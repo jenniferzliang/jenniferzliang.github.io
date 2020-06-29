@@ -1,1180 +1,433 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Jennifer Liang</title>
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+        
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <!-- Core theme CSS (includes Bootstrap)-->
 
-<head>
+        <link href="css/tab.css" rel="stylesheet" />
+        <link href="css/style1.css" rel="stylesheet" />
+        <link href="css/style2.css" rel="stylesheet" />
+        <link href="css/custom.css" rel="stylesheet" />
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+        <script src="js/portfolio.js"></script>
+        <script src="js/createPorfolio.js"></script>
 
-  <title>Jennifer Liang</title>
-
-  <!-- Custom fonts for this theme -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
-    type="text/css">
-
-  <!-- Theme CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/freelancer.min.css" rel="stylesheet">
-  <link href="css/custom.css" rel="stylesheet">
-
-</head>
-
-<body id="page-top">
-
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-    <div class="container">
-      <!--Nav Bar-->
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Jennifer Liang</a>
-      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-crimson text-white rounded"
-        type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-        aria-expanded="false" aria-label="Toggle navigation">
-        Menu
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Portfolio</a>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#resume">Resume</a>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#fun">Fun</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Masthead -->
-  <header class="masthead text-white text-center bg-crimson">
-    <div class="container d-flex align-items-center flex-column">
-
-
-      <!-- Masthead Heading -->
-      <br>
-      <br>
-      <h1 class="masthead-heading text-uppercase mb-0">Hello World!</h1>
-      <br>
-      <br>
-      <h1><small>It's a beautiful day ...</small></h1>
-      <br>
-      <!-- Icon Divider -->
-      <div class="divider-custom divider-light">
-        <div class="divider-custom-line"></div>
-      </div>
-
-      <!-- Masthead Subheading -->
-      <p class="masthead-subheading font-weight-light mb-0"></p>
-
-    </div>
-  </header>
-
-  <!-------------------------About Page--------------------------->
-  <section class="page-section mb-0" id="about">
-    <div class="container">
-
-      <!-- About Section Heading -->
-      <h2 class="page-section-heading text-center text-uppercase text-secondary">About</h2>
-
-      <!-- Icon Divider -->
-      <div class="divider-custom divider">
-        <div class="divider-custom-line"></div>
-      </div>
-
-      <!--Profile-->
-      <div class="row">
-        <div class="col col-lg-4 col-sm-12 col-12">
-          <img class="img-thumbnail " src="img/profile.jpg" alt="Jennifer_Liang">
-        </div>
-        <div class="col col-lg-8 col-sm-12 col-12">
-          <p class="lead ml-3 mt-2">Hi! I'm Jennifer Liang.</p>
-          <p class="lead ml-3 mr-4 mt-2">I'm currently a freshman at Harvard University studying Applied Mathematics and
-            Computer Science.</p>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!--------------------- Portfolio Section -------------------------------->
-  <section class="page-section portfolio bg-crimson text-white" id="portfolio">
-    <div class="container">
-
-      <!-- Portfolio Section Heading -->
-      <h2 class="page-section-heading text-center text-uppercase mb-0 text-white">What I've Done</h2>
-
-      <!-- Icon Divider -->
-      <div class="divider-custom divider-light">
-        <div class="divider-custom-line"></div>
-      </div>
-
-      <!-- Portfolio Grid Items -->
-      <div class="row">
-
-        <div class="col-md-6 col-lg-4">
-          <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModalChinatown">
-            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-              <div class="portfolio-item-caption-content text-center text-white">
-                <h1>Chinatown CitizenShip</h1>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/zoroak/z0.jpg" alt="">
-          </div>
-        </div>
-
-
-        <div class="col-md-6 col-lg-4">
-          <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModalSpotify">
-            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-              <div class="portfolio-item-caption-content text-center text-white">
-                <h1>Spotify Analyzer</h1>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/arduino/oledpushthumbnail.jpg" alt="">
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-          <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModalQGuide">
-            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-              <div class="portfolio-item-caption-content text-center text-white">
-                <h1>Harvard QGuide Analyzer</h1>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/cubesat/cubesat.jpg" alt="">
-          </div>
-        </div>
-
-        <div class="row">
-
-          <div class="col-md-6 col-lg-4">
-            <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModalZoroak">
-              <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                <div class="portfolio-item-caption-content text-center text-white">
-                  <h1>Zoroak</h1>
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top">Jennifer Liang</a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i class="fas fa-bars ml-1"></i></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ml-auto">
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#aboutme">About Me</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="assets/JenniferLiang.pdf">Resume</a></li>
+                    </ul>
                 </div>
-              </div>
-              <img class="img-fluid" src="img/portfolio/zoroak/z0.jpg" alt="">
             </div>
-          </div>
-
-
-          <div class="col-md-6 col-lg-4">
-            <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModalArduino">
-              <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                <div class="portfolio-item-caption-content text-center text-white">
-                  <h1>Arduino</h1>
-                </div>
-              </div>
-              <img class="img-fluid" src="img/portfolio/arduino/oledpushthumbnail.jpg" alt="">
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-4">
-            <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModalCubeSat">
-              <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                <div class="portfolio-item-caption-content text-center text-white">
-                  <h1>CubeSat Detection</h1>
-                </div>
-              </div>
-              <img class="img-fluid" src="img/portfolio/cubesat/cubesat.jpg" alt="">
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!--Resume-->
-  <section class="page-section mb-0" id="resume">
-    <div class="container">
-
-      <!-- About Section Heading -->
-      <h2 class="page-section-heading text-center text-uppercase text-secondary">About</h2>
-
-      <!-- Icon Divider -->
-      <div class="divider-custom divider">
-        <div class="divider-custom-line"></div>
-      </div>
-
-      <!--Profile-->
-      <div class="row">
-        <div class="col col-lg-1 col-sm-12 col-12 ml-2"></div>
-        <div class="col col-lg-10 col-sm-12 col-12 align-content-lg-center">
-          <h1 class="text-center mb-3">Education</h1>
-          <div class="row mb-1">
-
-            <div class="col col-lg-8 col-sm-12 col-12">
-              <h5>
-                Harvard University
-                <br><small>A.B. Applied Mathematics and Computer Science</small>
-              </h5>
-            </div>
-            <div class="col col-lg-4 col-sm-12 col-12 text-lg-right text-sm-left">
-              <p>Cambridge, MA<br>August 2019 - May 2023</p>
-            </div>
-
-            <div class="col col-lg-10 col-sm-12 col-12">
-
-              <p>
-                GPA: 4.0/4.0 <br>
-                Relevant Coursework: Computer Science, Microeconomics, Linear Algebra, Mathematics and Philosophy
-
-              </p>
-
-              <br>
-            </div>
-
-          </div>
-          <div class="row">
-            <div class="col col-lg-8 col-sm-12 col-12">
-              <h5>
-                Marc Garneau Collegiate Institute
-                <br><small>Talented Offerings for Programs in the Sciences</small>
-              </h5>
-            </div>
-
-            <div class="col col-lg-4 col-sm-12 col-12 text-lg-right text-sm-left">
-              <p>Toronto, ON<br>September 2015 - May 2019</p>
-            </div>
-            <div class="col col-lg-10 col-sm-12 col-12">
-              <p>GPA: 96/100
-                <br> Ontario Scholar, Medal of Academic Excellence
-                <br> Summa Cum Laude Femina in AP Physics C, Top Honors in Calculus and French
-              </p>
-            </div>
-
-
-          </div>
-          <div class="divider-custom divider">
-            <div class="divider-custom-line-break"></div>
-          </div>
-          <h1 class="text-center mb-3">Experience</h1>
-          <div class="row mb-1">
-
-            <div class="col col-lg-8 col-sm-12 col-12">
-              <h5>
-                Harvard User Research Center
-                <br><small>Lab Assistant</small>
-              </h5>
-            </div>
-            <div class="col col-lg-4 col-sm-12 col-12 text-lg-right text-sm-left">
-              <p>Cambridge, MA<br>September 2019 - March 2020</p>
-            </div>
-            <div class="col col-lg-10 col-sm-12 col-12">
-              <p>Assist with study participant management, lab space set up, greeting, and check-in.
-                <br>Assist with design and media creation and manage social media accounts on a biweekly basis
-                <br>Update department websites and wiki with content
-                <br>Support projects on UX and Digital Accessibility
-
-              </p>
-
-              <span class="badge badge-pill">UX Design</span>
-              <span class="badge badge-pill">HTML</span>
-              <br><br><br>
-            </div>
-
-
-          </div>
-          <div class="row">
-            <div class="col col-lg-8 col-sm-12 col-12">
-              <h5>
-                The Reckoner of MGCI
-                <br><small>Web Developer</small>
-              </h5>
-            </div>
-            <div class="col col-lg-4 col-sm-12 col-12 text-lg-right text-sm-left">
-              <p>Toronto, ON<br>September 2015 - May 2019</p>
-            </div>
-            <div class="col col-lg-10 col-sm-12 col-12">
-              <p>Work on front end maintenance of the site, run by WordPress. Utilizes Javascript, CSS, and HTML
-                <br>School newspaper awarded with “Best Electronic Newspaper” by Toronto Star
-                <br> www.thereckoner.ca
-              </p>
-              <span class="badge badge-pill">HTML</span>
-              <span class="badge badge-pill">CSS</span>
-              <span class="badge badge-pill">JS</span>
-
-            </div>
-
-          </div>
-
-          <div class="divider-custom divider">
-            <div class="divider-custom-line-break"></div>
-          </div>
-          <!--Leadership Activities-->
-          <h1 class="text-center mb-3">Leadership Activities</h1>
-          <div class="row mb-1">
-            <div class="col col-lg-8 col-sm-12 col-12">
-              <h5>
-                Harvard Women in CS
-                <br><small>Member</small>
-              </h5>
-            </div>
-            <div class="col col-lg-4 col-sm-12 col-12 text-lg-right text-sm-left">
-              <p>Cambridge, MA<br>September 2019 - Present</p>
-            </div>
-            <div class="col col-lg-10 col-sm-12 col-12">
-              <p>Volunteer at Harvard’s Girls Who Code to introduce computer science to middle & high school girls in
-                the local Boston/Cambridge area.
-                <br>Attend weekly events consisting of workshops on programming languages and CS forums.
-              </p>
-
-              <br><br><br>
-            </div>
-
-
-          </div>
-          <div class="row">
-            <div class="col col-lg-8 col-sm-12 col-12">
-              <h5>
-                Canada Learning Code
-                <br><small>Technical Mentor</small>
-              </h5>
-            </div>
-            <div class="col col-lg-4 col-sm-12 col-12 text-lg-right text-sm-left">
-              <p>Toronto, ON<br>October 2016 - May 2019</p>
-            </div>
-            <div class="col col-lg-10 col-sm-12 col-12">
-              <p>Assist in monthly workshops for Girls Learning Code and Kids Learning Code to instill in students an
-                interest in computer science and equip them with the skill set.
-                <br>Lead workshop activities for classes of 20 students in Scratch, Java, Ruby, and HTML, etc.
-              </p>
-
-            </div>
-
-          </div>
-          <div class="divider-custom divider">
-            <div class="divider-custom-line-break"></div>
-          </div>
-
-          <!--Skills-->
-          <h1 class="text-center mb-3">Skills</h1>
-          <div class="row mb-1">
-            <div class="col col-lg-12 col-sm-12 col-12">
-              <h5>Technical Skills: <small>Java, C/C++, Python, JavaScript, HTML, CSS, R Script, Arduino, Raspberry Pi,
-                  Microsoft Office</small></h5>
-              <h5>Languages: <small>Conversational Mandarin and French</small></h5>
-              <h5>Interests: <small>Hiking, Rock Climbing, Skiing, Book Blogging</small></h5>
-            </div>
-          </div>
-
-
-          <div class="divider-custom divider">
-            <div class="divider-custom-line-break"></div>
-          </div>
-
-          <!--Achievements-->
-          <h1 class="text-center mb-3">Achievements</h1>
-          <div class="row mb-1">
-            <div class="col col-lg-9 col-sm-12 col-12">
-              <h5>
-                European Girls' Mathematical Olympiad
-                <small>Bronze Medal</small>
-              </h5>
-            </div>
-            <div class="col col-lg-3 col-sm-12 col-12 text-lg-right text-sm-left">
-              <p>2018</p>
-            </div>
-            <div class="col col-lg-9 col-sm-12 col-12">
-              <h5>
-                Asian Pacific Math Olympiad
-                <small>Selected Contestant, Top 25 in Canada</small>
-              </h5>
-            </div>
-            <div class="col col-lg-3 col-sm-12 col-12 text-lg-right text-sm-left">
-              <p>2018, 2019</p>
-            </div>
-            <div class="col col-lg-9 col-sm-12 col-12">
-              <h5>
-                Canadian Computing Competition
-                <small>National Honour Roll</small>
-              </h5>
-            </div>
-            <div class="col col-lg-3 col-sm-12 col-12 text-lg-right text-sm-left">
-              <p>2017 - 2019</p>
-            </div>
-
-          </div>
-
-          <div class="divider-custom divider">
-            <div class="divider-custom-line-break"></div>
-          </div>
-
-          <!-- Auto width -->
-
-          <div class="row mb-1 mt-3">
-            <div class="col col-lg-4"></div>
-            <div class="col col-lg-4 col-sm-12 col-12">
-              <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="documents/Jennifer Liang.pdf"> Download</a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-
-
-
-  </section>
-
-  <!--------------------- Fun Section -------------------------------->
-  <section class="page-section portfolio bg-crimson text-white" id="fun">
-    <div class="container">
-
-      <!-- Portfolio Section Heading -->
-      <h2 class="page-section-heading text-center text-uppercase mb-0 text-white">Fun Things</h2>
-
-
-      <!-- Icon Divider -->
-      <div class="divider-custom divider-light">
-        <div class="divider-custom-line"></div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-6 col-lg-4">
-          <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModalEgmo">
-            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-              <div class="portfolio-item-caption-content text-center text-white">
-                <h1>EGMO 2018</h1>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/egmo/egmo0.jpg" alt="">
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-          <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModalFencing">
-            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-              <div class="portfolio-item-caption-content text-center text-white">
-                <h1>Fencing</h1>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/fencing/fhead.jpg" alt="">
-          </div>
-        </div>
-
-
-
-        <div class="col-md-6 col-lg-4">
-          <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModalBook">
-            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-              <div class="portfolio-item-caption-content text-center text-white">
-                <h1>Book Blogging</h1>
-              </div>
-            </div>
-            <img class="img-fluid" src="img/portfolio/bookblogging/bbthumb.jpg" alt="">
-          </div>
-        </div>
-
-      </div>
-
-  </section>
-
-  <!-- Copyright Section -->
-  <section class="copyright py-4 text-center text-white">
-    <div class="container">
-      <small class="float-lg-left">Copyright &copy; Jennifer Liang 2019</small>
-      <small class="float-lg-right">
-        <a class="link" target="_blank" href="mailto:jliang@college.harvard.edu">Email</a>&nbsp;//&nbsp;
-        <a class="link" target="_blank" href="https://www.linkedin.com/in/jennifer-liang-01/">LinkedIn</a>&nbsp;//&nbsp;
-        <a class="link" target="_blank" href="https://github.com/jenniferli1098">GitHub</a>
-      </small>
-      <br>
-    </div>
-  </section>
-
-  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-  <div class="scroll-to-top d-lg-none position-fixed ">
-    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
-      <i class="fa fa-chevron-up"></i>
-    </a>
-  </div>
-
-  <!-- Portfolio Modals -->
-
-  <div class="portfolio-modal modal fade" id="portfolioModalZoroak" tabindex="-1" role="dialog"
-    aria-labelledby="portfolioModalZoroakLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
-        <div class="modal-body text-center">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Zoroak</h2>
-                <!-- Icon Divider -->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Modal - Image -->
-                <!--Possible create a carousel-->
-                <!--<img class="img-fluid rounded mb-5" src="img/portfolio/zoroak/z0.jpg" alt="">-->
-                <div id="carouselExampleIndicators0" class="carousel slide" data-ride="carousel">
-                  <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators0" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators0" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators0" data-slide-to="2"></li>
-                    <li data-target="#carouselExampleIndicators0" data-slide-to="3"></li>
-                  </ol>
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <img class="d-block w-100" src="img/portfolio/zoroak/z4.jpg" alt="First slide">
-                    </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="img/portfolio/zoroak/z3.jpg" alt="Second slide">
-                    </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="img/portfolio/zoroak/z2.jpg" alt="Third slide">
-                    </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="img/portfolio/zoroak/z1.jpg" alt="Fourth slide">
-                    </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#carouselExampleIndicators0" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleIndicators0" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </div>
-                <!-- Portfolio Modal - Text -->
-                <p class="mb-5 text-left text-justified"><br>As the final project in AP Physics, we created Zoroak, a
-                  remote
-                  soil analyzer. In a group of five, we used Raspberry Pi and Python to create an autonomous soil arm
-                  that extracts soil samples and analyzes the light spectra, temperature, and soil density. OpenCV was
-                  used to calibrate position and depth. Motion is adjusted in real time.
-                  <br>
-                </p>
-                <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank"
-                        href="documents/Zoroak Remote Soil Analyzer.pdf">Documentation</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://bit.ly/2UQ74zU">Video</a>
-                    </li>
-                  </ul>
-                </nav>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container">
+                <div class="masthead-heading text-uppercase">Jennifer Liang</div>
+                <div class="masthead-subheading">Student</div>
                 <br>
-              </div>
+                <br>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="portfolio-modal modal fade" id="portfolioModalEgmo" tabindex="-1" role="dialog"
-    aria-labelledby="portfolioModalEgmoLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
-        <div class="modal-body text-center">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">European Girls’ Mathematical
-                  Olympiad 2018</h2>
-                <!-- Icon Divider -->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="divider-custom-line"></div>
+        </header>
+        <!-- About-->
+        <section class="page-section" id="aboutme">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">About me</h2>
+                    <h3 class="section-subheading text-muted">Hello there!</h3>
                 </div>
-                <!-- Portfolio Modal - Image -->
-                <div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel">
-                  <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators1" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators1" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators1" data-slide-to="2"></li>
-                    <li data-target="#carouselExampleIndicators1" data-slide-to="3"></li>
-                  </ol>
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <img class="d-block w-100" src="img/portfolio/egmo/egmo1.jpg" alt="First slide">
+                <div class="row">
+                    <div class="col-md-3  text-center">
+                        
+                        <div class="team-member">
+                            <img class="mx-auto rounded-circle" src="assets/img/profile/2.jpg" alt="" />
+                            <h4 class="text-muted">Jennifer Liang</h4>
+                            <br>
+                            <a class="btn btn-dark btn-social mx-2" href="https://www.linkedin.com/in/jennifer-liang-01/"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-dark btn-social mx-2" href="https://github.com/jenniferli1098"><i class="fab fa-github"></i></a>
+                            <a class="btn btn-dark btn-social mx-2" href="mailto:jliang@college.harvard.edu"><i class="fas fa-envelope"></i></a>
+                        </div>
                     </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="img/portfolio/egmo/egmo4.jpg" alt="Second slide">
+                    <div class="col-md-9 text-muted">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    Hi! I'm Jennifer Liang. <br>
+                                    I'm currently a student at Harvard University studying Applied Mathematics and Computer Science.
+                                    In addition to collaborating on side projects with friends, I love to read and learn.
+                                    During my free time, I've been running a book club to encourage kids to read during quarantine and an opportunity to meet others in the community. 
+                                    <br>
+                                    
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Courses</h5>
+                                <strong>Fall 2019</strong>
+                                <ul>
+                                    <li>EC10A - Microeconomics</li>
+                                    <li>Math23A - Linear Algebra and Real Analysis</li>
+                                    <li>CS50 - Introduction to Computer Science</li>
+                                    <li>FRSMR - Introduction to Infinity (seminar)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Math Contests</h5>
+                                <ul>
+                                    <li>European Girls Math Olympiads 2018 - Bronze</li>
+                                    <li>Canadian Open Math Competition - Bronze</li>
+                                    <li>Asian Pacific Mathematics Olympiad - National Qualifier</li>
+                                </ul>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5>Fun Facts!</h5>
+                                <ul>
+                                    <li>I been <b>fencing</b> since I was 12 years old. As a women’s foilist, I've placed top 4 in national tournaments and competed in the European Cadet Circuit. In 2016-2017, I was also the recipient of the Ontario Quest for Gold athlete scholarship.</li>
+                                    <li>I love to <b>read</b>! I run a blog with my friend where we help review and promote new releases for authors and publishers. <a href="https://www.instagram.com/little.white.bookshelf/">Link</a> </li>
+                                    <li>Currently brushing up on my <b>French</b> and learning <b>Chinese</b>!</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        
                     </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="img/portfolio/egmo/egmo3.jpg" alt="Third slide">
+                </div>
+            </div>
+        </section>
+        
+        
+        <!-- About-->
+        <section class="page-section bg-light" id="experience">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Experience</h2>
+                    <h3 class="section-subheading text-muted"></h3>
+                </div>
+                <ul class="timeline">
+                    <li class="timeline-inverted">
+                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/1.jpg" alt="" /></div>
+                        <div class="timeline-panel">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4>Harvard University</h4>
+                                    <h6 class="text-muted">Applied Math and Computer Science</h6>
+                                </div>
+                                
+                                <div class="col-lg-6 text-right">
+                                    <h6 class="text-muted">Aug 2019 - Jun 2023</h6>
+                                    <h6 class="text-muted">Cambridge, MA</h6>
+                                </div>
+                            </div>
+                            <div class="timeline-body"><p class="text-muted">
+                                Relevent courses: Introduction to Computer Science, Functional Programming, Linear Algebra, Multivariable Calculus
+                            </p></div>
+                        </div>
+                    </li>
+                    
+                    <!-- <li class="timeline-inverted">
+                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/1.jpg" alt="" /></div>
+                        <div class="timeline-panel">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h4>Harvard University</h4>
+                                    <h6 class="text-muted">Our Humble Beginnings</h6>
+                                </div>
+                                
+                                <div class="col-lg-6 text-right">
+                                    <h6 class="text-muted">Aug 2019 - Jun 2023</h6>
+                                    <h6 class="text-muted">Cambridge, MA</h6>
+
+                                </div>
+                            </div>
+                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
+                        </div>
+                    </li> -->
+
+                    <!-- <li class="timeline-inverted">
+                        <div class="timeline-image">
+                            <h4>Be Part<br />Of Our<br />Story!</h4>
+                        </div>
+                    </li> -->
+                </ul>
+            </div>
+        </section>
+
+        <section class="projects-section" id="portfolio">
+            <div class="container">
+                <div class="text-center page-section pb-0 pt-0">
+                    <h2 class="section-heading text-uppercase">Portfolio</h2>
+                    <h3 class="section-subheading text-muted">What I've done</h3>
+                </div>
+                
+                <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+                    <div class="col-lg-6"><img class="img-fluid" src="https://github.com/Danjin617/Online_Sublet_Platform/raw/master/websitetime.gif" alt="" /></div>
+                    <div class="col-lg-6">
+                        <div class="text-center h-100 project">
+                            <div class="d-flex h-100">
+                                <div class="project-text w-100 my-auto text-center text-lg-left">
+                                    <h4>Online Subletting Platform</h4>
+                                    <p class="text-black-50 mb-0">
+                                        Online subletting platform for students looking for residence during their stay at college or at an internship.
+                                        <br>
+                                        MongoDB, Express, Angular JS, and Node JS. Constructed RESTful API.
+                                    </p>
+                                    
+                                    <hr class="d-none d-lg-block mb-0 ml-0" />
+                                    <br>
+                                    <a class="btn btn-dark btn-social mx-2" href="http://online-subletting-platform.herokuapp.com/"><i class="fas fa-external-link-alt"></i>
+                                    </a><a class="btn btn-dark btn-social mx-2" href="https://www.youtube.com/watch?v=5lM1UaZmZH0"><i class="fab fa-youtube"></i></a>
+                                    <a class="btn btn-dark btn-social mx-2" href="https://github.com/Danjin617/Online_Sublet_Platform"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="img/portfolio/egmo/egmo2.jpg" alt="Fourth slide">
+                </div>
+                <div class="row justify-content-center no-gutters">
+                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/portfolio/ccit2.jpg" alt="" /></div>
+                    <div class="col-lg-6 order-lg-first">
+                        <div class="text-center h-100 project">
+                            <div class="d-flex h-100">
+                                <div class="project-text w-100 my-auto text-center text-lg-right">
+                                    <h4>Chinatown Citizenship</h4>
+                                    <p class="text-black-50 mb-0">
+                                        Website for Chinatown Citizenship, a program to help Chinese immigrants prepare for the US Naturalization exam.
+                                        <br>
+                                        Bootstrap, HTML/CSS, and Javascript
+                                    </p>
+                                    <hr class="d-none d-lg-block mb-0 mr-0" />
+                                    <br>
+                                    <a class="btn btn-dark btn-social mx-2" href="http://chinatowncitizenship.com/"><i class="fas fa-external-link-alt"></i></a>
+                                    <a class="btn btn-dark btn-social mx-2" href="https://github.com/jenniferli1098/chinatowncitizenship"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleIndicators1" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                  </a>
                 </div>
-                <!-- Portfolio Modal - Text -->
-                <p class="mb-5 text-left text-justified"> <br>
-                  In 2018, I earned a bronze medal at the European Girls’ Mathematical Olympiad (EGMO).
-                  Selected as one of four Canadian students to represent Canada in EGMO, I pursued three months of
-                  intensive training before travelling to Florence, Italy to take the two day-long contest. While the
-                  contest was intellectually stimulating, the social aspect of EGMO was what made it so memorable. We
-                  spent a week exploring Italy and meeting girls from 50 other countries who were equally passionate in
-                  mathematics and the STEM fields. Reinvigorated, I sought out opportunities in my own community to
-                  promote girls and women in STEM as we continue to break barriers in traditionally male-dominated
-                  fields, such as mentoring for Girls Learning Code and maintaining my own Robotics blog to make
-                  robotics more accessible to students.
-                </p>
-                <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="http://www.egmo2018.org/about/">Official Site</a>
-                    </li>
-
-                  </ul>
-                </nav>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="portfolio-modal modal fade" id="portfolioModalArduino" tabindex="-1" role="dialog"
-    aria-labelledby="portfolioModalArduinoLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
-        <div class="modal-body text-center">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0"> Arduino</h2>
-                <!-- Icon Divider -->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/arduino/bbgame.gif" alt="">
-                <p class="mb-5 text-left text-justified">
-                  In high school, I dabbled in working with and robotics. After learning to code in C and familiarizing
-                  myself with the Arduino, I began creating my own projects and prototypes.
-                  <br><br>
-                  <strong>Room Monitor</strong>
-                  <br>
-                  I prototyped a room monitor, which gathers surrounding measurements (eg. Light
-                  intensity, temperature, height), and displays it on an oLED. The prject underwent several version
-                  controls, where from each update, new sensors and features were added.
-                  <br><br>
-                  <strong>Brick Breaker</strong>
-                  <br>
-                  I attempted to recreate the iconic game <i>Brick Breaker</i> using an oLED display as a monitor, push
-                  button, and potentiometer as a controller. I used it as an outline for one of my Arduino workshops
-                  that I organized in high school.
-                </p>
-
-                <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank"
-                        href="https://github.com/jenniferli1098/oLEDwithPushButton">GitHub</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://www.youtube.com/watch?v=eCV6nI9EA2Y">Room
-                        Monitor</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://www.youtube.com/watch?v=Ev7cwnanPvw">Brick
-                        Breaker</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="portfolio-modal modal fade" id="portfolioModalFencing" tabindex="-1" role="dialog"
-    aria-labelledby="portfolioModalFencingLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
-        <div class="modal-body text-center">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Fencing</h2>
-                <!-- Icon Divider -->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Modal - Image -->
-                <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
-                  <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
-                    <li data-target="#carouselExampleIndicators2" data-slide-to="3"></li>
-                  </ol>
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <img class="d-block w-100" src="img/portfolio/fencing/f0.jpg" alt="First slide">
+                <!-- Project One Row-->
+                <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+                    <div class="col-lg-6"><img class="img-fluid" src="assets/img/portfolio/covidtracker1.jpg" alt="" /></div>
+                    <div class="col-lg-6">
+                        <div class="text-center h-100 project">
+                            <div class="d-flex h-100">
+                                <div class="project-text w-100 my-auto text-center text-lg-left">
+                                    <h4>Covid-19 Web Tracker</h4>
+                                    <p class="text-black-50 mb-0">
+                                        Interactive Web App to visualize and read data retrieved from <a href="https://covid19api.com/">covid19api</a>.
+                                        <br>
+                                        Node JS, Angular JS.
+                                    </p>
+                                    <hr class="d-none d-lg-block mb-0 ml-0" />
+                                    <br>
+                                    <a class="btn btn-dark btn-social mx-2" href="http://covidstatstracker.herokuapp.com/"><i class="fas fa-external-link-alt"></i>
+                                    <a class="btn btn-dark btn-social mx-2" href="https://github.com/jenniferli1098/CovidStatsTracker-webApp"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="img/portfolio/fencing/f1.jpg" alt="Second slide">
+                </div>
+            </div>
+            <div class="container pt-5">
+                <ul class="nav nav-tabs">
+                    <li><a data-toggle="tab" onclick="filterSelection('all')">All</a></li>
+                    <li><a data-toggle="tab" onclick="filterSelection('web')">Web Development</a></li>
+                    <li><a data-toggle="tab" onclick="filterSelection('app')">App Development</a></li>
+                    <li><a data-toggle="tab" onclick="filterSelection('misc')">Miscellaneous</a></li>
+                </ul>
+                <!--
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#all">All</a></li>
+                  <li><a data-toggle="tab" href="#web">Web Development</a></li>
+                  <li><a data-toggle="tab" href="#app">App Development</a></li>
+                  <li><a data-toggle="tab" href="#misc">Miscellaneous</a></li>
+                </ul>
+                -->
+                <!--web, app, misc-->
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6 mb-4 filterDiv app">
+                        <div class="portfolio-item text-center">
+                            <br>
+                            
+                            <button class="btn"onclick="changeInfo(0)">
+                            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal">
+                                <img class="portfolio-img img-fluid " src="assets/img/portfolio/app.png" alt=""/>
+                            
+                                <div class="portfolio-caption">
+                                    <div>Stay In Touch</div>
+                                </div>
+                            </a>
+                            </button>
+                        </div>
                     </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="img/portfolio/fencing/f2.jpg" alt="Third slide">
+                    <div class="col-lg-3 col-sm-6 mb-4 filterDiv app">
+                        <div class="portfolio-item text-center">
+                            <br>
+                            
+                            <button class="btn"onclick="changeInfo(1)">
+                            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal">
+                                <img class="portfolio-img img-fluid " src="assets/img/portfolio/app.png" alt=""/>
+                            
+                                <div class="portfolio-caption">
+                                    <div>Covid-19</div>
+                                </div>
+                            </a>
+                            </button>
+                        </div>
                     </div>
-                    <div class="carousel-item">
-                      <img class="d-block w-100" src="img/portfolio/fencing/f3.jpg" alt="Fourth slide">
+                    <div class="col-lg-3 col-sm-6 mb-4 filterDiv web">
+                        <div class="portfolio-item text-center">
+                            <br>
+                            
+                            <button class="btn"onclick="changeInfo(2)">
+                            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal">
+                                <img class="portfolio-img img-fluid " src="assets/img/portfolio/placeholder.jpg" alt=""/>
+                            
+                                <div class="portfolio-caption">
+                                    <div>Spotify Analyzer</div>
+                                </div>
+                            </a>
+                            </button>
+                        </div>
                     </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                  </a>
+                    <div class="col-lg-3 col-sm-6 mb-4 filterDiv app">
+                        <div class="portfolio-item text-center">
+                            <br>
+                            
+                            <button class="btn"onclick="changeInfo(3)">
+                            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal">
+                                <img class="portfolio-img img-fluid " src="assets/img/portfolio/app.png" alt=""/>
+                            
+                                <div class="portfolio-caption">
+                                    <div>Book Cataloguer</div>
+                                </div>
+                            </a>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 mb-4 filterDiv misc">
+                        <div class="portfolio-item text-center">
+                            <br>
+                            
+                            <button class="btn"onclick="changeInfo(4)">
+                            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal">
+                                <img class="portfolio-img img-fluid " src="assets/img/portfolio/cubesat1.jpg" alt=""/>
+                            
+                                <div class="portfolio-caption">
+                                    <div>CubeSat</div>
+                                </div>
+                            </a>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 mb-4 filterDiv misc">
+                        <div class="portfolio-item text-center">
+                            <br>
+                            
+                            <button class="btn"onclick="changeInfo(5)">
+                            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal">
+                                <img class="portfolio-img img-fluid " src="assets/img/portfolio/zoroak1.jpg" alt=""/>
+                            
+                                <div class="portfolio-caption">
+                                    <div>Zoroak</div>
+                                </div>
+                            </a>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 mb-4 filterDiv misc">
+                        <div class="portfolio-item text-center">
+                            <br>
+                            
+                            <button class="btn"onclick="changeInfo(6)">
+                            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal">
+                                <img class="portfolio-img img-fluid " src="assets/img/portfolio/arduino1.jpg" alt=""/>
+                            
+                                <div class="portfolio-caption">
+                                    <div>Arduino</div>
+                                </div>
+                            </a>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <!-- Portfolio Modal - Text -->
-                <p class="mb-5 text-left text-justified"> <br>I've been fencing for over eight years, and the sport has
-                  played an integral role in my
-                  growing up. In 2015-2017, I trained as an alternate on the National Under 17 Women's Foil Team where I
-                  competed in the European Circuits in Budapest, Hungary (2016) and Marseilles, France (2017). In high
-                  school, I helped around my club and became an assistant coach, giving one-on-one classes to youth
-                  fencers ages 6-10 and leading weekly group lessons of around 30 students.</p>
-                <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://www.huahuafencing.com">Club Link</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://youtu.be/VqYcvc833Y8">Video 1</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://youtu.be/bx9yBR6U_w4">Video 2</a>
-                    </li>
-                  </ul>
-                </nav>
+                
+                
               </div>
+        </section>
+        
+        <!-- Copyright Section -->
+        <section class="footer py-4 text-center text-white bg-dark">
+            <div class="container">
+            <small class="float-lg-left">Copyright &copy; Jennifer Liang 2019</small>
+            <small class="float-lg-right">
+                <a class="link" target="_blank" href="mailto:jliang@college.harvard.edu">Email</a>&nbsp;&nbsp;
+                <a class="link" target="_blank" href="https://www.linkedin.com/in/jennifer-liang-01/">LinkedIn</a>&nbsp;&nbsp;
+                <a class="link" target="_blank" href="https://github.com/jenniferli1098">GitHub</a>
+            </small>
+            <br>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        </section>
 
-  <div class="portfolio-modal modal fade" id="portfolioModalCubeSat" tabindex="-1" role="dialog"
-    aria-labelledby="portfolioModalCubeSatLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
-        <div class="modal-body text-center">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">CubeSat Detection</h2>
-                <!-- Icon Divider -->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="divider-custom-line"></div>
+
+        <!-- Portfolio Modals--><!-- Modal 1-->
+        <div class="portfolio-modal modal fade" id="portfolioModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-4">
+                                <img id="projectImg" class="img-fluid d-block mx-auto" src="assets/img/portfolio/01-full.jpg" alt="" />
+                                    
+                            </div>
+                            <div class="col-lg-6">
+                                <h2 id="projectName" class="text-uppercase">Project Name</h2>                                   
+                                <p id="projectTools"class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <div id="projectDescription" class="text-left ml-1" style="font-size: small;">Project Description</div>
+
+                            </div>
+                            <div class="col-lg-1"></div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/cubesat/boundingbox.gif" alt="">
-                <!-- Portfolio Modal - Text -->
-                <p class="mb-5 text-left text-justified">In the summer of 2017, I worked as a lab assistant for Dr
-                  Jian-Feng Shi in his research
-                  on optimizing the detection of cube satellites using convoluted neural networks. I used
-                  OpenCV to create real-time computer vision and gain further knowledge in machine vision. For his
-                  research, I helped extract ground data of more than 300 images to train neural networks. I was later
-                  acknowledged in his paper, "CubeSat Simulation and Detection using Monocular Camera Images and
-                  Convolutional Neural Networks" DOI: 10.2514/6.2018-1604</p>
-                <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank"
-                        href="https://arc.aiaa.org/doi/abs/10.2514/6.2018-1604">Publication</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://www.youtube.com/watch?v=vZY39SImb8U">Bounding
-                        Box</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://youtu.be/AfBw4jGBz6Y">Simulation</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="portfolio-modal modal fade" id="portfolioModalChinatown" tabindex="-1" role="dialog"
-    aria-labelledby="portfolioModalBookLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
-        <div class="modal-body text-center">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Chinatown</h2>
-                <!-- Icon Divider -->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/bookblogging/bbtitle.jpg" alt="">
-                <!-- Portfolio Modal - Text -->
-                <p class="mb-5 text-left text-justified">
-                  For our CS50 final project, my partner and I created a website for the organization we volunteered at.
-                  Which allows for chinese immigrants to study and prepare for their naturalization exam remotely.
-                </p>
-                <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://sleepingsuburb.wordpress.com">Curious? Check out
-                        my site!</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="portfolio-modal modal fade" id="portfolioModalBook" tabindex="-1" role="dialog"
-    aria-labelledby="portfolioModalBookLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
-        <div class="modal-body text-center">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Book Blogging</h2>
-                <!-- Icon Divider -->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/bookblogging/bbtitle.jpg" alt="">
-                <!-- Portfolio Modal - Text -->
-                <p class="mb-5 text-left text-justified">It started with teardrops on a paperback copy of <i>Heartless
-                    by Marissa Meyer</i> and a need to rant. Tapping vigorously away on the keyboard, I stumbled through
-                  a rabbit hole into the eccentric and lively community of book bloggers. With a collective love for
-                  literary and figurative worlds, we gushed over fairy tale retellings and declared our love for
-                  favorite book tropes. From reaching out to
-                  authors to host exclusive interviews to promoting an up and coming book, there is never a dull moment
-                  in the book community. No longer is reading a solitary activity; book blogging has become my favorite
-                  pastime amidst the chaos of everyday life.</p>
-                <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://www.instagram.com/little.white.bookshelf/">Curious? Check out
-                        my site!</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  
-  <div class="portfolio-modal modal fade" id="portfolioModalChinatown" tabindex="-1" role="dialog"
-    aria-labelledby="portfolioModalBookLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
-        <div class="modal-body text-center">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Chinatown</h2>
-                <!-- Icon Divider -->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/bookblogging/bbtitle.jpg" alt="">
-                <!-- Portfolio Modal - Text -->
-                <p class="mb-5 text-left text-justified">
-                  For our CS50 final project, my partner and I created a website for the organization we volunteered at.
-                  Which allows for chinese immigrants to study and prepare for their naturalization exam remotely.
-                </p>
-                <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://sleepingsuburb.wordpress.com">Curious? Check out
-                        my site!</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="portfolio-modal modal fade" id="portfolioModalSpotify" tabindex="-1" role="dialog"
-    aria-labelledby="portfolioModalBookLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
-        <div class="modal-body text-center">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Spotify Analyzer</h2>
-                <!-- Icon Divider -->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/bookblogging/bbtitle.jpg" alt="">
-                <!-- Portfolio Modal - Text -->
-                <p class="mb-5 text-left text-justified">
-                  The Spotify Analyzer takes in a user's account and analyzes the songs in their playlists.
-                </p>
-                <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://sleepingsuburb.wordpress.com">Curious? Check out
-                        my site!</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  
-  <div class="portfolio-modal modal fade" id="portfolioModalChinatown" tabindex="-1" role="dialog"
-    aria-labelledby="portfolioModalBookLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
-        <div class="modal-body text-center">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Chinatown</h2>
-                <!-- Icon Divider -->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/bookblogging/bbtitle.jpg" alt="">
-                <!-- Portfolio Modal - Text -->
-                <p class="mb-5 text-left text-justified">
-                  For our CS50 final project, my partner and I created a website for the organization we volunteered at.
-                  Which allows for chinese immigrants to study and prepare for their naturalization exam remotely.
-                </p>
-                <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://sleepingsuburb.wordpress.com">Curious? Check out
-                        my site!</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="portfolio-modal modal fade" id="portfolioModalQGuide" tabindex="-1" role="dialog"
-    aria-labelledby="portfolioModalBookLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">
-            <i class="fas fa-times"></i>
-          </span>
-        </button>
-        <div class="modal-body text-center">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-lg-8">
-                <!-- Portfolio Modal - Title -->
-                <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Harvard QGuide Analyzer</h2>
-                <!-- Icon Divider -->
-                <div class="divider-custom">
-                  <div class="divider-custom-line"></div>
-                  <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
-                  </div>
-                  <div class="divider-custom-line"></div>
-                </div>
-                <!-- Portfolio Modal - Image -->
-                <img class="img-fluid rounded mb-5" src="img/portfolio/bookblogging/bbtitle.jpg" alt="">
-                <!-- Portfolio Modal - Text -->
-                <p class="mb-5 text-left text-justified">
-                  Web application which analyzes the comments in the Harvard QGuide, a site used to students to evaluate
-                  teachers and courses.
-                </p>
-                <nav class="navbar navbar-expand-sm bg-light justify-content-center">
-                  <ul class="navbar-nav">
-                    <li class="nav-item">
-                      <a class="nav-link" target="_blank" href="https://sleepingsuburb.wordpress.com">Curious? Check out
-                        my site!</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Plugin JavaScript -->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Contact Form JavaScript -->
-  <script src="js/jqBootstrapValidation.js"></script>
-  <script src="js/contact_me.js"></script>
-
-  <!-- Custom scripts for this template -->
-  <script src="js/freelancer.min.js"></script>
-
-
-</body>
-
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
 </html>

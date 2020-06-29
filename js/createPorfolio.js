@@ -1,0 +1,53 @@
+var project = [
+    {
+        name: "Stay In Touch",
+        tools: "Swift",
+        description: '<p>Due to Covid-19 causing everyone to self-isolate, it has become easier to lose touch with friends and family. We created an iOS app to help users keep track of friends and family members, by keeping track of that last time you met.</p><a class="btn btn-dark btn-social" href="https://github.com/jenniferli1098/StayInTouch-iOS"><i class="fab fa-github"></i></a>',
+        img: ""
+    },
+    {
+        name: "Covid Tracker",
+        tools: "Swift",
+        description: '<p>Helps you search up most recent data of covid cases by location. Simulates a weather app.</p><a class="btn btn-dark btn-social" href="https://github.com/jenniferli1098/CovidStatsTracker-webApp"><i class="fab fa-github"></i></a>',
+        img: ""
+    },
+    {
+        name: "Spotify Analyzer",
+        tools: "Python, Django, HTML, Spotify API",
+        description: '<p>Analyzes your public playlists and searches up songs for song analysis</p><a class="btn btn-dark btn-social" href="https://github.com/jenniferli1098/spotifyAnalyzer"><i class="fab fa-github"></i></a>',
+        img: "",
+
+    },
+    {
+        name: "Book Cataloguer",
+        tools: "Android Developer, Java, SQLite Database",
+        description: '<p>Catalogues and compiles lists of books that you have read. Make calls to the OpenLibrary API to look up information of books.</p><a class="btn btn-dark btn-social mx-2" href="https://github.com/jenniferli1098/spotifyAnalyzer"><i class="fab fa-github"></i></a>',
+        img: ""
+    },
+    {
+        name: "CubeSat Detection",
+        tools: "OpenCV, Tensor Flow",
+        description:"Worked as a lab assistant for Dr Jian-Feng Shi in his research on optimizing the detection of cube satellites using convoluted neural networks. I used OpenCV to create real-time computer vision and gain further knowledge in machine vision. For his research, I helped extract ground data of more than 300 images to train neural networks. I was later acknowledged in his paper, 'CubeSat Simulation and Detection using Monocular Camera Images and Convolutional Neural Networks' DOI: 10.2514/6.2018-1604",
+        img: "assets/img/portfolio/cubesat2.gif",
+    },
+    {
+        name: "Zoroak",
+        tools: "OpenCV, Raspberry Pi, Python",
+        description:"As the final project in AP Physics, we created Zoroak, a remote soil analyzer. In a group of five, we used Raspberry Pi and Python to create an autonomous soil arm that extracts soil samples and analyzes the light spectra, temperature, and soil density. OpenCV was used to calibrate position and depth. Motion is adjusted in real time.",
+        img: "assets/img/portfolio/zoroak2.jpg",
+    },
+    {
+        name: "Arduino Projects",
+        tools: "Arduino, C",
+        description: "<br><b> Room Monitor </b><br>Gathers environmental measurements (eg. Light intensity, temperature, height), and displays it on an oLED. <br><b> Brick Breaker </b><br> Recreated the iconic game Brick Breaker using an oLED display as a monitor, push button, and potentiometer as a controller.",
+        img: "assets/img/portfolio/arduino2.gif",
+    }
+];
+
+
+function changeInfo(k) {
+    document.getElementById("projectImg").src = project[k].img;
+    document.getElementById("projectName").innerHTML = project[k].name;
+    document.getElementById("projectDescription").innerHTML = project[k].description;
+    document.getElementById("projectTools").innerHTML = project[k].tools;
+}
