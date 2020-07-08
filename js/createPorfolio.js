@@ -15,7 +15,7 @@ var project = [
         name: "Spotify Analyzer",
         tools: "Python, Django, HTML, Spotify API",
         description: '<p>Analyzes your public playlists and searches up songs for song analysis</p><a class="btn btn-dark btn-social" href="https://github.com/jenniferli1098/spotifyAnalyzer"><i class="fab fa-github"></i></a>',
-        img: "",
+        img: "assets/img/portfolio/spotify2.png",
 
     },
     {
