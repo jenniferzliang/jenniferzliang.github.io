@@ -41,6 +41,12 @@ var project = [
         tools: "Arduino, C",
         description: "<br><b> Room Monitor </b><br>Gathers environmental measurements (eg. Light intensity, temperature, height), and displays it on an oLED. <br><b> Brick Breaker </b><br> Recreated the iconic game Brick Breaker using an oLED display as a monitor, push button, and potentiometer as a controller.",
         img: "assets/img/portfolio/arduino2.gif",
+    },
+    {
+        name: "The Arctic Reading Club",
+        tools: "Founder",
+        description: '<p>Growing up as an avid reader, I loved exploring the world through books. With COVID-19 closing down services like libraries and community centers, I wanted to create a new outlet in which kids can come together and bond over books. Thus, The Arctic Reading Circle was born.</p><a class="btn btn-dark btn-social mx-2" href="https://thearcticreadingcircle.web.app"><i class="fas fa-link"></i></a>',
+        img: "assets/img/portfolio/arc1.jpg",
     }
 ];
 
