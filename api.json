@@ -226,19 +226,19 @@
         "x-codeSamples": [
           {
             "lang": "Curl",
-            "source": "curl --request GET \\\n  --url https:/api.directx.ca/order/1000/12345"
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/order/1000/12345"
           },
           {
             "lang": "Node",
-            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https:/api.directx.ca/orders/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/order/1000/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
           },
           {
             "lang": "JavaScript",
-            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https:/api.directx.ca/orders/12345\");\n\nxhr.send(data);"
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/order/1000/12345\");\n\nxhr.send(data);"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nurl = \"https:/api.directx.ca/orders/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+            "source": "import requests\n\nurl = \"https://api.directx.ca/order/1000/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
           }
         ]
       }
@@ -280,19 +280,19 @@
         "x-codeSamples": [
           {
             "lang": "Curl",
-            "source": "curl --request GET \\\n  --url https:/api.directx.ca/orders/12345"
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/orders/12345"
           },
           {
             "lang": "Node",
-            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https:/api.directx.ca/orders/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orders/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
           },
           {
             "lang": "JavaScript",
-            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https:/api.directx.ca/orders/12345\");\n\nxhr.send(data);"
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orders/12345\");\n\nxhr.send(data);"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nurl = \"https:/api.directx.ca/orders/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+            "source": "import requests\n\nurl = \"https://api.directx.ca/orders/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
           }
         ]
       }
@@ -312,7 +312,8 @@
             "required": true,
             "description": "Account ID",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "exmaple":"12345"
             }
           },
           {
@@ -321,7 +322,8 @@
             "required": true,
             "description": "Job ID",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example" : "12345"
             }
           }
         ],
@@ -332,7 +334,25 @@
           "500": {
             "description": "Cannot find order info"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/zpl/1000/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/zpl/1000/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/zpl/1000/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/zpl/1000/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
       }
     },
     "/orderPhoto/{account}/{jobID}": {
@@ -350,7 +370,8 @@
             "required": true,
             "description": "Account ID",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example" : "1000"
             }
           },
           {
@@ -359,7 +380,8 @@
             "required": true,
             "description": "Job ID",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example" : "12345"
             }
           }
         ],
@@ -370,7 +392,25 @@
           "404": {
             "description": "Cannot find photos"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/orderPhoto/1000/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orderPhoto/1000/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orderPhoto/1000/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/orderPhoto/1000/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
       }
     },
     "/orderPhoto/{account}/{jobID}/{photoNumber}": {
@@ -388,7 +428,8 @@
             "required": true,
             "description": "Account ID",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example":"1000"
             }
           },
           {
@@ -397,7 +438,8 @@
             "required": true,
             "description": "Job ID",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "12345"
             }
           },
           {
@@ -406,7 +448,8 @@
             "required": true,
             "description": "Photo number",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example":"1"
             }
           }
         ],
@@ -417,7 +460,25 @@
           "404": {
             "description": "Cannot find photo"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/orderPhoto/1000/12345/1"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orderPhoto/1000/12345/1'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orderPhoto/1000/12345/1\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/orderPhoto/1000/12345/1\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
       }
     },
     "/orderSignature/{account}/{jobID}": {
@@ -435,7 +496,8 @@
             "required": true,
             "description": "Account ID",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "1000"
             }
           },
           {
@@ -444,7 +506,8 @@
             "required": true,
             "description": "Job ID",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example" : "12345"
             }
           }
         ],
@@ -455,7 +518,25 @@
           "404": {
             "description": "Not found"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/orderSignature/1000/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orderSignature/1000/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orderSignature/1000/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/orderSignature/1000/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
       }
     },
     "/barcode/{jobID}": {
@@ -473,7 +554,8 @@
             "required": true,
             "description": "Job ID",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example" : "12345"
             }
           }
         ],
@@ -481,7 +563,25 @@
           "200": {
             "description": "Operation complete, returns a picture of the barcode"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/barcode/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/barcode/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/barcode/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/barcode/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
       }
     },
     "/referenceFields/{account}": {
@@ -499,7 +599,8 @@
             "required": true,
             "description": "Account ID",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example" : "1111"
             }
           }
         ],
@@ -543,7 +644,25 @@
               }
             }
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/referenceFields/1111"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/referenceFields/1111'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/referenceFields/1111\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/referenceFields/1111\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
       }
     },
     "/referenceDropDown/{refID}": {
