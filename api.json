@@ -27,8 +27,42 @@
       "description": "API calls for shipments"
     },
     {
-      "name": "Sms",
-      "description": "Write SMS messages to send to clients"
+      "name": "Reference",
+      "description": "Editing Reference Fields"
+    },
+    {
+      "name": "Track",
+      "description": "Tracking job orders"
+    },
+    {
+      "name": "Misc",
+      "description": "Miscellaneous"
+    },
+    {
+      "name": "order_model",
+      "x-displayName": "Order Model",
+      "description": "<SchemaDefinition schemaRef=\"#/definitions/Order\" />\n"
+    },
+
+  ],
+  "x-tagGroups": [
+    {
+      "name": "API References",
+      "tags": [
+        "Orders",
+        "Reference",
+        "Track",
+        "Misc"
+      ]
+    },
+    {
+      "name": "Models",
+      "tags": [
+        "order_model",
+        "template_definition",
+        "component_model",
+        "workspace_model"
+      ]
     }
   ],
 
