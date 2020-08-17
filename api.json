@@ -41,12 +41,12 @@
     {
       "name": "order_model",
       "x-displayName": "Order Model",
-      "description": "<SchemaDefinition schemaRef=\"#/definitions/Order\" />\n"
+      "description": "<SchemaDefinition schemaRef=\"#/components/Order\" />\n"
     },
     {
       "name": "address_model",
       "x-displayName": "Address Model",
-      "description": "<SchemaDefinition schemaRef=\"#/definitions/Address\" />\n"
+      "description": "<SchemaDefinition schemaRef=\"#/components/Address\" />\n"
     },
 
   ],
@@ -162,7 +162,7 @@
             "description": "Order info",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Order"
+              "$ref": "#/components/Order"
             }
           }
         ],
@@ -264,7 +264,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Order"
+              "$ref": "#/components/Order"
             }
           }
         }
@@ -293,7 +293,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref": "#/definitions/Order"
+                "$ref": "#/components/Order"
               }
 
             }
@@ -859,7 +859,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/Address"
+              "$ref": "#/components/Address"
             }
           }
         }
@@ -1171,7 +1171,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref": "#/definitions/Address"
+                "$ref": "#/components/Address"
               }
             }
           },
@@ -1225,7 +1225,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref": "#/definitions/Address"
+                "$ref": "#/components/Address"
               }
             }
           },
@@ -1421,7 +1421,7 @@
           "200": {
             "description" : "OK",
             "schema" : {
-              "$ref": "#/definitions/Address"
+              "$ref": "#/components/Address"
             }
           },
           "405": {
@@ -1516,7 +1516,7 @@
       }
     }
   },
-  "definitions": {
+  "components": {
     "Order": {
       "type": "object",
       "properties": {
