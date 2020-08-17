@@ -942,7 +942,8 @@
                   "newWeight": {
                     "type": "integer",
                     "format": "int32",
-                    "description": "Weight of package"
+                    "description": "Weight of package",
+                    "example" : 12
                   }
                 }
               }
@@ -959,19 +960,19 @@
         "x-codeSamples": [
           {
             "lang": "Curl",
-            "source": "curl --request GET \\\n  --url https://api.directx.ca/orderUpdateWeight/1000/12345"
+            "source": "curl --request PATCH \\\n  --url https://api.directx.ca/orderUpdateWeight/1000/12345 \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/json' \\\n --data '\"newWeight\":12'"
           },
           {
             "lang": "Node",
-            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orderUpdateWeight/1000/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'PATCH',\n  url: 'https://api.directx.ca/orderUpdateWeight/1000/12345',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '[\"newWeight\":12]',\n  json: true\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
           },
           {
             "lang": "JavaScript",
-            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orderUpdateWeight/1000/12345\");\n\nxhr.send(data);"
+            "source": "var data = JSON.stringify([\n  {\n    \"newWeight\": 12\n  }\n]);\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"PATCH\", \"https://api.directx.ca/orderUpdateWeight/1000/12345\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nurl = \"https://api.directx.ca/orderUpdateWeight/1000/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+            "source": "import requests\n\nurl = \"https://api.directx.ca/orderUpdateWeight/1000/12345\"\n\npayload = \"[{\\\"newWeight\\\":12]\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/json\"\n    }\n\nresponse = requests.request(\"PATCH\", url, data=payload, headers=headers)\n\nprint(response.text)"
           }
         ]
       }
