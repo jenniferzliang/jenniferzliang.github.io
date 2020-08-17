@@ -40,11 +40,6 @@
       "description": "Miscellaneous"
     },
     {
-      "name": "order_model",
-      "x-displayName": "Order Model",
-      "description": "<SchemaDefinition schemaRef=\"#/components/Order\" />\n"
-    },
-    {
       "name": "address_model",
       "x-displayName": "Address Model",
       "description": "<SchemaDefinition schemaRef=\"#/components/Address\" />\n"
