@@ -85,15 +85,18 @@
                 "properties": {
                   "phonenumber": {
                     "type": "string",
-                    "description": "Phone Number"
+                    "description": "Phone Number",
+                    "example": "1234567890" 
                   },
                   "trackingNumber": {
                     "type": "string",
-                    "description": "Tracking Number"
+                    "description": "Tracking Number",
+                    "12349872"
                   },
                   "url": {
                     "type": "string",
-                    "description": "Tracking URL"
+                    "description": "Tracking URL",
+                    "https://ship.directx.ca/1234567890"
                   }
                 }
               }
