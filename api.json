@@ -89,57 +89,70 @@
                   "properties": {
                     "companyID": {
                       "type": "integer",
-                      "description": "companyID"
+                      "description": "companyID",
+                      "example" : 1234
                     },
                     "jobID": {
                       "type": "string",
-                      "description": "jobID"
+                      "description": "jobID",
+                      "example" : "1111"
                     },
                     "foxJob": {
                       "type": "string",
-                      "description": "foxJob"
+                      "description": "foxJob",
+                      "example" : "12345"
                     },
                     "email_req": {
                       "type": "string",
                       "format": "email",
-                      "description": "Email"
+                      "description": "Email",
+                      "example" : "johndoe@example.com"
                     },
                     "email_addr": {
                       "type": "string",
                       "format": "email",
-                      "description": "email address"
+                      "description": "email address",
+                      "example" : "johndoe@example.com"
                     },
                     "ship_addressID": {
-                      "type": "string",
-                      "description": "Shipping Address ID"
+                      "type": "integer",
+                      "description": "Shipping Address ID",
+                      "example" : 10000
                     },
                     "trackingNumber": {
                       "type": "string",
-                      "description": "Tracking Number for users to track their package"
+                      "description": "Tracking Number for users to track their package",
+                      "example" : "1234567890"
                     },
                     "isEmailSent": {
                       "type": "integer",
-                      "description": "Number of emails sent"
+                      "description": "Number of emails sent",
+                      "example" : 1
                     },
                     "result": {
                       "type": "string",
-                      "description": "Result"
+                      "description": "Result",
+                      "example" : "Finished"
                     },
                     "returnJobID": {
                       "type": "string",
-                      "description": "Return jobID"
+                      "description": "Return jobID",
+                      "example" : "12345"
                     },
                     "returnTrackingNumber": {
                       "type": "string",
-                      "description": "Return tracking number"
+                      "description": "Return tracking number",
+                      "example" : "1234554321"
                     },
                     "returnFoxJob": {
                       "type": "string",
-                      "description": "Return foxJob"
+                      "description": "Return foxJob",
+                      "example" : "12345"
                     },
                     "returnResult": {
                       "type": "string",
-                      "description": "Return result"
+                      "description": "Return result",
+                      "example" : "Pending"
                     }
                   }
                 }
@@ -1583,13 +1596,13 @@
             "type": "integer",
             "format": "int64",
             "description": "Shipping Address ID",
-            "example" : 1111
+            "example" : 101
           },
           "conAddressID": {
             "type": "integer",
             "format": "int64",
             "description": "Consign Address ID",
-            "example" : 1111
+            "example" : 800
           },
           "del_inst": {
             "type": "string",
@@ -1651,12 +1664,14 @@
           "pieces": {
             "type": "integer",
             "format": "int32",
-            "description": "Number of packages"
+            "description": "Number of packages",
+            "example" : 2
           },
           "weight": {
             "type": "integer",
             "format": "int32",
-            "description": "Weight of package"
+            "description": "Weight of package",
+            "example" : 12
           },
           "packageType": {
             "type": "string",
@@ -1677,7 +1692,8 @@
           },
           "caller": {
             "type": "string",
-            "description": "Caller name"
+            "description": "Caller name",
+            "example" : "Jane"
           },
           "additionalEmail": {
             "type": "string",
@@ -1690,11 +1706,13 @@
               "baseRate": {
                 "type": "number",
                 "format": "double",
-                "description": "Return trip base rate"
+                "description": "Return trip base rate",
+                "example" : 2.33
               },
               "ser_time": {
                 "type": "integer",
-                "description": "Return trip service time"
+                "description": "Return trip service time",
+                "example" : 12
               },
               "dtdct": {
                 "type": "string",
@@ -1710,15 +1728,18 @@
         "properties": {
           "dbid": {
             "type": "string",
-            "description": "Database ID"
+            "description": "Database ID",
+            "example" : 1
           },
           "addressID": {
             "type": "string",
-            "description": "Address ID"
+            "description": "Address ID",
+            "example" : "000"
           },
           "companyName": {
             "type": "string",
-            "description": "Company name"
+            "description": "Company name",
+            "example" : "John's Store"
           },
           "suite": {
             "type": "string",
@@ -1726,27 +1747,33 @@
           },
           "address": {
             "type": "string",
-            "description": "Address Line"
+            "description": "Address Line",
+            "example" : "123 Main street"
           },
           "quad": {
             "type": "string",
-            "description": "Quad if there exists one (NE, SE, NW, SW)"
+            "description": "Quad if there exists one (NE, SE, NW, SW)",
+            "example" : "SW"
           },
           "city": {
             "type": "string",
-            "description": "City"
+            "description": "City",
+            "example" : "Calgary"
           },
           "prov": {
             "type": "string",
-            "description": "Province"
+            "description": "Province",
+            "example" : "Alberta"
           },
           "postal": {
             "type": "string",
-            "description": "Postal Code"
+            "description": "Postal Code",
+            "example" : "A2F4W3"
           },
           "country": {
             "type": "string",
-            "description": "Country"
+            "description": "Country",
+            "example" : "Canada"
           },
           "zone": {
             "type": "string",
@@ -1754,37 +1781,45 @@
           },
           "contact": {
             "type": "string",
-            "description": "Contact name"
+            "description": "Contact name",
+            "exmaple" : "John Doe"
           },
           "phone": {
             "type": "string",
-            "description": "Contact phone number"
+            "description": "Contact phone number",
+            "example" : "1234567890"
           },
           "lat": {
             "type": "number",
             "format": "float",
-            "description": "Latitude"
+            "description": "Latitude",
+            "example" : 12.23
           },
           "long": {
             "type": "number",
             "format": "float",
-            "description": "Longitude"
+            "description": "Longitude",
+            "example" : 40.21
           },
           "gpserror": {
             "type": "boolean",
-            "description": "Returns true if there is GPS error"
+            "description": "Returns true if there is GPS error",
+            "example" : false
           },
           "locationID": {
             "type": "string",
-            "description": "Location ID"
+            "description": "Location ID",
+            "example" : "0000"
           },
           "private": {
             "type": "boolean",
-            "description": "Returns true if address is private"
+            "description": "Returns true if address is private",
+            "example" : true
           },
           "custNo": {
             "type": "string",
-            "description": "Customer Number"
+            "description": "Customer Number",
+            "example" : "102"
           },
           "contactID": {
             "type": "number",
