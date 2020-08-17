@@ -40,10 +40,15 @@
       "description": "Miscellaneous"
     },
     {
+      "name": "order_model",
+      "x-displayName": "Order Model",
+      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Order\" />\n"
+    },
+    {
       "name": "address_model",
       "x-displayName": "Address Model",
-      "description": "<SchemaDefinition schemaRef=\"#/components/Address\" />\n"
-    }
+      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Address\" />\n"
+    },
 
   ],
   "x-tagGroups": [
@@ -59,6 +64,7 @@
     {
       "name": "Models",
       "tags": [
+        "order_model",
         "address_model"
       ]
     }
