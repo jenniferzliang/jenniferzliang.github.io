@@ -48,7 +48,7 @@
       "name": "address_model",
       "x-displayName": "Address Model",
       "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Address\" />\n"
-    },
+    }
 
   ],
   "x-tagGroups": [
