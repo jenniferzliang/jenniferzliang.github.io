@@ -83,7 +83,7 @@
             "description": "Invalid input"
           }
         },
-        "x-code-samples": [
+        "x-codeSamples": [
           {
             "lang": "Shell + Curl",
             "source": "curl --request GET \\\n  --url https://us1.pdfgeneratorapi.com/api/v3/templates \\\n  --header 'authorization: Bearer REPLACE_BEARER_TOKEN'"
