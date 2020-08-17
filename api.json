@@ -80,8 +80,6 @@
             "description": "Invalid input"
           }
         }
-
-        ]
       }
     },
     "/order": {
