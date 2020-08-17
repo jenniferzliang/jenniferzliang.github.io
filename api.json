@@ -222,7 +222,25 @@
               }
             }
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https:/api.directx.ca/order/1000/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https:/api.directx.ca/orders/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https:/api.directx.ca/orders/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https:/api.directx.ca/orders/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
       }
     },
     "/orders/{account}": {
@@ -258,7 +276,25 @@
               }
             }
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https:/api.directx.ca/orders/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https:/api.directx.ca/orders/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https:/api.directx.ca/orders/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https:/api.directx.ca/orders/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
       }
     },
     "/zpl/{account}/{jobID}": {
