@@ -18,7 +18,7 @@
   },
   "servers": [
     {
-      "url": "https://us1.pdfgeneratorapi.com/api/v3"
+      "url": "https://api.directx.ca"
     }
   ],
   "tags": [
@@ -82,7 +82,37 @@
           "405": {
             "description": "Invalid input"
           }
-        }
+        },
+        "x-code-samples": [
+          {
+            "lang": "Shell + Curl",
+            "source": "curl --request GET \\\n  --url https://us1.pdfgeneratorapi.com/api/v3/templates \\\n  --header 'authorization: Bearer REPLACE_BEARER_TOKEN'"
+          },
+          {
+            "lang": "Php + Curl",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, array(\n  CURLOPT_URL => \"https://us1.pdfgeneratorapi.com/api/v3/templates\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => array(\n    \"authorization: Bearer REPLACE_BEARER_TOKEN\"\n  ),\n));\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
+          },
+          {
+            "lang": "Csharp + Restsharp",
+            "source": "var client = new RestClient(\"https://us1.pdfgeneratorapi.com/api/v3/templates\");\nvar request = new RestRequest(Method.GET);\nrequest.AddHeader(\"authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
+          },
+          {
+            "lang": "Java + Unirest",
+            "source": "HttpResponse<String> response = Unirest.get(\"https://us1.pdfgeneratorapi.com/api/v3/templates\")\n  .header(\"authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .asString();"
+          },
+          {
+            "lang": "Node + Native",
+            "source": "var http = require(\"https\");\n\nvar options = {\n  \"method\": \"GET\",\n  \"hostname\": \"us1.pdfgeneratorapi.com\",\n  \"port\": null,\n  \"path\": \"/api/v3/templates\",\n  \"headers\": {\n    \"authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nvar req = http.request(options, function (res) {\n  var chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    var body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+          },
+          {
+            "lang": "Python + Python3",
+            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"us1.pdfgeneratorapi.com\")\n\nheaders = { 'authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/v3/templates\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+          },
+          {
+            "lang": "Ruby + Native",
+            "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://us1.pdfgeneratorapi.com/api/v3/templates\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
+          }
+        ]
       },
       "security": [
         {
