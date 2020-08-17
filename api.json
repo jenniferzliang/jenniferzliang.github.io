@@ -1577,34 +1577,41 @@
           "account": {
             "type": "string",
             "maxLength": 10,
-            "description": "Account ID"
+            "description": "Account ID",
+            "example" : "1111"
           },
           "shipAddressID": {
             "type": "integer",
             "format": "int64",
-            "description": "Shipping Address ID"
+            "description": "Shipping Address ID",
+            "example" : 1111
           },
           "conAddressID": {
             "type": "integer",
             "format": "int64",
-            "description": "Consign Address ID"
+            "description": "Consign Address ID",
+            "example" : 1111
           },
           "del_inst": {
             "type": "string",
-            "description": "Deliver Instruction"
+            "description": "Deliver Instruction",
+            "example" : "Leave at door"
           },
           "cust_ref": {
             "type": "string",
-            "description": "Customer Reference"
+            "description": "Customer Reference",
+            "example" : "John Doe"
           },
           "checkedEmail": {
             "type": "boolean",
-            "description": "True if email is checked"
+            "description": "True if email is checked",
+            "example" : true
           },
           "deliveryEmail": {
             "type": "string",
             "format": "email",
-            "description": "Delivery Email"
+            "description": "Delivery Email",
+            "example" : "johndoe@example.com"
           },
           "rate": {
             "type": "object",
@@ -1612,15 +1619,18 @@
               "baseRate": {
                 "type": "number",
                 "format": "double",
-                "description": "Base Rate charges"
+                "description": "Base Rate charges",
+                "example" : 3.00
               },
               "ser_time": {
                 "type": "integer",
-                "description": "Service time"
+                "description": "Service time",
+                "example" : 10
               },
               "ser_area": {
                 "type": "string",
-                "description": "Service area"
+                "description": "Service area",
+                "example" : "S"
               },
               "dtdct": {
                 "type": "string",
