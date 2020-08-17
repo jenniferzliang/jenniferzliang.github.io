@@ -178,7 +178,7 @@
           },
           {
             "lang": "Python",
-            "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.directx.ca\")\n\nheaders = { 'authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/v3/templates\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
+            "source": "import requests\n\nurl = \"https://api.directx.ca/order\"\n\npayload = \"{\\\"account\\\": \\\"1111\\\",\\\"shipAddressID\\\": 1111,\\\"conAddressID\\\": 1111,\\\"del_inst\\\": \\\"Leave at door\\\",\\\"cust_ref\\\": \\\"John Doe\\\",\\\"checkedEmail\\\": true,\\\"deliveryEmail\\\": \\\"johndoe@example.com\\\",\\\"rate\\\": {\\\"baseRate\\\": 3,\\\"ser_time\\\": 10,\\\"ser_area\\\": \\\"S\\\",\\\"dtdct\\\": \\\"2019-08-24T14:15:22Z\\\",\\\"dtCallIn\\\": \\\"2019-08-24T14:15:22Z\\\"},\\\"email\\\": \\\"user@example.com\\\",\\\"pieces\\\": 0,\\\"weight\\\": 0,\\\"packageType\\\": \\\"Envelope\\\",\\\"caller\\\": \\\"string\\\",\\\"additionalEmail\\\": \\\"user@example.com\\\",\\\"returnTripServic\\\": {\\\"baseRate\\\": 0,\\\"ser_time\\\": 0,\\\"dtdct\\\": \\\"2019-08-24T14:15:22Z\\\"}}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
           }
         ]
       }
