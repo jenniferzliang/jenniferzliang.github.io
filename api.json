@@ -43,6 +43,11 @@
       "x-displayName": "Order Model",
       "description": "<SchemaDefinition schemaRef=\"#/definitions/Order\" />\n"
     },
+    {
+      "name": "address_model",
+      "x-displayName": "Address Model",
+      "description": "<SchemaDefinition schemaRef=\"#/definitions/Address\" />\n"
+    },
 
   ],
   "x-tagGroups": [
@@ -59,9 +64,7 @@
       "name": "Models",
       "tags": [
         "order_model",
-        "template_definition",
-        "component_model",
-        "workspace_model"
+        "address_model"
       ]
     }
   ],
