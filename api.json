@@ -6,10 +6,10 @@
     "title": "DirectIt API",
     "description": "Information on using the endpoints can be found here:",
     "x-logo": {
-      "url": "https://pdfgeneratorapi.com/assets/web/images/logo_and_text_white.png",
+      "url": "https://ship.directx.ca/img/DirectItGroup_logo.png",
       "backgroundColor": "#3F46AD",
-      "altText": "PDF Generator API",
-      "href": "https://docs.pdfgeneratorapi.com"
+      "altText": "West DirectIt API",
+      "href": "https://api.directx.ca/docs"
     }
   },
   "tags": [
@@ -180,7 +180,6 @@
             "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.directx.ca/api/v3/templates\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
-      }
       }
     },
     "/order/{account}/{jobID}": {
