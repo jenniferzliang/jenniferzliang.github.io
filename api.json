@@ -59,7 +59,6 @@
     {
       "name": "Models",
       "tags": [
-        "order_model",
         "address_model"
       ]
     }
