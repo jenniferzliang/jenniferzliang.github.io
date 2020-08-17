@@ -1,15 +1,11 @@
 {
-  "openapi": "3.0.3",
+  "swagger": "2.0",
   "info": {
-    "version": "1.2.0",
-    "title": "West Direct RESTful API",
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
-    },
-    "description": "API calls for clients"
+    "version": "1.1.0",
+    "title": "DirectIt API",
+    "description": "Information on using the endpoints can be found here:"
   },
-  "host": "api.directx.ca/",
+  "host": "api.directx.ca",
   "basePath": "/",
   "tags": [
     {
@@ -22,6 +18,7 @@
     }
   ],
   "schemes": [
+    "https",
     "http"
   ],
   "consumes": [
@@ -40,14 +37,6 @@
         "summary": "Send a message",
         "description": "",
         "operationId": "sendSMS",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
@@ -80,7 +69,12 @@
             "description": "Invalid input"
           }
         }
-      }
+      },
+      "security": [
+        {
+          "api_key": []
+        }
+      ]
     },
     "/order": {
       "post": {
@@ -108,45 +102,58 @@
               "type": "object",
               "properties" : {
                 "companyID" : {
-                  "type" : "integer"
+                  "type" : "integer",
+                  "description" : "companyID"
                 },
                 "jobID" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "jobID"
                 },
                 "foxJob" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "foxJob"
                 },
                 "email_req" : {
                   "type" : "string",
-                  "format" : "email"
+                  "format" : "email",
+                  "description" : "Email"
                 },
                 "email_addr" : {
                   "type" : "string",
-                  "format" : "email"
+                  "format" : "email",
+                  "description" : "email address"
                 },
                 "ship_addressID" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "Shipping Address ID"
                 },
                 "trackingNumber" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "Tracking Number for users to track their package"
                 },
                 "isEmailSent" : {
-                  "type" : "integer"
+                  "type" : "integer",
+                  "description" : "Number of emails sent"
                 },
                 "result" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "Result"
                 },
                 "returnJobID" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "Return jobID"
                 },
                 "returnTrackingNumber" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "Return tracking number"
                 },
                 "returnFoxJob" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "Return foxJob"
                 },
                 "returnResult" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "Return result"
                 }
                 
               }
@@ -190,42 +197,6 @@
             }
           }
         }
-      },
-      "delete": {
-        "tags": [
-          "Orders"
-        ],
-        "summary": "Delete order",
-        "description": "Delete order by account ID and job ID",
-        "operationId": "deleteOrder",
-        "parameters": [
-          {
-            "name": "account",
-            "in": "path",
-            "required": true,
-            "description": "Account ID",
-            "type": "string"
-          },
-          {
-            "name": "jobID",
-            "in": "path",
-            "required": true,
-            "description": "Job ID",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200" : {
-            "description" : "OK"
-          },
-          "400": {
-            "description": "Invalid account ID supplied"
-          },
-          "404": {
-            "description": "Order not found"
-          }
-        },
-        "deprecated" : true
       }
     },
     "/orders/{account}": {
@@ -241,7 +212,7 @@
             "name": "account",
             "in": "path",
             "required": true,
-            "description": "",
+            "description": "Account ID",
             "type": "string"
           }
         ],
@@ -455,22 +426,28 @@
                 "type" : "object",
                 "properties" : {
                   "refID": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description" : "Reference ID"
                   },
                   "typeDesc": {
-                    "type": "string"
+                    "type": "string",
+                    "description" : "Description"
                   },
                   "label": {
-                    "type": "string"
+                    "type": "string",
+                    "description" : "Label"
                   },
                   "maxLen": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description" : "Maximum length"
                   },
                   "defaultValue": {
-                    "type": "string"
+                    "type": "string",
+                    "description" : "Default Value"
                   },
                   "required": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description" : "Required"
                   }
                 }
               }
@@ -505,7 +482,8 @@
                 "type" : "object",
                 "properties" : {
                   "ddvalue" : {
-                    "type" : "string"
+                    "type" : "string",
+                    "description" : "Drop down value"
                   }
                 }
               }
@@ -522,20 +500,15 @@
         "summary": "Post reference fields",
         "description": "Create new reference fields",
         "operationId": "postReferenceFields",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
             "name": "body",
             "description": "Reference field info",
-            "required": true,
+            "required": [
+              "jobID",
+              "reference"
+            ],
             "schema": {
               "properties": {
                 "jobID": {
@@ -599,29 +572,37 @@
                 "type" : "object",
                 "properties" : {
                   "ORDER" :{
-                    "type" : "integer"
+                    "type" : "integer",
+                    "description" : "Order ID"
                   },
                   "TIMESTAMP" :{
                     "type": "string",
-                    "format":"date-time"
+                    "format":"date-time",
+                    "description" : "Time Stamp"
                   },
                   "color" :{
-                    "type" : "string"
+                    "type" : "string",
+                    "description" : "Color"
                   },
                   "filled" :{
-                    "type" : "boolean"
+                    "type" : "boolean",
+                    "description" : "Filled status"
                   },
                   "POSITION" :{
-                    "type" : "string"
+                    "type" : "string",
+                    "description" : "Position"
                   },
                   "inclTime" :{
-                    "type" : "boolean"
+                    "type" : "boolean",
+                    "description" : "Include time"
                   },
                   "bigText" :{
-                    "type" : "string"
+                    "type" : "string",
+                    "description" : "Big text"
                   },
                   "smallText" :{
-                    "type" : "string"
+                    "type" : "string",
+                    "description" : "Small Text"
                   }
                 }
               }
@@ -655,37 +636,46 @@
               "properties" :{
                 "slat" : {
                   "type" : "number",
-                  "format" : "float"
+                  "format" : "float",
+                  "description" : "Start latitude"
                 },
                 "slong" : {
                   "type" : "number",
-                  "format" : "float"
+                  "format" : "float",
+                  "description" : "Start longitude"
                 },
                 "clat" : {
                   "type" : "number",
-                  "format" : "float"
+                  "format" : "float",
+                  "description" : "Current latitude"
                 },
                 "clong" : {
                   "type" : "number",
-                  "format" : "float"
+                  "format" : "float",
+                  "description" : "Current longitude"
                 },
                 "last_driv" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "Last Driver"
                 },
                 "TripLat" : {
                   "type" : "number",
-                  "format" : "float"
+                  "format" : "float",
+                  "description" : "Trip Latitude"
                 },
                 "TripLong" : {
                   "type" : "number",
-                  "format" : "float"
+                  "format" : "float",
+                  "description" : "Trip Longitude"
                 },
                 "TripTimeUTC" : {
                   "type" : "string",
-                  "format" : "date-time"
+                  "format" : "date-time",
+                  "description" : "Trip Time in UTC"
                 },
                 "TripLocation" : {
-                  "type" : "string"
+                  "type" : "string",
+                  "description" : "Trip Location"
                 },
                 "DriverLat" : {
                   "type" : "number",
@@ -731,14 +721,6 @@
         "summary": "Update weight",
         "description": "",
         "operationId": "orderUpdateWeight",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
         "parameters": [
           {
             "name": "account",
@@ -831,7 +813,37 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type":"object",
+                "properties" : {
+                  "username": {
+                    "type": "string",
+                    "description" : "Username"
+                  },
+                  "emailAddress": {
+                    "type" : "string",
+                    "format" : "email",
+                    "description" : "Email"
+                  },
+                  "sendNotification": {
+                    "type" : "boolean",
+                    "description" : "Subscribed to notifications"
+                  },
+                  "LastDate": {
+                    "type" : "string",
+                    "format" : "date-time",
+                    "description" : "Last date used"
+                  },
+                  "tripCount": {
+                    "type" : "integer",
+                    "description" : "Number of trips"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -855,7 +867,26 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "object",
+                  "properties" : {
+                    "accountName": {
+                      "type" : "string",
+                      "description" : "Name of account"
+                    },
+                    "account" : {
+                      "type" : "string",
+                      "description" : "Account ID"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -868,14 +899,6 @@
         "summary": "Login Token",
         "description": "",
         "operationId": "loginToken",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
@@ -885,15 +908,154 @@
             "schema": {
               "properties": {
                 "sso_token": {
-                  "type": "string"
+                  "type": "string",
+                  "description" : "SSO Token for login"
                 }
               }
             }
           }
         ],
         "responses": {
+          "401" : {
+            "description" : "sso_token not found"
+          },
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema" : {
+              "properties" : {
+                "message": {
+                  "type" : "string",
+                  "description" : "Message: Login successful!"
+                },
+                "preferences": {
+                  "properties" :{
+                    "email_Req": {
+                      "type" : "string"
+                    },
+                    "CompanyID": {
+                      "type" : "integer"
+                    },
+                    "email_addr": {
+                      "type" : "string",
+                      "format" : "email"
+                    },
+                    "ship_addressID": {
+                      "type" : "string"
+                    },
+                    "phone": {
+                      "type" : "string"
+                    },
+                    "groupID": 76,
+                    "openTime": {
+                      "type" : "string"
+                    },
+                    "closeTime": {
+                      "type" : "string"
+                    }
+                  }
+                },
+                "userReal": {
+                  "properties" : {
+                    "ACCOUNT": {
+                      "type" : "string"
+                    },
+                    "SHIPPER": {
+                      "type" : "string"
+                    },
+                    "ADDRESS": {
+                      "type" : "string"
+                    },
+                    "LOCATION": {
+                      "type" : "string"
+                    },
+                    "CITY": {
+                      "type" : "string"
+                    },
+                    "POSTAL": {
+                      "type" : "string"
+                    },
+                    "PHONE": {
+                      "type" : "string"
+                    },
+                    "CALLER": {
+                      "type" : "string"
+                    },
+                    "FAX": {
+                      "type" : "string"
+                    },
+                    "SURCHARGE": {
+                      "type" : "number"
+                    },
+                    "PASSWORD": {
+                      "type" : "string"
+                    },
+                    "accountID": {
+                      "type" : "number"
+                    },
+                    "addressID": {
+                      "type" : "string"
+                    },
+                    "HasInvoicePassword": {
+                      "type" : "integer"
+                    },
+                    "referenceRequired": {
+                      "type" : "boolean"
+                    }
+
+                  }
+                  
+                },
+                "user": {
+                  "properties" : {
+                    "user_name": {
+                      "type" : "string"
+                    },
+                    "accountNumber": {
+                      "type" : "string"
+                    },
+                    "groupID": {
+                      "type" : "integer"
+                    },
+                    "HasInvoicePassword": {
+                      "type" : "integer"
+                    },
+                    "referenceRequired": {
+                      "type" : "boolean"
+                    },
+                    "address": {
+                      "properties" : {
+                        "addressID": {
+                          "type" : "string"
+                        },
+                        "companyName": {
+                          "type" : "string"
+                        },
+                        "address": {
+                          "type" : "string"
+                        },
+                        "city": {
+                          "type" : "string"
+                        },
+                        "postalCode": {
+                          "type" : "string"
+                        },
+                        "phone": {
+                          "type" : "string"
+                        },
+                        "HasGPS": {
+                          "type" : "boolean"
+                        }
+                      }
+                    },
+                    "email": {
+                      "type" : "string",
+                      "format" : "email"
+                    }
+                  }
+                }
+              }
+              
+            }
           },
           "405": {
             "description": "Invalid input"
@@ -909,14 +1071,6 @@
         "summary": "Search address",
         "description": "Returns top ten address in the database matching search parameters",
         "operationId": "topAddress",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "path",
@@ -934,7 +1088,7 @@
               "properties": {
                 "$": {
                   "type": "string",
-                  "description": "address"
+                  "description": "Address search query"
                 }
               }
             }
@@ -942,7 +1096,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref": "#/definitions/Address"
+              }
+            }
           },
           "405": {
             "description": "Invalid input"
@@ -958,39 +1118,31 @@
         "summary": "Expand Address",
         "description": "",
         "operationId": "expandAddress",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "path",
             "name": "account",
-            "description":"accountID",
+            "description":"Account ID",
             "required":true,
             "type":"string"
           },
           {
             "in": "path",
             "name": "skip",
-            "description":"accountID",
+            "description":"Number of search results to skip",
             "required":true,
             "type":"integer"
           },
           {
             "in": "body",
             "name": "body",
-            "description": "Adress Info",
+            "description": "Address Info",
             "required": true,
             "schema": {
               "properties": {
                 "$": {
                   "type": "string",
-                  "description": "address"
+                  "description": "Address search query"
                 }
               }
             }
@@ -998,7 +1150,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref": "#/definitions/Address"
+              }
+            }
           },
           "405": {
             "description": "Invalid input"
@@ -1014,14 +1172,6 @@
         "summary": "Add contact",
         "description": "Create new contact",
         "operationId": "addContact",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
@@ -1064,14 +1214,6 @@
         "summary": "Create user email",
         "description": "",
         "operationId": "postUserEmails",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
@@ -1101,7 +1243,20 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema" : {
+              "properties" : {
+                "message" : {
+                  "type" : "string"
+                },
+                "data" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
           },
           "405": {
             "description": "Invalid input"
@@ -1117,62 +1272,72 @@
         "summary": "Create address",
         "description": "Create new address to the database. Must be a valid address.",
         "operationId": "address",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
             "name": "body",
             "description": "Address info",
-            "required": true,
+            "required":true,
             "schema": {
               "properties": {
                 "accountNumber": {
-                  "type": "string"
+                  "type": "string",
+                  "required":true
                 },
                 "address": {
                   "type": "object",
                   "properties": {
                     "companyName": {
-                      "type": "string"
+                      "type": "string",
+                      "description" : "Company Name",
+                      "required":true
                     },
                     "suite": {
-                      "type": "string"
+                      "type": "string",
+                      "description" : "Address suite"
                     },
                     "address": {
-                      "type": "string"
+                      "type": "string",
+                      "description" : "Address line",
+                      "required":true
                     },
                     "quad": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "Quad if there exists one (NE, SE, NW, SW)"
                     },
                     "city": {
-                      "type": "string"
+                      "type": "string",
+                      "description" : "City",
+                      "required":true
                     },
                     "prov": {
-                      "type": "string"
+                      "type": "string",
+                      "description" : "Province",
+                      "required":true
                     },
                     "postal": {
-                      "type": "string"
+                      "type": "string",
+                      "description" : "Postal code",
+                      "required":true
                     },
                     "country": {
-                      "type": "string"
+                      "type": "string",
+                      "description" : "Country",
+                      "required":true
                     },
                     "phone": {
-                      "type": "string"
+                      "type": "string",
+                      "description" : "Phone number"
                     },
                     "lat": {
                       "type": "number",
-                      "format": "float"
+                      "format": "float",
+                      "description" : "Latitude"
                     },
                     "long": {
                       "type": "number",
-                      "format": "float"
+                      "format": "float",
+                      "description" : "Longitude"
                     }
                   }
                   
@@ -1202,14 +1367,6 @@
         "summary": "Create order call",
         "description": "",
         "operationId": "orderCall",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "path",
@@ -1257,14 +1414,6 @@
         "summary": "Get invoice password",
         "description": "Retrive invoice password for an account",
         "operationId": "invoicePassword",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
         "parameters": [
           {
             "in": "body",
@@ -1274,10 +1423,12 @@
             "schema": {
               "properties": {
                 "accountNumber": {
-                  "type": "string"
+                  "type": "string",
+                  "required": true
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "required": true
                 }
               }
             }
@@ -1314,38 +1465,47 @@
           "description": "Consign Address ID"
         },
         "del_inst": {
-          "type": "string"
+          "type": "string",
+          "description": "Deliver Instruction"
         },
         "cust_ref": {
-          "type": "string"
+          "type": "string",
+          "description": "Customer Reference"
         },
         "checkedEmail": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "True if email is checked"
         },
         "deliveryEmail": {
           "type": "string",
-          "format":"email"
+          "format":"email",
+          "description": "Delivery Email"
         },
         "rate" : {
           "type": "object",
           "properties": {
             "baseRate": {
               "type":"number",
-              "format":"double"
+              "format":"double",
+              "description": "Base Rate charges"
             },
             "ser_time": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Service time"
             },
             "ser_area": {
-              "type": "string"
+              "type": "string",
+              "description": "Service area"
             },
             "dtdct": {
               "type": "string",
-              "format":"date-time"
+              "format":"date-time",
+              "description": "Deliver Time"
             },
             "dtCallIn": {
               "type": "string",
-              "format":"date-time"
+              "format":"date-time",
+              "description": "Deliver Time Call In"
             }
           }
         },
@@ -1366,175 +1526,135 @@
         },
         "packageType": {
           "type": "string",
-          "maxLength" : 40
+          "description": "Type of package",
+          "enum" : [
+            "Envelope",
+            "Package",
+            "Box",
+            "Skid",
+            "Roll",
+            "Binder",
+            "Book",
+            "Drycleaning",
+            "Flowers",
+            "Bag",
+            "Other"
+          ]
         },
         "caller": {
           "type": "string",
-          "description": "Caller"
+          "description": "Caller name"
         },
         "additionalEmail": {
           "type": "string",
-          "format":"email"
+          "format":"email",
+          "description": "Additional email"
         },
         "returnTripService" : {
           "type": "object",
           "properties": {
             "baseRate": {
               "type":"number",
-              "format":"double"
+              "format":"double",
+              "description": "Return trip base rate"
             },
             "ser_time": {
-              "type": "integer"
+              "type": "integer",
+              "description": "Return trip service time"
             },
             "dtdct": {
               "type": "string",
-              "format":"date-time"
+              "format":"date-time",
+              "description": "Return trip delivery time"
             }
           }
         }
-      },
-      "xml": {
-        "name": "Order"
-      }
-    },
-    "Category": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "Category"
-      }
-    },
-    "User": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "username": {
-          "type": "string"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string",
-          "format" : "email"
-        },
-        "password": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "userStatus": {
-          "type": "integer",
-          "format": "int32",
-          "description": "User Status"
-        }
-      },
-      "xml": {
-        "name": "User"
-      }
-    },
-    "Tag": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "Tag"
       }
     },
     "Address": {
       "type": "object",
-      "required": [
-        "companyName",
-        "address",
-        "city",
-        "prov",
-        "postal",
-        "country"
-      ],
       "properties": {
         "dbid" : {
-          "type" : "string"
+          "type" : "string",
+          "description": "Database ID"
         },
         "addressID" : {
-          "type" : "string"
+          "type" : "string",
+          "description": "Address ID"
         },
         "companyName": {
-          "type": "string"
+          "type": "string",
+          "description": "Company name"
         },
         "suite": {
-          "type": "string"
+          "type": "string",
+          "description": "Address Suite"
         },
         "address": {
-          "type": "string"
+          "type": "string",
+          "description": "Address Line"
         },
         "quad": {
-          "type": "string"
+          "type": "string",
+          "description": "Quad if there exists one (NE, SE, NW, SW)"
         },
         "city": {
-          "type": "string"
+          "type": "string",
+          "description": "City"
         },
         "prov": {
-          "type": "string"
+          "type": "string",
+          "description": "Province"
         },
         "postal": {
-          "type": "string"
+          "type": "string",
+          "description": "Postal Code"
         },
         "country": {
-          "type": "string"
+          "type": "string",
+          "description": "Country"
         },
         "zone": {
-          "type": "string"
+          "type": "string",
+          "description": "Delivery Zone"
         },
         "contact": {
-          "type": "string"
+          "type": "string",
+          "description": "Contact name"
         },
         "phone": {
-          "type": "string"
+          "type": "string",
+          "description": "Contact phone number"
         },
         "lat": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Latitude"
         },
         "long": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Longitude"
         },
-        "gpderror": {
-          "type" : "boolean"
+        "gpserror": {
+          "type" : "boolean",
+          "description": "Returns true if there is GPS error"
         },
         "locationID": {
-          "type": "string"
+          "type": "string",
+          "description": "Location ID"
         },
         "private": {
-          "type" : "boolean"
+          "type" : "boolean",
+          "description": "Returns true if address is private"
         },
         "custNo": {
-          "type": "string"
+          "type": "string",
+          "description": "Customer Number"
         },
         "contactID": {
-          "type": "number"
+          "type": "number",
+          "description": "Contact ID"
         },
         "cnt": {
           "type": "number"
@@ -1556,12 +1676,10 @@
         },
         "LastDate": {
           "type" : "string",
-          "format":"date-time"
+          "format":"date-time",
+          "description": "Last Date Used"
         }
         
-      },
-      "xml": {
-        "name": "Address"
       }
     },
     "ApiResponse": {
@@ -1581,8 +1699,15 @@
     }
   },
 
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
   "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
+    "description": "DirectIt developer API documentation",
+    "url": "https://api.directx.ca/documentation"
   }
 }
