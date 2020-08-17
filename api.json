@@ -193,22 +193,10 @@
         "operationId": "getOrder",
         "parameters": [
           {
-            "name": "account",
-            "in": "path",
-            "required": true,
-            "description": "Account ID",
-            "schema": {
-              "type": "string"
-            }
+            "$ref" : "#/components/parameters/account"
           },
           {
-            "name": "jobID",
-            "in": "path",
-            "required": true,
-            "description": "Job ID",
-            "schema": {
-              "type": "string"
-            }
+            "$ref" : "#/components/parameters/jobID"
           }
         ],
         "responses": {
@@ -253,13 +241,7 @@
         "operationId": "getOrders",
         "parameters": [
           {
-            "name": "account",
-            "in": "path",
-            "required": true,
-            "description": "Account ID",
-            "schema": {
-              "type": "string"
-            }
+            "$ref" : "#/components/parameters/account"
           }
         ],
         "responses": {
@@ -307,24 +289,10 @@
         "operationId": "zpl",
         "parameters": [
           {
-            "name": "account",
-            "in": "path",
-            "required": true,
-            "description": "Account ID",
-            "schema": {
-              "type": "string",
-              "exmaple":"12345"
-            }
+            "$ref" : "#/components/parameters/account"
           },
           {
-            "name": "jobID",
-            "in": "path",
-            "required": true,
-            "description": "Job ID",
-            "schema": {
-              "type": "string",
-              "example" : "12345"
-            }
+            "$ref" : "#/components/parameters/jobID"
           }
         ],
         "responses": {
@@ -365,24 +333,10 @@
         "operationId": "orderPhoto",
         "parameters": [
           {
-            "name": "account",
-            "in": "path",
-            "required": true,
-            "description": "Account ID",
-            "schema": {
-              "type": "string",
-              "example" : "1000"
-            }
+            "$ref" : "#/components/parameters/account"
           },
           {
-            "name": "jobID",
-            "in": "path",
-            "required": true,
-            "description": "Job ID",
-            "schema": {
-              "type": "string",
-              "example" : "12345"
-            }
+            "$ref" : "#/components/parameters/jobID"
           }
         ],
         "responses": {
@@ -423,24 +377,10 @@
         "operationId": "orderPhotoByNumber",
         "parameters": [
           {
-            "name": "account",
-            "in": "path",
-            "required": true,
-            "description": "Account ID",
-            "schema": {
-              "type": "string",
-              "example":"1000"
-            }
+            "$ref" : "#/components/parameters/account"
           },
           {
-            "name": "jobID",
-            "in": "path",
-            "required": true,
-            "description": "Job ID",
-            "schema": {
-              "type": "string",
-              "example": "12345"
-            }
+            "$ref" : "#/components/parameters/jobID"
           },
           {
             "name": "photoNumber",
@@ -491,24 +431,10 @@
         "operationId": "orderSignature",
         "parameters": [
           {
-            "name": "account",
-            "in": "path",
-            "required": true,
-            "description": "Account ID",
-            "schema": {
-              "type": "string",
-              "1000"
-            }
+            "$ref" : "#/components/parameters/account"
           },
           {
-            "name": "jobID",
-            "in": "path",
-            "required": true,
-            "description": "Job ID",
-            "schema": {
-              "type": "string",
-              "example" : "12345"
-            }
+            "$ref" : "#/components/parameters/jobID"
           }
         ],
         "responses": {
@@ -594,14 +520,7 @@
         "operationId": "referenceFields",
         "parameters": [
           {
-            "name": "account",
-            "in": "path",
-            "required": true,
-            "description": "Account ID",
-            "schema": {
-              "type": "string",
-              "example" : "1111"
-            }
+            "$ref" : "#/components/parameters/account"
           }
         ],
         "responses": {
@@ -946,22 +865,10 @@
         "operationId": "orderUpdateWeight",
         "parameters": [
           {
-            "name": "account",
-            "in": "path",
-            "required": true,
-            "description": "Account ID",
-            "schema": {
-              "type": "string"
-            }
+            "$ref" : "#/components/parameters/account"
           },
           {
-            "name": "jobID",
-            "in": "path",
-            "required": true,
-            "description": "Job ID",
-            "schema": {
-              "type": "string"
-            }
+            "$ref" : "#/components/parameters/jobID"
           }
         ],
         "requestBody": {
@@ -998,13 +905,7 @@
         "operationId": "getAddressByID",
         "parameters": [
           {
-            "name": "account",
-            "in": "path",
-            "required": true,
-            "description": "Account ID",
-            "schema": {
-              "type": "string"
-            }
+            "$ref" : "#/components/parameters/account"
           },
           {
             "name": "addressID",
@@ -1012,7 +913,7 @@
             "required": true,
             "description": "Address ID",
             "schema": {
-              "type": "string"
+              "type": "101"
             }
           }
         ],
@@ -1040,13 +941,7 @@
         "operationId": "getUserEmails",
         "parameters": [
           {
-            "name": "account",
-            "in": "path",
-            "required": true,
-            "description": "Account ID",
-            "schema": {
-              "type": "string"
-            }
+            "$ref" : "#/components/parameters/account"
           }
         ],
         "responses": {
@@ -1105,7 +1000,8 @@
             "required": true,
             "description": "Group ID",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example" : "1"
             }
           }
         ],
@@ -1322,13 +1218,7 @@
         "operationId": "topAddress",
         "parameters": [
           {
-            "in": "path",
-            "name": "account",
-            "description": "accountID",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref" : "#/components/parameters/account"
           }
         ],
         "requestBody": {
@@ -1377,13 +1267,7 @@
         "operationId": "expandAddress",
         "parameters": [
           {
-            "in": "path",
-            "name": "account",
-            "description": "Account ID",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref" : "#/components/parameters/account"
           },
           {
             "in": "path",
@@ -1635,22 +1519,10 @@
         "operationId": "orderCall",
         "parameters": [
           {
-            "in": "path",
-            "name": "account",
-            "description": "accountID",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref" : "#/components/parameters/account"
           },
           {
-            "in": "path",
-            "name": "job",
-            "description": "jobID",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
+            "$ref" : "#/components/parameters/jobID"
           }
         ],
         "requestBody": {
@@ -1992,22 +1864,32 @@
             "description": "Last Date Used"
           }
         }
-      },
-      "ApiResponse": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "type": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
       }
+    },
+    "parameters": {
+      "account": {
+        "name": "account",
+        "in": "path",
+        "description": "Template unique identifier",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "1000"
+        }
+      },
+      "jobID" : {
+        "name": "jobID",
+        "in": "path",
+        "required": true,
+        "description": "Job ID",
+        "schema": {
+          "type": "string",
+          "example" : "12345"
+        }
+        
+      }
+
     }
+
   }
 }
