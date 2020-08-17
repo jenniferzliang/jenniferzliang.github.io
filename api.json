@@ -165,31 +165,23 @@
         },
         "x-codeSamples": [
           {
-            "lang": "Shell + Curl",
-            "source": "curl --request GET \\\n  --url https://api.directx.ca/api/v3/templates \\\n  --header 'authorization: Bearer REPLACE_BEARER_TOKEN'"
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.dirextx.ca/order \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '{\"account\": \"1111\",\"shipAddressID\": 1111,\"conAddressID\": 1111,\"del_inst\": \"Leave at door\",\"cust_ref\": \"John Doe\",\"checkedEmail\": true,\"deliveryEmail\": \"johndoe@example.com\",\"rate\": {\"baseRate\": 3,\"ser_time\": 10,\"ser_area\": \"S\",\"dtdct\": \"2019-08-24T14:15:22Z\",\"dtCallIn\": \"2019-08-24T14:15:22Z\"},\"email\": \"user@example.com\",\"pieces\": 0,\"weight\": 0,\"packageType\": \"Envelope\",\"caller\": \"string\",\"additionalEmail\": \"user@example.com\",\"returnTripServic\": {\"baseRate\": 0,\"ser_time\": 0,\"dtdct\": \"2019-08-24T14:15:22Z\"}}'"
           },
           {
-            "lang": "Php + Curl",
-            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, array(\n  CURLOPT_URL => \"https://api.directx.ca/api/v3/templates\",\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => \"\",\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 30,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => \"GET\",\n  CURLOPT_HTTPHEADER => array(\n    \"authorization: Bearer REPLACE_BEARER_TOKEN\"\n  ),\n));\n\n$response = curl_exec($curl);\n$err = curl_error($curl);\n\ncurl_close($curl);\n\nif ($err) {\n  echo \"cURL Error #:\" . $err;\n} else {\n  echo $response;\n}"
-          },
-          {
-            "lang": "Csharp + Restsharp",
-            "source": "var client = new RestClient(\"https://api.directx.ca/api/v3/templates\");\nvar request = new RestRequest(Method.GET);\nrequest.AddHeader(\"authorization\", \"Bearer REPLACE_BEARER_TOKEN\");\nIRestResponse response = client.Execute(request);"
-          },
-          {
-            "lang": "Java + Unirest",
-            "source": "HttpResponse<String> response = Unirest.get(\"https://api.directx.ca/api/v3/templates\")\n  .header(\"authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .asString();"
-          },
-          {
-            "lang": "Node + Native",
+            "lang": "Node",
             "source": "var http = require(\"https\");\n\nvar options = {\n  \"method\": \"GET\",\n  \"hostname\": \"api.directx.ca\",\n  \"port\": null,\n  \"path\": \"/api/v3/templates\",\n  \"headers\": {\n    \"authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nvar req = http.request(options, function (res) {\n  var chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    var body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
           },
           {
-            "lang": "Python + Python3",
+            "lang": "JavaScript",
+            "source": "HttpResponse<String> response = Unirest.get(\"https://api.directx.ca/api/v3/templates\")\n  .header(\"authorization\", \"Bearer REPLACE_BEARER_TOKEN\")\n  .asString();"
+          },
+          {
+            "lang": "Python",
             "source": "import http.client\n\nconn = http.client.HTTPSConnection(\"api.directx.ca\")\n\nheaders = { 'authorization': \"Bearer REPLACE_BEARER_TOKEN\" }\n\nconn.request(\"GET\", \"/api/v3/templates\", headers=headers)\n\nres = conn.getresponse()\ndata = res.read()\n\nprint(data.decode(\"utf-8\"))"
           },
           {
-            "lang": "Ruby + Native",
+            "lang": "Ruby",
             "source": "require 'uri'\nrequire 'net/http'\nrequire 'openssl'\n\nurl = URI(\"https://api.directx.ca/api/v3/templates\")\n\nhttp = Net::HTTP.new(url.host, url.port)\nhttp.use_ssl = true\nhttp.verify_mode = OpenSSL::SSL::VERIFY_NONE\n\nrequest = Net::HTTP::Get.new(url)\nrequest[\"authorization\"] = 'Bearer REPLACE_BEARER_TOKEN'\n\nresponse = http.request(request)\nputs response.read_body"
           }
         ]
