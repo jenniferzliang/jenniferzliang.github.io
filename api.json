@@ -7,7 +7,7 @@
     "description": "Information on using the endpoints can be found here:",
     "x-logo": {
       "url": "https://ship.directx.ca/img/DirectItGroup_logo.png",
-      "backgroundColor": "#3F46AD",
+      "backgroundColor": "#000000",
       "altText": "West DirectIt API",
       "href": "https://api.directx.ca/docs"
     }
@@ -170,7 +170,7 @@
           },
           {
             "lang": "Node",
-            "source": "var http = require(\"https\");\n\nvar options = {\n  \"method\": \"GET\",\n  \"hostname\": \"api.directx.ca\",\n  \"port\": null,\n  \"path\": \"/api/v3/templates\",\n  \"headers\": {\n    \"authorization\": \"Bearer REPLACE_BEARER_TOKEN\"\n  }\n};\n\nvar req = http.request(options, function (res) {\n  var chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function () {\n    var body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n});\n\nreq.end();"
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',  url: 'https://api.directx.ca/order',  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '{\"account\": \"1111\",\"shipAddressID\": 1111,\"conAddressID\": 1111,\"del_inst\": \"Leave at door\",\"cust_ref\": \"John Doe\",\"checkedEmail\": true,\"deliveryEmail\": \"johndoe@example.com\",\"rate\": {\"baseRate\": 3,\"ser_time\": 10,\"ser_area\": \"S\",\"dtdct\": \"2019-08-24T14:15:22Z\",\"dtCallIn\": \"2019-08-24T14:15:22Z\"},\"email\": \"user@example.com\",\"pieces\": 0,\"weight\": 0,\"packageType\": \"Envelope\",\"caller\": \"string\",\"additionalEmail\": \"user@example.com\",\"returnTripServic\": {\"baseRate\": 0,\"ser_time\": 0,\"dtdct\": \"2019-08-24T14:15:22Z\"\n  }\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
           },
           {
             "lang": "JavaScript",
