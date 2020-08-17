@@ -4,13 +4,7 @@
   "info": {
     "version": "1.0.0",
     "title": "DirectIt API",
-    "description": "Information on using the endpoints can be found here:",
-    "x-logo": {
-      "url": "https://pdfgeneratorapi.com/assets/web/images/logo_and_text_white.png",
-      "backgroundColor": "#3F46AD",
-      "altText": "PDF Generator API",
-      "href": "https://docs.pdfgeneratorapi.com"
-    }
+    "description": "Information on using the endpoints can be found here:"
   },
   "host": "api.directx.ca",
   "basePath": "/",
