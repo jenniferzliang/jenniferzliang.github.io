@@ -31,16 +31,6 @@
       "description": "Write SMS messages to send to clients"
     }
   ],
-  "schemes": [
-    "https",
-    "http"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
 
   "paths": {
     "/sendSMS": {
