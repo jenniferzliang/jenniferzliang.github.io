@@ -166,7 +166,7 @@
         "x-codeSamples": [
           {
             "lang": "Curl",
-            "source": "curl --request POST \\\n  --url https://api.dirextx.ca/order \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '{\"account\": \"1111\",\"shipAddressID\": 1111,\"conAddressID\": 1111,\"del_inst\": \"Leave at door\",\"cust_ref\": \"John Doe\",\"checkedEmail\": true,\"deliveryEmail\": \"johndoe@example.com\",\"rate\": {\"baseRate\": 3,\"ser_time\": 10,\"ser_area\": \"S\",\"dtdct\": \"2019-08-24T14:15:22Z\",\"dtCallIn\": \"2019-08-24T14:15:22Z\"},\"email\": \"user@example.com\",\"pieces\": 0,\"weight\": 0,\"packageType\": \"Envelope\",\"caller\": \"string\",\"additionalEmail\": \"user@example.com\",\"returnTripServic\": {\"baseRate\": 0,\"ser_time\": 0,\"dtdct\": \"2019-08-24T14:15:22Z\"}}'"
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/order \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '{\"account\": \"1111\",\"shipAddressID\": 1111,\"conAddressID\": 1111,\"del_inst\": \"Leave at door\",\"cust_ref\": \"John Doe\",\"checkedEmail\": true,\"deliveryEmail\": \"johndoe@example.com\",\"rate\": {\"baseRate\": 3,\"ser_time\": 10,\"ser_area\": \"S\",\"dtdct\": \"2019-08-24T14:15:22Z\",\"dtCallIn\": \"2019-08-24T14:15:22Z\"},\"email\": \"user@example.com\",\"pieces\": 0,\"weight\": 0,\"packageType\": \"Envelope\",\"caller\": \"string\",\"additionalEmail\": \"user@example.com\",\"returnTripServic\": {\"baseRate\": 0,\"ser_time\": 0,\"dtdct\": \"2019-08-24T14:15:22Z\"}}'"
           },
           {
             "lang": "Node",
@@ -344,21 +344,7 @@
             "description": "Operation complete, returns a picture of the order"
           },
           "404": {
-            "description": "Cannot find photos",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error description",
-                      "example": "Picture not found"
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Cannot find photos"
           }
         },
         "x-codeSamples": [
@@ -412,21 +398,7 @@
             "description": "Operation complete, returns a picture of the order"
           },
           "404": {
-            "description": "Cannot find photos",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error description",
-                      "example": "Picture not found"
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Cannot find photo"
           }
         },
         "x-codeSamples": [
@@ -633,11 +605,14 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "ddvalue": {
-                        "type": "string",
-                        "description": "Drop down value"
+                    "type": "array",
+                    "items" : {
+                      "type": "object",
+                      "properties": {
+                        "ddvalue": {
+                          "type": "string",
+                          "description": "Drop down value"
+                        }
                       }
                     }
                   }
@@ -715,7 +690,25 @@
           "405": {
             "description": "Invalid input"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/postReferenceFields \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"jobID\": 12345,\"reference\": {\"refID\": 0,\"value\": 10}'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/postReferenceFields',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"jobID\": 12345,\"reference\": {\"refID\": 0,\"value\": 10}'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"jobID\": 12345,\"reference\": {\"refID\": 0,\"value\": 10}';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/postReferenceFields\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/postReferenceFields\"\n\npayload = \"{\\\"jobID\\\": 12345,\\\"reference\\\": {\\\"refID\\\": 0,\\\"value\\\": 10}}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
       }
     },
     "/track/{jobID}": {
@@ -1341,13 +1334,46 @@
               }
             }
           },
+
           "401": {
-            "description": "sso_token not found"
+            "description": "sso_token not found",
+             "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "description": "Error description",
+                        "example": "account not found"
+                      }
+                    }
+                  }
+                }
+              }
           },
           "405": {
             "description": "Invalid input"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/postReferenceFields \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"sso_token\": \"SSO_TOKEN\"'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/postReferenceFields',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"sso_token\": \"SSO_TOKEN\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"sso_token\": \"SSO_TOKEN\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/postReferenceFields\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/postReferenceFields\"\n\npayload = \"{\\\"sso_token\\\": \\\"SSO_TOKEN\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
       }
     },
     "/topAddress/{account}": {
@@ -1396,7 +1422,25 @@
           "405": {
             "description": "Invalid input"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/topAddress/1000 \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"$\": \"QUERY\"'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/topAddress/1000',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"$\": \"QUERY\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"$\": \"QUERY\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/topAddress/1000\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/topAddress/1000\"\n\npayload = \"{\\\"$\\\": \\\"QUERY\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
       }
     },
     "/expandAddress/{account}/{skip}": {
@@ -1454,7 +1498,25 @@
           "405": {
             "description": "Invalid input"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/expandAddress/1000/4 \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"$\": \"QUERY\"'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/expandAddress/1000/4',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"$\": \"QUERY\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"$\": \"QUERY\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/expandAddress/1000/4\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/expandAddress/1000/4\"\n\npayload = \"{\\\"$\\\": \\\"QUERY\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
       }
     },
     "/addContact": {
@@ -2012,7 +2074,7 @@
       "account": {
         "name": "account",
         "in": "path",
-        "description": "Template unique identifier",
+        "description": "Account ID",
         "required": true,
         "schema": {
           "type": "string",
