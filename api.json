@@ -2298,6 +2298,32 @@
           }
         }
       },
+      "error405": {
+        "description": "Not valid input",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "Entity not found",
+                    "Resource not found"
+                  ],
+                  "description": "Error description",
+                  "example": "Entity not found"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 405
+                }
+              }
+            }
+          }
+        }
+      },
       "error422": {
         "description": "Unprocessable Entity",
         "content": {
