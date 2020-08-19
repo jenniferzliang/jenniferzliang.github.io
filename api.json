@@ -1684,49 +1684,59 @@
                       "companyName": {
                         "type": "string",
                         "description": "Company Name",
-                        "example" : ""
+                        "example" : "DirectIT Group"
                       },
                       "suite": {
                         "type": "string",
-                        "description": "Address suite"
+                        "description": "Address suite",
+                        "example": "Unit 1"
                       },
                       "address": {
                         "type": "string",
-                        "description": "Address line"
+                        "description": "Address line",
+                        "example" : "100 Barclay Parade"
                       },
                       "quad": {
                         "type": "string",
-                        "description": "Quad if there exists one (NE, SE, NW, SW)"
+                        "description": "Quad if there exists one (NE, SE, NW, SW)",
+                        "example":"SW"
                       },
                       "city": {
                         "type": "string",
-                        "description": "City"
+                        "description": "City",
+                        "example":"Calgary"
                       },
                       "prov": {
                         "type": "string",
-                        "description": "Province"
+                        "description": "Province",
+                        "example":"AB"
                       },
                       "postal": {
                         "type": "string",
-                        "description": "Postal code"
+                        "description": "Postal code",
+                        "example":"T2P3E7"
                       },
                       "country": {
                         "type": "string",
-                        "description": "Country"
+                        "description": "Country",
+                        "example":"Canada"
                       },
                       "phone": {
                         "type": "string",
-                        "description": "Phone number"
+                        "description": "Phone number",
+                        "example":"1234567890"
                       },
                       "lat": {
                         "type": "number",
                         "format": "float",
-                        "description": "Latitude"
+                        "description": "Latitude",
+                        "example": 51.05246
                       },
                       "long": {
                         "type": "number",
                         "format": "float",
-                        "description": "Longitude"
+                        "description": "Longitude",
+                        "example" : -114.068443
                       }
                     }
                   }
@@ -1819,7 +1829,7 @@
           "Misc"
         ],
         "summary": "Get invoice password",
-        "description": "Retrive invoice password for an account",
+        "description": "Retrieve invoice password for an account",
         "operationId": "invoicePassword",
         "requestBody": {
           "content": {
@@ -1827,10 +1837,12 @@
               "schema": {
                 "properties": {
                   "accountNumber": {
-                    "type": "string"
+                    "type": "string",
+                    "example" : "1000"
                   },
                   "password": {
-                    "type": "string"
+                    "type": "string",
+                    "example" : "password123"
                   }
                 }
               }
