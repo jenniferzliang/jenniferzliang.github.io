@@ -4,7 +4,7 @@
   "info": {
     "version": "1.3.0",
     "title": "DirectIt API",
-    "description": "# Introduction\nDirectIT API allows users to access ________. This API reference is provides a reference to integrate your system to the DirectIT system. The API allows you to create, get, update and cancel orders.. \n\nYou can access to API tool for testing [here](https://api.directx.ca/api-docs) \n\n## Base URL\nThe base URL for all the API endpoints is `https://api.directx.ca`\n\nFor example\n* `https://api.directx.ca/orders/1000`\n* `https://api.directx.ca/zpl/1000/12345`\n* `https://api.directx.ca/referenceFields/1000`\n# Authentication\nDirectIT API uses __API Key__ for authorization. This API key is a special token that the client needs to provide when making API calls. The key is sent as a request header under the name __sso_token__.\nWhen authenticating to the DirectIT API, a sso token should be generated uniquely by a __server-side application__ and included as a __sso_token__ in the header of each request.\n\n## Accessing your SSO Token\nYou can retrieve a __SSO Token__ by entering your credentials and account info in the [generateLoginToken](#/Authentication/generateLoginToken) call. Your sso token will then be emailed to you.\n\n## Using SSO Token\nSSO Token are placed in the __header__\n\n\nProperty `sso_token` defines the token being used.\n```\n{\n  \"sso_token\": \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n\n",
+    "description": "# Introduction\nDirectIT API allows users to access ________. This API reference is provides a reference to integrate your system to the DirectIT system. The API allows you to create, get, update and cancel orders.. \n\nYou can access to API tool for testing [here](https://api.directx.ca/api-docs) \n\n## Base URL\nThe base URL for all the API endpoints is `https://api.directx.ca`\n\nFor example\n* `https://api.directx.ca/orders/1000`\n* `https://api.directx.ca/zpl/1000/12345`\n* `https://api.directx.ca/referenceFields/1000`\n# Authentication\nDirectIT API uses __API Key__ for authorization. This API key is a special token that the client needs to provide when making API calls. The key is sent as a request header under the name __apiKey__.\nWhen authenticating to the DirectIT API, a sso token should be generated uniquely by a __server-side application__ and included as a __apiKey__ in the header of each request.\n\n## Accessing your SSO Token\nYou can retrieve a __SSO Token__ by entering your credentials and account info in the [generateLoginToken](#/Authentication/generateLoginToken) call. Your sso token will then be emailed to you.\n\n## Using SSO Token\nSSO Token are placed in the __header__\n\n\nProperty `apiKey` defines the token being used.\n```\n{\n  \"apiKey\": \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n}\n```\n\n",
     "x-logo": {
       "url": "https://ship.directx.ca/img/DirectItGroup_logo.png",
       "backgroundColor": "#000000",
@@ -121,7 +121,7 @@
       "post": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -249,7 +249,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -302,7 +302,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -355,7 +355,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -404,7 +404,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -456,7 +456,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -515,7 +515,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -605,7 +605,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -687,7 +687,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -759,7 +759,7 @@
       "post": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -837,7 +837,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -925,7 +925,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -1054,7 +1054,7 @@
       "patch": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -1134,7 +1134,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -1199,7 +1199,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -1276,7 +1276,7 @@
       "get": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -1358,7 +1358,7 @@
             "application/json": {
               "schema": {
                 "properties": {
-                  "sso_token": {
+                  "apiKey": {
                     "type": "string",
                     "description": "SSO Token for login"
                   }
@@ -1511,7 +1511,7 @@
           },
 
           "401": {
-            "description": "sso_token not found",
+            "description": "apiKey not found",
              "content": {
                 "application/json": {
                   "schema": {
@@ -1534,19 +1534,19 @@
         "x-codeSamples": [
           {
             "lang": "Curl",
-            "source": "curl --request POST \\\n  --url https://api.directx.ca/postReferenceFields \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"sso_token\": \"SSO_TOKEN\"'"
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/postReferenceFields \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"apiKey\": \"apiKey\"'"
           },
           {
             "lang": "Node",
-            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/postReferenceFields',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"sso_token\": \"SSO_TOKEN\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/postReferenceFields',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"apiKey\": \"apiKey\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
           },
           {
             "lang": "JavaScript",
-            "source": "var data = '\"sso_token\": \"SSO_TOKEN\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/postReferenceFields\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+            "source": "var data = '\"apiKey\": \"apiKey\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/postReferenceFields\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nurl = \"https://api.directx.ca/postReferenceFields\"\n\npayload = \"{\\\"sso_token\\\": \\\"SSO_TOKEN\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+            "source": "import requests\n\nurl = \"https://api.directx.ca/postReferenceFields\"\n\npayload = \"{\\\"apiKey\\\": \\\"apiKey\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
           }
         ]
       }
@@ -1698,7 +1698,7 @@
       "post": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -1762,7 +1762,7 @@
       "post": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -1850,7 +1850,7 @@
       "post": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -1957,7 +1957,7 @@
       "post": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -2021,7 +2021,7 @@
       "post": {
         "security": [
           {
-            "sso_token": []
+            "apiKey": []
           }
         ],
         "tags": [
@@ -2386,10 +2386,10 @@
 
     },
     "securitySchemes" : {
-      "sso_token": {
+      "apiKey": {
         "type" : "apiKey",
         "in" : "header",
-        "name" : "sso_token"
+        "name" : "apiKey"
 
       }
     },
