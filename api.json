@@ -51,7 +51,7 @@
       "tags" : [
         "Authentication"
       ]
-    }
+    },
     {
       "name": "API References",
       "tags": [
@@ -544,7 +544,7 @@
           },
           "500": {
             "$ref" : "#/components/responses/error500"
-          },
+          }
         },
         "x-codeSamples": [
           {
