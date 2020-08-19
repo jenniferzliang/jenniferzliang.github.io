@@ -160,7 +160,7 @@
             }
           },
           "405": {
-            "$ref" : "#/responses/error405"
+            "$ref" : "#/components/responses/error405"
           }
         },
         "x-codeSamples": [
