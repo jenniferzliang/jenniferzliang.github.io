@@ -14,6 +14,10 @@
   },
   "tags": [
     {
+      "name": "Authentication",
+      "description": "Retrieving SSO_Token and verification"
+    },
+    {
       "name": "Orders",
       "description": "API calls for shipments"
     },
@@ -43,6 +47,12 @@
   ],
   "x-tagGroups": [
     {
+      "name": "Authentication",
+      "tags" : [
+        "Authentication"
+      ]
+    }
+    {
       "name": "API References",
       "tags": [
         "Orders",
@@ -60,6 +70,53 @@
     }
   ],
   "paths": {
+    "/generateLoginToken" : {
+      "post" : {
+        "tags" : [ 
+          "Authentication"
+        ],
+        "summary" : "Retrieve login token",
+        "description" : "Login token/sso token is necessary to access DirectIT Group's API",
+        "operationId" : "generateLoginToken",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type": "object",
+                "properties" : {
+                  "email" : {
+                    "type" : "string",
+                    "format" : "email"
+                  },
+                  "user_name" : {
+                    "type" : "string"
+                  },
+                  "account" : {
+                    "type" : "string"
+                  }
+                }
+                
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "message" : {
+                    "type" : "string",
+                    "example" : "Please check your email for a token: user@example.com"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/order": {
       "post": {
         "tags": [
@@ -2222,6 +2279,14 @@
         
       }
 
+    },
+    "securitySchemes" : {
+      "sso_token": {
+        "type" : "apiKey",
+        "in" : "header",
+        "name" : "sso_token"
+
+      }
     },
     "responses" : {
       "error401": {
