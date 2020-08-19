@@ -160,7 +160,7 @@
             }
           },
           "405": {
-            "description": "Invalid input"
+            "$ref" : "#/responses/error405"
           }
         },
         "x-codeSamples": [
@@ -300,7 +300,7 @@
             "description": "Operation complete, returns a ZPL Label"
           },
           "500": {
-            "description": "Cannot find order info"
+            "$ref" : "#/components/responses/error500"
           }
         },
         "x-codeSamples": [
@@ -344,7 +344,10 @@
             "description": "Operation complete, returns a picture of the order"
           },
           "404": {
-            "description": "Cannot find photos"
+            "$ref" : "#/components/responses/error404"
+          },
+          "500": {
+            "$ref" : "#/components/responses/error500"
           }
         },
         "x-codeSamples": [
@@ -398,7 +401,7 @@
             "description": "Operation complete, returns a picture of the order"
           },
           "404": {
-            "description": "Cannot find photo"
+            "$ref" : "#/components/responses/error404"
           }
         },
         "x-codeSamples": [
@@ -442,7 +445,7 @@
             "description": "Operation complete, returns a picture of the order signature"
           },
           "404": {
-            "description": "Not found"
+            "$ref" : "#/components/responses/error404"
           }
         },
         "x-codeSamples": [
@@ -481,7 +484,10 @@
         "responses": {
           "200": {
             "description": "Operation complete, returns a picture of the barcode"
-          }
+          },
+          "500": {
+            "$ref" : "#/components/responses/error500"
+          },
         },
         "x-codeSamples": [
           {
@@ -555,6 +561,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref" : "#/components/responses/error500"
           }
         },
         "x-codeSamples": [
@@ -619,6 +628,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref" : "#/components/responses/error500"
           }
         },
         "x-codeSamples": [
@@ -688,7 +700,10 @@
             "description": "OK"
           },
           "405": {
-            "description": "Invalid input"
+            "$ref" : "#/components/responses/error405"
+          },
+          "500": {
+            "$ref" : "#/components/responses/error500"
           }
         },
         "x-codeSamples": [
@@ -814,6 +829,9 @@
           }
         ],
         "responses": {
+          "500" : {
+            "$ref" : "#/components/responses/error500"
+          },
           "200": {
             "description": "OK",
             "content": {
@@ -893,9 +911,6 @@
                 }
               }
             }
-          },
-          "500": {
-            "description": "Invalid input"
           }
         },
         "x-codeSamples": [
@@ -954,7 +969,23 @@
         },
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "message": {
+                      "type" : "string",
+                      "example" :"successful"
+                    },
+                    "recordSets": {
+                      "type" : "array",
+                      "items" : "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "x-codeSamples": [
@@ -1005,7 +1036,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Address"
+                  "type" : "array",
+                  "items" : {
+                    "type" : "array",
+                    "items" : {
+                      "$ref": "#/components/schemas/Address"
+                    }
+                  }
                 }
               }
             }
@@ -2185,6 +2222,126 @@
         
       }
 
+    },
+    "responses" : {
+      "error401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "Authentication failed",
+                    "Required parameter missing"
+                  ],
+                  "description": "Error description",
+                  "example": "Authentication failed"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 401
+                }
+              }
+            }
+          }
+        }
+      },
+      "error403": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error description",
+                  "example": "Access not granted"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 403
+                }
+              }
+            }
+          }
+        }
+      },
+      "error404": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "Entity not found",
+                    "Resource not found"
+                  ],
+                  "description": "Error description",
+                  "example": "Entity not found"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 404
+                }
+              }
+            }
+          }
+        }
+      },
+      "error422": {
+        "description": "Unprocessable Entity",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error description",
+                  "example": "Incorrect parameter value"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 422
+                }
+              }
+            }
+          }
+        }
+      },
+      "error500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error description",
+                  "example": "Internal error"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 500
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
   }
