@@ -1558,7 +1558,25 @@
           "405": {
             "description": "Invalid input"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/addContact \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"address\" : { \"companyName\" : \"_companyName_\", \"phone\" : \"_phoneNumber_\"}'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/addContact',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"address\" : { \"companyName\" : \"_companyName_\", \"phone\" : \"_phoneNumber_\"}'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"address\" : { \"companyName\" : \"_companyName_\", \"phone\" : \"_phoneNumber_\"}';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/addContact\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/addContact\"\n\npayload = \"{\\\"address\\\" : { \\\"companyName\\\" : \\\"_companyName_\\\", \\\"phone\\\" : \\\"_phoneNumber_\\\"}}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
       }
     },
     "/userEmails": {
@@ -1575,17 +1593,20 @@
               "schema": {
                 "properties": {
                   "accountNumber": {
-                    "type": "string"
+                    "type": "string",
+                    "example" : "1000"
                   },
                   "caller": {
                     "type": "object",
                     "properties": {
                       "username": {
-                        "type": "string"
+                        "type": "string",
+                        "example" : "_username_"
                       },
                       "emailAddress": {
                         "type": "string",
-                        "format": "email"
+                        "format": "email",
+                        "example" : "user@example.com"
                       }
                     }
                   }
@@ -1620,7 +1641,25 @@
           "405": {
             "description": "Invalid input"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/userEmails \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"accountNumber\" : \"1000\",\"caller\" : { \"username\" : \"_username_\", \"emailAddress\" : \"_emailAddress_\"}'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/userEmails',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"accountNumber\" : \"1000\",\"caller\" : { \"username\" : \"_username_\", \"emailAddress\" : \"_emailAddress_\"}'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"accountNumber\" : \"1000\",\"caller\" : { \"username\" : \"_username_\", \"emailAddress\" : \"_emailAddress_\"}';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/userEmails\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/userEmails\"\n\npayload = \"{\\\"accountNumber\\\" : \\\"1000\\\",\\\"caller\\\" : { \\\"username\\\" : \\\"_username_\\\", \\\"emailAddress\\\" : \\\"_emailAddress_\\\"}}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
       }
     },
     "/address": {
@@ -1644,7 +1683,8 @@
                     "properties": {
                       "companyName": {
                         "type": "string",
-                        "description": "Company Name"
+                        "description": "Company Name",
+                        "example" : ""
                       },
                       "suite": {
                         "type": "string",
@@ -1752,7 +1792,25 @@
           "405": {
             "description": "Invalid input"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/ordercall/1000/12345 \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"phone\" : \"1234567890\"'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/ordercall/1000/12345',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"phone\" : \"1234567890\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"phone\" : \"1234567890\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/ordercall/1000/12345\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/ordercall/1000/12345\"\n\npayload = \"{\\\"phone\\\" : \\\"1234567890\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
       }
     },
     "/invoicePassword": {
@@ -1788,7 +1846,25 @@
           "405": {
             "description": "Invalid input"
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/invoicePassword \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"accountNumber\" : \"1000\",\"password\" : \"password123\"'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/invoicePassword',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"accountNumber\" : \"1000\",\"password\" : \"password123\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"accountNumber\" : \"1000\",\"password\" : \"password123\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/invoicePassword\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/invoicePassword\"\n\npayload = \"{\\\"accountNumber\\\" : \\\"1000\\\",\\\"password\\\" : \\\"password123\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
       }
     }
   },
@@ -1954,21 +2030,22 @@
           "addressID": {
             "type": "string",
             "description": "Address ID",
-            "example" : "000"
+            "example" : "1924791"
           },
           "companyName": {
             "type": "string",
             "description": "Company name",
-            "example" : "John's Store"
+            "example" : "DirectIT Group"
           },
           "suite": {
             "type": "string",
-            "description": "Address Suite"
+            "description": "Address Suite",
+            "example" : "Unit 1"
           },
           "address": {
             "type": "string",
             "description": "Address Line",
-            "example" : "123 Main street"
+            "example" : "100 Barclay Parade"
           },
           "quad": {
             "type": "string",
@@ -1983,12 +2060,12 @@
           "prov": {
             "type": "string",
             "description": "Province",
-            "example" : "Alberta"
+            "example" : "AB"
           },
           "postal": {
             "type": "string",
             "description": "Postal Code",
-            "example" : "A2F4W3"
+            "example" : "T2P3E7"
           },
           "country": {
             "type": "string",
@@ -1997,7 +2074,8 @@
           },
           "zone": {
             "type": "string",
-            "description": "Delivery Zone"
+            "description": "Delivery Zone",
+            "example" : "SB"
           },
           "contact": {
             "type": "string",
@@ -2013,13 +2091,13 @@
             "type": "number",
             "format": "float",
             "description": "Latitude",
-            "example" : 12.23
+            "example" : 51.05246
           },
           "long": {
             "type": "number",
             "format": "float",
             "description": "Longitude",
-            "example" : 40.21
+            "example" : -114.068443
           },
           "gpserror": {
             "type": "boolean",
@@ -2029,17 +2107,16 @@
           "locationID": {
             "type": "string",
             "description": "Location ID",
-            "example" : "0000"
+            "example" : "2657"
           },
           "private": {
             "type": "boolean",
             "description": "Returns true if address is private",
-            "example" : true
+            "example" : false
           },
           "custNo": {
             "type": "string",
-            "description": "Customer Number",
-            "example" : "102"
+            "description": "Customer Number"
           },
           "contactID": {
             "type": "number",
@@ -2049,10 +2126,12 @@
             "type": "number"
           },
           "cnt2": {
-            "type": "number"
+            "type": "number",
+            "example" : 41
           },
           "hasGPS": {
-            "type": "number"
+            "type": "number",
+            "example" : 1
           },
           "rowNumber": {
             "type": "number"
