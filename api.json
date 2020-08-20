@@ -4,7 +4,7 @@
   "info": {
     "version": "1.3.0",
     "title": "DirectIt API",
-    "description": "# Introduction\nDirectIT API allows users to access ________. This API reference is provides a reference to integrate your system to the DirectIT system. The API allows you to create, get, and update orders, and handle accounts and other references. \n\nYou can access to API tool for testing [here](https://api.directx.ca/api-docs)\n ## Base URL\nThe base URL for all the API endpoints is `https://api.directx.ca`\n\nFor example\n* `https://api.directx.ca/orders/1000`\n* `https://api.directx.ca/zpl/1000/12345`\n* `https://api.directx.ca/referenceFields/1000` \n# Authentication\nDirectIT API uses __API Key__ for authorization. This API key is a special token that the client needs to provide when making API calls. The key is sent as a request header under the name __sso_token__.\nWhen authenticating to the DirectIT API, a sso token should be generated uniquely by a __server-side application__ and included as a __sso_token__ in the header of each request.\n## Accessing your SSO Token\nYou can retrieve a __SSO Token__ by entering your credentials and account info in the [generateLoginToken](#/Authentication/generateLoginToken) call. Your sso token will then be emailed to you.\n## Using SSO Token\nSSO Token are placed in the __header__\nProperty `sso_token` defines the token being used. \n\nIn Curl\n```\ncurl -X GET \"https://api.directx.ca/orders/1000\" -H  \"accept: application/json\" -H  \"sso_token: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n```\n\nIn Java:\n```\nxhr.setRequestHeader(\"sso_token\",\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\");\n```\nIn Python:\n```\nheaders = {\n  'sso_token': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'\n}\n```",
+    "description": "# Introduction\nDirectIT API allows users to access ________. This API reference is provides a reference to integrate your system to the DirectIT system. The API allows you to create, get, and update orders, and handle accounts and other references. \n\nYou can access to API tool for testing [here](https://api.directx.ca/api-docs)\n ## Base URL\nThe base URL for all the API endpoints is `https://api.directx.ca`\n\nFor example\n* `https://api.directx.ca/orders/1000`\n* `https://api.directx.ca/zpl/1000/12345`\n* `https://api.directx.ca/referenceFields/1000` \n# Authentication\nDirectIT API uses __API Key__ for authorization. This API key is a special token that the client needs to provide when making API calls. The key is sent as a request header under the name __sso_token__.\nWhen authenticating to the DirectIT API, a sso token should be generated uniquely by a __server-side application__ and included as a __sso_token__ in the header of each request.\n## Accessing your SSO Token\nYou can retrieve a __SSO Token__ by entering your credentials and account info in the [generateLoginToken](#operation/generateLoginToken) call. Your sso token will then be emailed to you.\n## Using SSO Token\nSSO Token are placed in the __header__\nProperty `sso_token` defines the token being used. \n\nIn Curl\n```\ncurl -X GET \"https://api.directx.ca/orders/1000\" -H  \"accept: application/json\" -H  \"sso_token: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n```\n\nIn Java:\n```\nxhr.setRequestHeader(\"sso_token\",\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\");\n```\nIn Python:\n```\nheaders = {\n  'sso_token': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'\n}\n```",
     "x-logo": {
       "url": "https://ship.directx.ca/img/DirectItGroup_logo.png",
       "backgroundColor": "#000000",
@@ -47,14 +47,9 @@
   ],
   "x-tagGroups": [
     {
-      "name": "Authentication",
-      "tags" : [
-        "Authentication"
-      ]
-    },
-    {
       "name": "API References",
       "tags": [
+        "Authentication",
         "Orders",
         "Reference",
         "Track",
