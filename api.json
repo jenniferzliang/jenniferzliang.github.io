@@ -87,7 +87,8 @@
                     "type" : "string"
                   },
                   "account" : {
-                    "type" : "string"
+                    "type" : "string",
+                    "example" : "1000"
                   }
                 }
                 
@@ -109,7 +110,25 @@
               }
             }
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request PATCH \\\n  --url https://api.directx.ca/generateLoginToken \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/json' \\\n --data '\"email\":\"user@example.com\",\"user_name\":\"string\",\"account\":\"1000\"'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'PATCH',\n  url: 'https://api.directx.ca/generateLoginToken',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '[\"email\":\"user@example.com\",\"user_name\":\"string\",\"account\":\"1000\"]',\n  json: true\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = JSON.stringify([\n  {\n    \"email\":\"user@example.com\",\"user_name\":\"string\",\"account\":\"1000\"\n  }\n]);\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"PATCH\", \"https://api.directx.ca/generateLoginToken\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/generateLoginToken\"\n\npayload = \"[{\\\"email\\\":\\\"user@example.com\\\",\\\"user_name\\\":\\\"string\\\",\\\"account\\\":\\\"1000\\\"]\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/json\"\n    }\n\nresponse = requests.request(\"PATCH\", url, data=payload, headers=headers)\n\nprint(response.text)"
+          }
+        ]
       }
     },
     "/order": {
