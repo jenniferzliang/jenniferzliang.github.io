@@ -2,7 +2,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "1.3.0",
+    "version": "1.0.0",
     "title": "DirectIt API",
     "description": "# Introduction\n This API reference provides a reference to integrate your system to the DirectIT system. The API allows you to create, get, and update orders, and handle accounts and other references. \n\nYou can access to API tool for testing [here](https://api.directx.ca/api-docs)\n ## Base URL\nThe base URL for all the API endpoints is `https://api.directx.ca`\n\nFor example\n* `https://api.directx.ca/orders/1000`\n* `https://api.directx.ca/zpl/1000/12345`\n* `https://api.directx.ca/referenceFields/1000` \n\n# Use Case \n ### 1 Register for account \n Contact IT Direct to register for account \n ### 2 Obtain token \n You can retrieve a __SSO Token__ by entering your credentials and account info in the [generateLoginToken](#operation/generateLoginToken) call. Your sso token will then be emailed to you. \n ### 3 Create order \n Create an order using [postOrder](#operation/postOrder) and include sso_token in authentication. \n\n After the call, the reponse will return the reference to the order which will be its __jobID__. The jobID is used when making other calls to update or retrieve information for the order. \n ### 4 Print label \n ZPL Label image can be retrieved using the call [https://api.directx.ca/zpl/{account}/{jobID}](#operation/zpl)\n ### 5 Get reference \n Get reference fields for your account. \n ### 6 Track an order \n Examples of API calls to use are: \n * `https://api.directx.ca/order/{account}/{jobID}` \n * `https://api.directx.ca/barcode/{jobID}`\n * `https://api.directx.ca/orderPhoto/{account}/{jobID}` \n # Sample Code \n ## 1 Register for an account \n  Contact IT Direct to register for account. \n## 2 Obtain token \n Construct a patch request with the baseURL: `https://api.directx.ca/generateLoginToken`.\n\n In the payload, enter the credentials. \n```\n{\n    \"email\": \"user@example.com\",\n    \"user_name\": \"string\",\n    \"account\": \"1000\"\n}\n```\n Check email for the sso_token. \n ## 3 Create order \n Description on each of the data fields for postOrder can be found here: [postOrder](#operation/postOrder). \n\n Send a post to url `https://api.directx.ca/postOrder`. \n\n Enter in the [sso_token](#section/Authentication/Using-SSO-Token) in the header for authentication.\n\nEnter in the payload: \n ```\n{\n\"account\": \"1000\",\n\"shipAddressID\": 1111,\n\"conAddressID\": 1111,\n\"del_inst\": \"Leave at door\",\n\"cust_ref\": \"John Doe\",\n\"checkedEmail\": true,\n\"deliveryEmail\": \"johndoe@example.com\",\n\"rate\": {\n   \"baseRate\": 3,\n   \"ser_time\": 10,\n   \"ser_area\": \"S\",\n   \"dtdct\": \"2019-08-24T14:15:22Z\",\n   \"dtCallIn\": \"2019-08-24T14:15:22Z\"\n},\n\"email\": \"user@example.com\",\n\"pieces\": 0,\n\"weight\": 0,\n\"packageType\": \"Envelope\",\n\"caller\": \"string\",\n\"additionalEmail\": \"user@example.com\",\n\"returnTripService\": {\n   \"baseRate\": 0,\n   \"ser_time\": 0,\n   \"dtdct\": \"2019-08-24T14:15:22Z\"\n}\n}\n```\n \n If the order was successfully created, it will return a JSON response with the values: \n```\n{\n    \"companyID\": 1234,\n    \"jobID\": \"12345\",    \"foxJob\": \"1111\",\n    \"email_req\": \"johndoe@example.com\",\n    \"email_addr\": \"johndoe@example.com\",\n    \"ship_addressID\": 10000,\n    \"trackingNumber\": \"1234567890\",\n    \"isEmailSent\": 1,\n    \"result\": \"Finished\",\n    \"returnJobID\": \"54321\",\n    \"returnTrackingNumber\": \"1234554321\",\n    \"returnFoxJob\": \"10007\",\n    \"returnResult\": \"Pending\"\n}\n```\n The jobID reference for this order is `12345`. This value will be used when accessing data for the order.\n  ## 4 Print label \n ZPL Label image can be retrieved using the call [https://api.directx.ca/zpl/{account}/{jobID}](#operation/zpl)\n\n An example of the endpoint is: \n\n `https://api.directx.ca/zpl/1000/12345`\n ## 5 Get reference \n An example of calling the reference fields of a given account is: \n\n `https://api.directx.ca/referenceFields/1000`\n ## 6 Track an order \n Examples of API calls to use are: \n * `https://api.directx.ca/order/1000/12345` \n * `https://api.directx.ca/track/12345`\n\n# Authentication\nDirectIT API uses __API Key__ for authorization. This API key is a special token that the client needs to provide when making API calls. The key is sent as a request header under the name __sso_token__.\nWhen authenticating to the DirectIT API, a sso token should be generated uniquely by a __server-side application__ and included as a __sso_token__ in the header of each request.\n## Accessing your SSO Token\nYou can retrieve a __SSO Token__ by entering your credentials and account info in the [generateLoginToken](#operation/generateLoginToken) call. Your sso token will then be emailed to you.\n## Using SSO Token\nSSO Token are placed in the __header__\nProperty `sso_token` defines the token being used. \n\nIn Curl\n```\ncurl -X GET \"https://api.directx.ca/orders/1000\" -H  \"accept: application/json\" -H  \"sso_token: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n```\n\nIn Java:\n```\nxhr.setRequestHeader(\"sso_token\",\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\");\n```\nIn Python:\n```\nheaders = {\n  'sso_token': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'\n}\n```",
     "x-logo": {
@@ -65,33 +65,152 @@
     }
   ],
   "paths": {
-    "/generateLoginToken" : {
-      "patch" : {
-        "tags" : [ 
-          "Authentication"
+    "/getQuote" :{
+      "post" : {
+        "tags": [
+          "Orders"
         ],
-        "summary" : "Retrieve login token",
-        "description" : "Login token/sso token is necessary to access DirectIT Group's API",
-        "operationId" : "generateLoginToken",
-        "requestBody" : {
+        "summary" : "Get quote for delivery",
+        "description" : "Get quote for delivery. Check to see if address is valid and returns the rate choices for the delivery.",
+        "operationId" : "getQuote",
+        "requestBody" :{
           "content" : {
             "application/json" : {
               "schema" : {
-                "type": "object",
+                "type":"object",
                 "properties" : {
-                  "email" : {
-                    "type" : "string",
-                    "format" : "email"
+                  "pieces" : {
+                    "type" : "integer",
+                    "example" : 1,
+                    "description" : "Number of pieces in shipment. Can affect rate and available service types"
                   },
-                  "user_name" : {
-                    "type" : "string"
+                  "weight" : {
+                    "type" : "integer",
+                    "example" : 1,
+                    "description" : "Total weight of the shipment. Can affect rate and available service types"
                   },
-                  "account" : {
+                  "declared_value" : {
+                    "type" : "integer",
+                    "example" : null,
+                    "description" : "Insurable amount.  will affect final rate if non-zero."
+                  },
+                  "pickup_datetime" : {
                     "type" : "string",
-                    "example" : "1000"
+                    "format" : "date-time",
+                    "example" : null,
+                    "description" : "The date and time in UTC values when the trip will be ready for pickup.  Leaving null will default to ready immediately."
+                  },
+                  "reference" : {
+                    "type" : "string",
+                    "example" : null,
+                    "description" : "Customer reference for trip. Appears on invoice."
+                  },
+                  "special_instructions" : {
+                    "type" : "string",
+                    "example" : null,
+                    "description" : "Any specific instructions for this trip.  Will be visible to dispatch and driver."
+                  },
+                  "delivery_url" : {
+                    "type" : "string",
+                    "example" : null,
+                    "description" : "Any web link that needs to be present on the trip, similar to a customer reference. Visible to driver."
+                  },
+                  "delivery_sig_required" : {
+                    "type" : "integer",
+                    "example" : 1,
+                    "description" : "Defaults to 1.  setting to 0 will allow delivery without a signature.  (signature is always attempted)"
+                  },
+                  "description" : {
+                    "type": "string",
+                    "description" : "description of the trip.  suitable examples would be 'Envelope, Box, Roll, Skid, etc'",
+                    "description": "Type of package",
+                    "enum": [
+                      "Envelope",
+                      "Package",
+                      "Box",
+                      "Skid",
+                      "Roll",
+                      "Binder",
+                      "Book",
+                      "Drycleaning",
+                      "Flowers",
+                      "Bag",
+                      "Other"
+                    ]
+                  },
+                  "account_email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "jillsmith@example.com",
+                    "description" : "will send shipment notifications to this email address including exception and delivery notifications"
+                  },
+                  "client_email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "johnsmith@example.com",
+                    "description" : "will send a notification to this email of a shipment bound to them as the receiver with a tracking link."
+                  },
+                  "delivery" : {
+                    "type" : "object",
+                    "properties" : {
+                      "description" : {
+                        "type" : "string",
+                        "example" : "DirectIT Group",
+                        "description" : "The company or individual name of the receiver."
+                      },
+                      "suite" : {
+                        "type" : "string",
+                        "example" : "Unit 1",
+                        "description" : "The suite portion of the address."
+                      },
+                      "address" : {
+                        "type" : "string",
+                        "example" : "100 Barclay Parade",
+                        "description" : "The road portion of the address."
+                      },
+                      "city" : {
+                        "type" : "string",
+                        "example" : "Calgary",
+                        "description" : "The city for delivery. If left blank, will default to account default setting as specified when api key setup."
+                      },
+                      "province" : {
+                        "type" : "string",
+                        "example" : "Alberta",
+                        "description" : "The province.  if left blank, will default to account default setting as specified when api key setup."
+                      },
+                      "country" : {
+                        "type" : "string",
+                        "example" : "Canada",
+                        "description" : "The country.  if left blank, will default to account default setting as specified when api key setup."
+                      },
+                      "postal" : {
+                        "type" : "string",
+                        "example" : "T2P3E7",
+                        "description" : "the postal code for the address. Not required."
+                      },
+                      "latitude" : {
+                        "type" : "number",
+                        "example" : 0.0,
+                        "description" : "Latitude. If known, you may provide the GPS coordinates of the delivery address using these fields.  not required."
+                      },
+                      "longitude" : {
+                        "type" : "number",
+                        "example" : 0.0,
+                        "description" : "Longitude.  if known, you may provide the GPS coordinates of the delivery address using these fields.  not required."
+                      },
+                      "contactName" : {
+                        "type" : "string",
+                        "example" : "John Smith",
+                        "description" : "An Attention to name at the delivery. "
+                      },
+                      "contactPhone" : {
+                        "type" : "string",
+                        "example" : "123-456-7890",
+                        "description" : "A phone number to contact @ the delivery. "
+                      }
+                    }
                   }
                 }
-                
               }
             }
           }
@@ -102,33 +221,149 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "message" : {
+                  "type" : "array",
+                  "items" : {
+                    "type":"object",
+                    "properties": {
+                      "quoteID" : {
+                        "type" :"string",
+                        "example" : "E8B7B1EC-55B0-4B57-B7F9-E5DC0DE71A97",
+                        "description" : "Quote ID of the order request. Valid for 60 seconds to call execute_quote"
+                      },
+                      "descr" :{
+                        "type" : "string",
+                        "example" : "Air Service Overnight VPU  Today after 12:57 [ $34.38]",
+                        "description" : "Description of rate and delivery method"
+
+                      },
+                      "dtCallIn" :{
+                        "type" : "string",
+                        "format" :"date-time",
+                        "description" : "Delivery call in"
+
+                      },
+                      "dtDCT" :{
+                        "type" : "string",
+                        "format" :"date-time",
+                        "description" : "delivery date call time"
+                      },
+                      "rate" :{
+                        "type" : "string",
+                        "description" : "Rate of package"
+                      },
+                      "ser_area" :{
+                        "type" : "string",
+                        "example" : "A",
+                        "description" : "Service area"
+                      },
+                      "ser_time" :{
+                        "type" : "integer",
+                        "example" : 121,
+                        "description" : "Service time"
+                      },
+                      "distance" : {
+                        "type" : "number",
+                        "example" : 316234,
+                        "description" : "Delivery distance"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          
+        }
+      }
+    },
+    "/executeQuote" : {
+      "post": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Execute quote",
+        "description": "Execute quote and place order using the quote ID retrieved from getQuote",
+        "operationId": "executeQuote",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type" : "object",
+                "properties" : {
+                  "quoteID" : {
                     "type" : "string",
-                    "example" : "Please check your email for a token: user@example.com"
+                    "example" : "E8B7B1EC-55B0-4B57-B7F9-E5DC0DE71A97",
+                    "description" : "A quoteID obtained from the output of a call to /getQuote."
                   }
                 }
               }
             }
           }
         },
-        "x-codeSamples": [
-          {
-            "lang": "Curl",
-            "source": "curl --request PATCH \\\n  --url https://api.directx.ca/generateLoginToken \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/json' \\\n --data '\"email\":\"user@example.com\",\"user_name\":\"string\",\"account\":\"1000\"'"
-          },
-          {
-            "lang": "Node",
-            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'PATCH',\n  url: 'https://api.directx.ca/generateLoginToken',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '[\"email\":\"user@example.com\",\"user_name\":\"string\",\"account\":\"1000\"]',\n  json: true\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
-          },
-          {
-            "lang": "JavaScript",
-            "source": "var data = JSON.stringify([\n  {\n    \"email\":\"user@example.com\",\"user_name\":\"string\",\"account\":\"1000\"\n  }\n]);\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"PATCH\", \"https://api.directx.ca/generateLoginToken\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
-          },
-          {
-            "lang": "Python",
-            "source": "import requests\n\nurl = \"https://api.directx.ca/generateLoginToken\"\n\npayload = \"[{\\\"email\\\":\\\"user@example.com\\\",\\\"user_name\\\":\\\"string\\\",\\\"account\\\":\\\"1000\\\"]\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/json\"\n    }\n\nresponse = requests.request(\"PATCH\", url, data=payload, headers=headers)\n\nprint(response.text)"
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type" : "array",
+                  "items" : {
+                    "type":"object",
+                    "properties": {
+                      "jobID" : {
+                        "type" : "string",
+                        "example" : "12345",
+                        "description" : "jobID"
+                      },
+                      "rate" : {
+                        "type" : "number",
+                        "example" : 3.00,
+                        "description" : "Rate of delivery"
+                      },
+                      "ser_area" : {
+                        "type" : "string",
+                        "example" : "C",
+                        "description" : "Service area"
+                      },
+                      "ser_time" : {
+                        "type" : "integer",
+                        "example" : 120,
+                        "description" : "Service time"
+                      },
+                      "dtCallIn" : {
+                        "type" : "string",
+                        "format" : "date-time",
+                        "description" : "dctCallIn"
+                      },
+                      "dtDCT" : {
+                        "type" : "string",
+                        "format" : "date-time",
+                        "description" : "dtDCT"
+                      },
+                      "TrackNumber" : {
+                        "type" : "string",
+                        "example" : "TR8323512161586",
+                        "description" : "Tracking number"
+                      },
+                      "TrackNumber" : {
+                        "type" : "string",
+                        "example" : "https://ship.directx.ca/redirect.php?TrackNumber=TR8323512161586",
+                        "description" : "Tracking link to view order"
+                      }
+
+                    }
+                  }
+                }
+              }
+            }
           }
-        ]
+        }
+
       }
     },
     "/order": {
@@ -235,8 +470,8 @@
               }
             }
           },
-          "405": {
-            "$ref" : "#/components/responses/error405"
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -290,6 +525,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -343,6 +581,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -389,6 +630,9 @@
         "responses": {
           "200": {
             "description": "Operation complete, returns a ZPL Label"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           },
           "500": {
             "$ref" : "#/components/responses/error500"
@@ -438,6 +682,9 @@
         "responses": {
           "200": {
             "description": "Operation complete, returns a picture of the order"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           },
           "404": {
             "$ref" : "#/components/responses/error404"
@@ -501,6 +748,9 @@
           "200": {
             "description": "Operation complete, returns a picture of the order"
           },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          },
           "404": {
             "$ref" : "#/components/responses/error404"
           }
@@ -550,6 +800,9 @@
           "200": {
             "description": "Operation complete, returns a picture of the order signature"
           },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          },
           "404": {
             "$ref" : "#/components/responses/error404"
           }
@@ -590,6 +843,9 @@
         "responses": {
           "200": {
             "description": "Operation complete, returns a picture of the barcode"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           },
           "500": {
             "$ref" : "#/components/responses/error500"
@@ -673,8 +929,8 @@
               }
             }
           },
-          "500": {
-            "$ref" : "#/components/responses/error500"
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -745,8 +1001,8 @@
               }
             }
           },
-          "500": {
-            "$ref" : "#/components/responses/error500"
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -820,11 +1076,11 @@
           "200": {
             "description": "OK"
           },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          },
           "405": {
             "$ref" : "#/components/responses/error405"
-          },
-          "500": {
-            "$ref" : "#/components/responses/error500"
           }
         },
         "x-codeSamples": [
@@ -913,6 +1169,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -960,9 +1219,6 @@
           }
         ],
         "responses": {
-          "500" : {
-            "$ref" : "#/components/responses/error500"
-          },
           "200": {
             "description": "OK",
             "content": {
@@ -1042,6 +1298,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -1122,6 +1381,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -1167,7 +1429,8 @@
             "required": true,
             "description": "Address ID",
             "schema": {
-              "type": "101"
+              "type": "string",
+              "example" : "101"
             }
           }
         ],
@@ -1187,6 +1450,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -1264,6 +1530,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -1337,6 +1606,9 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -2006,6 +2278,9 @@
           },
           "405": {
             "description": "Invalid input"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -2067,6 +2342,9 @@
           },
           "405": {
             "description": "Invalid input"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
           }
         },
         "x-codeSamples": [
@@ -2095,6 +2373,9 @@
     "url": "https://api.directx.ca/documentation"
   },
   "servers": [
+    {
+      "url" : "http://localhost:6655/"
+    },
     {
       "url": "https://api.directx.ca/"
     }
