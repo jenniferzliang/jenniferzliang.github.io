@@ -496,24 +496,27 @@
           },
           "401": {
             "$ref" : "#/components/responses/error401"
+          },
+          "404": {
+            "$ref" : "#/components/responses/error404"
           }
         },
         "x-codeSamples": [
           {
             "lang": "Curl",
-            "source": "curl --request GET \\\n  --url https://api.directx.ca/orders/12345"
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/order/12345"
           },
           {
             "lang": "Node",
-            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orders/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/order/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
           },
           {
             "lang": "JavaScript",
-            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orders/12345\");\n\nxhr.send(data);"
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/order/12345\");\n\nxhr.send(data);"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nurl = \"https://api.directx.ca/orders/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+            "source": "import requests\n\nurl = \"https://api.directx.ca/order/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
           }
         ]
       },
@@ -551,8 +554,48 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          },
+          "404": {
+            "$ref" : "#/components/responses/error404"
+          },
+          "500" : {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error" : {
+                      "type" : "string",
+                      "example" : "jobID has already been delivered.  Cannot process Cancel request."
+                    }
+                  }
+                }
+              }
+            }
           }
-        }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request DELETE \\\n  --url https://api.directx.ca/order/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'DELETE', url: 'https://api.directx.ca/order/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"DELETE\", \"https://api.directx.ca/order/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/order/12345\"\n\nresponse = requests.request(\"DELETE\", url)\n\nprint(response.text)"
+          }
+        ]
 
       }
     },
@@ -591,19 +634,19 @@
         "x-codeSamples": [
           {
             "lang": "Curl",
-            "source": "curl --request GET \\\n  --url https://api.directx.ca/orders/12345"
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/orderSummary"
           },
           {
             "lang": "Node",
-            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orders/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orderSummary'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
           },
           {
             "lang": "JavaScript",
-            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orders/12345\");\n\nxhr.send(data);"
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orderSummary\");\n\nxhr.send(data);"
           },
           {
             "lang": "Python",
-            "source": "import requests\n\nurl = \"https://api.directx.ca/orders/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+            "source": "import requests\n\nurl = \"https://api.directx.ca/orderSummary\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
           }
         ]
       }
