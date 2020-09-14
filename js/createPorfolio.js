@@ -3,7 +3,7 @@ var project = [
         name: "Stay In Touch",
         tools: "Swift",
         description: '<p>Due to Covid-19 causing everyone to self-isolate, it has become easier to lose touch with friends and family. We created an iOS app to help users keep track of friends and family members, by keeping track of that last time you met.</p><a class="btn btn-dark btn-social" href="https://github.com/jenniferli1098/StayInTouch-iOS"><i class="fab fa-github"></i></a>',
-        img: ""
+        img: "assets/img/portfolio/stayintouch2.png"
     },
     {
         name: "Covid Tracker",
@@ -47,7 +47,14 @@ var project = [
         tools: "Founder",
         description: '<p>Growing up as an avid reader, I loved exploring the world through books. With COVID-19 closing down services like libraries and community centers, I wanted to create a new outlet in which kids can come together and bond over books. Thus, The Arctic Reading Circle was born.</p><a class="btn btn-dark btn-social mx-2" href="https://thearcticreadingcircle.web.app"><i class="fas fa-link"></i></a>',
         img: "assets/img/portfolio/arc1.jpg",
-    }
+    },
+    {
+        name: "Don't Sit Be Fit",
+        tools: "ReactJS, Firebase",
+        description: '<p>Due to gyms closing down due to Covid-19, it’s been increasingly harder for everyone to stay fit and maintain a healthy lifestyle, impacting both productivity and personal well-being. We wanted to build an easily accessible web application that allows users to view, track, and share their workout routines. An online platform where users can share and try new workouts, Don’t Sit Be Fit brings in the fun in training. 30 minutes of activity per day has never been easier.</p><a class="btn btn-dark btn-social mx-2" href="https://dontsitbefit.web.app/"><i class="fas fa-link"></i></a>',
+        img: "assets/img/portfolio/dontsitbefit2.png",
+    },
+
 ];
 
 
