@@ -1159,10 +1159,10 @@
 
     },
     "securitySchemes" : {
-      "apiKey": {
+      "sso_token": {
         "type" : "apiKey",
         "in" : "header",
-        "name" : "apiKey"
+        "name" : "sso_token"
 
       }
     },
