@@ -1,0 +1,2966 @@
+
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "DirectIt API",
+    "description": "# Introduction\n This API reference provides a reference to integrate your system to the DirectIT system. The API allows you to create, get, and update orders, and handle accounts and other references. \n\nYou can access to API tool for testing [here](https://api.directx.ca/api-docs)\n ## Base URL\nThe base URL for all the API endpoints is `https://api.directx.ca`\n\nFor example\n* `https://api.directx.ca/orders/1000`\n* `https://api.directx.ca/zpl/1000/12345`\n* `https://api.directx.ca/referenceFields/1000` \n\n# Use Case \n ### 1 Register for account \n Contact IT Direct to register for account \n ### 2 Obtain token \n You can retrieve a __SSO Token__ by entering your credentials and account info in the [generateLoginToken](#operation/generateLoginToken) call. Your sso token will then be emailed to you. \n ### 3 Create order \n Create an order using [postOrder](#operation/postOrder) and include sso_token in authentication. \n\n After the call, the reponse will return the reference to the order which will be its __jobID__. The jobID is used when making other calls to update or retrieve information for the order. \n ### 4 Print label \n ZPL Label image can be retrieved using the call [https://api.directx.ca/zpl/{account}/{jobID}](#operation/zpl)\n ### 5 Get reference \n Get reference fields for your account. \n ### 6 Track an order \n Examples of API calls to use are: \n * `https://api.directx.ca/order/{account}/{jobID}` \n * `https://api.directx.ca/barcode/{jobID}`\n * `https://api.directx.ca/orderPhoto/{account}/{jobID}` \n # Sample Code \n ## 1 Register for an account \n  Contact IT Direct to register for account. \n## 2 Obtain token \n Construct a patch request with the baseURL: `https://api.directx.ca/generateLoginToken`.\n\n In the payload, enter the credentials. \n```\n{\n    \"email\": \"user@example.com\",\n    \"user_name\": \"string\",\n    \"account\": \"1000\"\n}\n```\n Check email for the sso_token. \n ## 3 Create order \n Description on each of the data fields for postOrder can be found here: [postOrder](#operation/postOrder). \n\n Send a post to url `https://api.directx.ca/postOrder`. \n\n Enter in the [sso_token](#section/Authentication/Using-SSO-Token) in the header for authentication.\n\nEnter in the payload: \n ```\n{\n\"account\": \"1000\",\n\"shipAddressID\": 1111,\n\"conAddressID\": 1111,\n\"del_inst\": \"Leave at door\",\n\"cust_ref\": \"John Doe\",\n\"checkedEmail\": true,\n\"deliveryEmail\": \"johndoe@example.com\",\n\"rate\": {\n   \"baseRate\": 3,\n   \"ser_time\": 10,\n   \"ser_area\": \"S\",\n   \"dtdct\": \"2019-08-24T14:15:22Z\",\n   \"dtCallIn\": \"2019-08-24T14:15:22Z\"\n},\n\"email\": \"user@example.com\",\n\"pieces\": 0,\n\"weight\": 0,\n\"packageType\": \"Envelope\",\n\"caller\": \"string\",\n\"additionalEmail\": \"user@example.com\",\n\"returnTripService\": {\n   \"baseRate\": 0,\n   \"ser_time\": 0,\n   \"dtdct\": \"2019-08-24T14:15:22Z\"\n}\n}\n```\n \n If the order was successfully created, it will return a JSON response with the values: \n```\n{\n    \"companyID\": 1234,\n    \"jobID\": \"12345\",    \"foxJob\": \"1111\",\n    \"email_req\": \"johndoe@example.com\",\n    \"email_addr\": \"johndoe@example.com\",\n    \"ship_addressID\": 10000,\n    \"trackingNumber\": \"1234567890\",\n    \"isEmailSent\": 1,\n    \"result\": \"Finished\",\n    \"returnJobID\": \"54321\",\n    \"returnTrackingNumber\": \"1234554321\",\n    \"returnFoxJob\": \"10007\",\n    \"returnResult\": \"Pending\"\n}\n```\n The jobID reference for this order is `12345`. This value will be used when accessing data for the order.\n  ## 4 Print label \n ZPL Label image can be retrieved using the call [https://api.directx.ca/zpl/{account}/{jobID}](#operation/zpl)\n\n An example of the endpoint is: \n\n `https://api.directx.ca/zpl/1000/12345`\n ## 5 Get reference \n An example of calling the reference fields of a given account is: \n\n `https://api.directx.ca/referenceFields/1000`\n ## 6 Track an order \n Examples of API calls to use are: \n * `https://api.directx.ca/order/1000/12345` \n * `https://api.directx.ca/track/12345`\n\n# Authentication\nDirectIT API uses __API Key__ for authorization. This API key is a special token that the client needs to provide when making API calls. The key is sent as a request header under the name __sso_token__.\nWhen authenticating to the DirectIT API, a sso token should be generated uniquely by a __server-side application__ and included as a __sso_token__ in the header of each request.\n## Accessing your SSO Token\nYou can retrieve a __SSO Token__ by entering your credentials and account info in the [generateLoginToken](#operation/generateLoginToken) call. Your sso token will then be emailed to you.\n## Using SSO Token\nSSO Token are placed in the __header__\nProperty `sso_token` defines the token being used. \n\nIn Curl\n```\ncurl -X GET \"https://api.directx.ca/orders/1000\" -H  \"accept: application/json\" -H  \"sso_token: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\n```\n\nIn Java:\n```\nxhr.setRequestHeader(\"sso_token\",\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\");\n```\nIn Python:\n```\nheaders = {\n  'sso_token': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'\n}\n```",
+    "x-logo": {
+      "url": "https://ship.directx.ca/img/DirectItGroup_logo.png",
+      "backgroundColor": "#070707",
+      "altText": "West DirectIt API",
+      "href": "https://api.directx.ca/api-docs"
+    }
+  },
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Retrieving token and verification"
+    },
+    {
+      "name": "Orders",
+      "description": "API calls for shipments"
+    },
+    {
+      "name": "Reference",
+      "description": "Editing Reference Fields"
+    },
+    {
+      "name": "Track",
+      "description": "Tracking job orders"
+    },
+    {
+      "name": "Misc",
+      "description": "Miscellaneous"
+    },
+    {
+      "name": "order_model",
+      "x-displayName": "Order Model",
+      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Order\" />\n"
+    },
+    {
+      "name": "address_model",
+      "x-displayName": "Address Model",
+      "description": "<SchemaDefinition schemaRef=\"#/components/schemas/Address\" />\n"
+    }
+
+  ],
+  "x-tagGroups": [
+    {
+      "name": "API References",
+      "tags": [
+        "Authentication",
+        "Orders",
+        "Reference",
+        "Track",
+        "Misc"
+      ]
+    },
+    {
+      "name": "Models",
+      "tags": [
+        "order_model",
+        "address_model"
+      ]
+    }
+  ],
+  "paths": {
+    "/getQuote" :{
+      "post" : {
+        "tags": [
+          "Orders"
+        ],
+        "summary" : "Get quote for delivery",
+        "description" : "Get quote for delivery. Check to see if address is valid and returns the rate choices for the delivery.",
+        "operationId" : "getQuote",
+        "requestBody" :{
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type":"object",
+                "properties" : {
+                  "pieces" : {
+                    "type" : "integer",
+                    "example" : 1,
+                    "description" : "Number of pieces in shipment. Can affect rate and available service types"
+                  },
+                  "weight" : {
+                    "type" : "integer",
+                    "example" : 1,
+                    "description" : "Total weight of the shipment. Can affect rate and available service types"
+                  },
+                  "declared_value" : {
+                    "type" : "integer",
+                    "example" : null,
+                    "description" : "Insurable amount.  will affect final rate if non-zero."
+                  },
+                  "pickup_datetime" : {
+                    "type" : "string",
+                    "format" : "date-time",
+                    "example" : null,
+                    "description" : "The date and time in UTC values when the trip will be ready for pickup.  Leaving null will default to ready immediately."
+                  },
+                  "reference" : {
+                    "type" : "string",
+                    "example" : null,
+                    "description" : "Customer reference for trip. Appears on invoice."
+                  },
+                  "special_instructions" : {
+                    "type" : "string",
+                    "example" : null,
+                    "description" : "Any specific instructions for this trip.  Will be visible to dispatch and driver."
+                  },
+                  "delivery_url" : {
+                    "type" : "string",
+                    "example" : null,
+                    "description" : "Any web link that needs to be present on the trip, similar to a customer reference. Visible to driver."
+                  },
+                  "delivery_sig_required" : {
+                    "type" : "integer",
+                    "example" : 1,
+                    "description" : "Defaults to 1.  setting to 0 will allow delivery without a signature.  (signature is always attempted)"
+                  },
+                  "description" : {
+                    "type": "string",
+                    "description" : "description of the trip.  suitable examples would be 'Envelope, Box, Roll, Skid, etc'",
+                    "description": "Type of package",
+                    "enum": [
+                      "Envelope",
+                      "Package",
+                      "Box",
+                      "Skid",
+                      "Roll",
+                      "Binder",
+                      "Book",
+                      "Drycleaning",
+                      "Flowers",
+                      "Bag",
+                      "Other"
+                    ]
+                  },
+                  "account_email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "jillsmith@example.com",
+                    "description" : "will send shipment notifications to this email address including exception and delivery notifications"
+                  },
+                  "client_email" : {
+                    "type" : "string",
+                    "format" : "email",
+                    "example" : "johnsmith@example.com",
+                    "description" : "will send a notification to this email of a shipment bound to them as the receiver with a tracking link."
+                  },
+                  "delivery" : {
+                    "type" : "object",
+                    "properties" : {
+                      "description" : {
+                        "type" : "string",
+                        "example" : "DirectIT Group",
+                        "description" : "The company or individual name of the receiver."
+                      },
+                      "suite" : {
+                        "type" : "string",
+                        "example" : "Unit 1",
+                        "description" : "The suite portion of the address."
+                      },
+                      "address" : {
+                        "type" : "string",
+                        "example" : "100 Barclay Parade",
+                        "description" : "The road portion of the address."
+                      },
+                      "city" : {
+                        "type" : "string",
+                        "example" : "Calgary",
+                        "description" : "The city for delivery. If left blank, will default to account default setting as specified when api key setup."
+                      },
+                      "province" : {
+                        "type" : "string",
+                        "example" : "Alberta",
+                        "description" : "The province.  if left blank, will default to account default setting as specified when api key setup."
+                      },
+                      "country" : {
+                        "type" : "string",
+                        "example" : "Canada",
+                        "description" : "The country.  if left blank, will default to account default setting as specified when api key setup."
+                      },
+                      "postal" : {
+                        "type" : "string",
+                        "example" : "T2P3E7",
+                        "description" : "the postal code for the address. Not required."
+                      },
+                      "latitude" : {
+                        "type" : "number",
+                        "example" : 0.0,
+                        "description" : "Latitude. If known, you may provide the GPS coordinates of the delivery address using these fields.  not required."
+                      },
+                      "longitude" : {
+                        "type" : "number",
+                        "example" : 0.0,
+                        "description" : "Longitude.  if known, you may provide the GPS coordinates of the delivery address using these fields.  not required."
+                      },
+                      "contactName" : {
+                        "type" : "string",
+                        "example" : "John Smith",
+                        "description" : "An Attention to name at the delivery. "
+                      },
+                      "contactPhone" : {
+                        "type" : "string",
+                        "example" : "123-456-7890",
+                        "description" : "A phone number to contact @ the delivery. "
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type" : "array",
+                  "items" : {
+                    "type":"object",
+                    "properties": {
+                      "quoteID" : {
+                        "type" :"string",
+                        "example" : "E8B7B1EC-55B0-4B57-B7F9-E5DC0DE71A97",
+                        "description" : "Quote ID of the order request. Valid for 60 seconds to call execute_quote"
+                      },
+                      "descr" :{
+                        "type" : "string",
+                        "example" : "Air Service Overnight VPU  Today after 12:57 [ $34.38]",
+                        "description" : "Description of rate and delivery method"
+
+                      },
+                      "dtCallIn" :{
+                        "type" : "string",
+                        "format" :"date-time",
+                        "description" : "Delivery call in"
+
+                      },
+                      "dtDCT" :{
+                        "type" : "string",
+                        "format" :"date-time",
+                        "description" : "delivery date call time"
+                      },
+                      "rate" :{
+                        "type" : "string",
+                        "description" : "Rate of package"
+                      },
+                      "ser_area" :{
+                        "type" : "string",
+                        "example" : "A",
+                        "description" : "Service area"
+                      },
+                      "ser_time" :{
+                        "type" : "integer",
+                        "example" : 121,
+                        "description" : "Service time"
+                      },
+                      "distance" : {
+                        "type" : "number",
+                        "example" : 316234,
+                        "description" : "Delivery distance"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          
+        }
+      }
+    },
+    "/executeQuote" : {
+      "post": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Execute quote",
+        "description": "Execute quote and place order using the quote ID retrieved from getQuote",
+        "operationId": "executeQuote",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type" : "object",
+                "properties" : {
+                  "quoteID" : {
+                    "type" : "string",
+                    "example" : "E8B7B1EC-55B0-4B57-B7F9-E5DC0DE71A97",
+                    "description" : "A quoteID obtained from the output of a call to /getQuote."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type" : "array",
+                  "items" : {
+                    "type":"object",
+                    "properties": {
+                      "jobID" : {
+                        "type" : "string",
+                        "example" : "12345",
+                        "description" : "jobID"
+                      },
+                      "rate" : {
+                        "type" : "number",
+                        "example" : 3.00,
+                        "description" : "Rate of delivery"
+                      },
+                      "ser_area" : {
+                        "type" : "string",
+                        "example" : "C",
+                        "description" : "Service area"
+                      },
+                      "ser_time" : {
+                        "type" : "integer",
+                        "example" : 120,
+                        "description" : "Service time"
+                      },
+                      "dtCallIn" : {
+                        "type" : "string",
+                        "format" : "date-time",
+                        "description" : "dctCallIn"
+                      },
+                      "dtDCT" : {
+                        "type" : "string",
+                        "format" : "date-time",
+                        "description" : "dtDCT"
+                      },
+                      "TrackNumber" : {
+                        "type" : "string",
+                        "example" : "TR8323512161586",
+                        "description" : "Tracking number"
+                      },
+                      "TrackNumber" : {
+                        "type" : "string",
+                        "example" : "https://ship.directx.ca/redirect.php?TrackNumber=TR8323512161586",
+                        "description" : "Tracking link to view order"
+                      }
+
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      }
+    },
+    "/order": {
+      "post": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Make an order",
+        "description": "Create a new order",
+        "operationId": "postOrder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Order"
+              }
+            }
+          },
+          "description": "Order info",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "companyID": {
+                      "type": "integer",
+                      "description": "companyID",
+                      "example" : 123
+                    },
+                    "jobID": {
+                      "type": "string",
+                      "description": "jobID",
+                      "example" : "12345"
+                    },
+                    "foxJob": {
+                      "type": "string",
+                      "description": "foxJob",
+                      "example" : "1111"
+                    },
+                    "email_req": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email",
+                      "example" : "johndoe@example.com"
+                    },
+                    "email_addr": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "email address",
+                      "example" : "johndoe@example.com"
+                    },
+                    "ship_addressID": {
+                      "type": "integer",
+                      "description": "Shipping Address ID",
+                      "example" : 10000
+                    },
+                    "trackingNumber": {
+                      "type": "string",
+                      "description": "Tracking Number for users to track their package",
+                      "example" : "1234567890"
+                    },
+                    "isEmailSent": {
+                      "type": "integer",
+                      "description": "Number of emails sent",
+                      "example" : 1
+                    },
+                    "result": {
+                      "type": "string",
+                      "description": "Result",
+                      "example" : "Finished"
+                    },
+                    "returnJobID": {
+                      "type": "string",
+                      "description": "Return jobID",
+                      "example" : "12345"
+                    },
+                    "returnTrackingNumber": {
+                      "type": "string",
+                      "description": "Return tracking number",
+                      "example" : "1234554321"
+                    },
+                    "returnFoxJob": {
+                      "type": "string",
+                      "description": "Return foxJob",
+                      "example" : "12345"
+                    },
+                    "returnResult": {
+                      "type": "string",
+                      "description": "Return result",
+                      "example" : "Pending"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/order \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '{\"account\": \"1000\",\"shipAddressID\": 1111,\"conAddressID\": 1111,\"del_inst\": \"Leave at door\",\"cust_ref\": \"John Doe\",\"checkedEmail\": true,\"deliveryEmail\": \"johndoe@example.com\",\"rate\": {\"baseRate\": 3,\"ser_time\": 10,\"ser_area\": \"S\",\"dtdct\": \"2019-08-24T14:15:22Z\",\"dtCallIn\": \"2019-08-24T14:15:22Z\"},\"email\": \"user@example.com\",\"pieces\": 0,\"weight\": 0,\"packageType\": \"Envelope\",\"caller\": \"string\",\"additionalEmail\": \"user@example.com\",\"returnTripServic\": {\"baseRate\": 0,\"ser_time\": 0,\"dtdct\": \"2019-08-24T14:15:22Z\"}}'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/order',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '{\"account\": \"1000\",\"shipAddressID\": 1111,\"conAddressID\": 1111,\"del_inst\": \"Leave at door\",\"cust_ref\": \"John Doe\",\"checkedEmail\": true,\"deliveryEmail\": \"johndoe@example.com\",\"rate\": {\"baseRate\": 3,\"ser_time\": 10,\"ser_area\": \"S\",\"dtdct\": \"2019-08-24T14:15:22Z\",\"dtCallIn\": \"2019-08-24T14:15:22Z\"},\"email\": \"user@example.com\",\"pieces\": 0,\"weight\": 0,\"packageType\": \"Envelope\",\"caller\": \"string\",\"additionalEmail\": \"user@example.com\",\"returnTripServic\": {\"baseRate\": 0,\"ser_time\": 0,\"dtdct\": \"2019-08-24T14:15:22Z\"}}'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '{\"account\": \"1000\",\"shipAddressID\": 1111,\"conAddressID\": 1111,\"del_inst\": \"Leave at door\",\"cust_ref\": \"John Doe\",\"checkedEmail\": true,\"deliveryEmail\": \"johndoe@example.com\",\"rate\": {\"baseRate\": 3,\"ser_time\": 10,\"ser_area\": \"S\",\"dtdct\": \"2019-08-24T14:15:22Z\",\"dtCallIn\": \"2019-08-24T14:15:22Z\"},\"email\": \"user@example.com\",\"pieces\": 0,\"weight\": 0,\"packageType\": \"Envelope\",\"caller\": \"string\",\"additionalEmail\": \"user@example.com\",\"returnTripServic\": {\"baseRate\": 0,\"ser_time\": 0,\"dtdct\": \"2019-08-24T14:15:22Z\"}}';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/order\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/order\"\n\npayload = \"{\\\"account\\\": \\\"1000\\\",\\\"shipAddressID\\\": 1111,\\\"conAddressID\\\": 1111,\\\"del_inst\\\": \\\"Leave at door\\\",\\\"cust_ref\\\": \\\"John Doe\\\",\\\"checkedEmail\\\": true,\\\"deliveryEmail\\\": \\\"johndoe@example.com\\\",\\\"rate\\\": {\\\"baseRate\\\": 3,\\\"ser_time\\\": 10,\\\"ser_area\\\": \\\"S\\\",\\\"dtdct\\\": \\\"2019-08-24T14:15:22Z\\\",\\\"dtCallIn\\\": \\\"2019-08-24T14:15:22Z\\\"},\\\"email\\\": \\\"user@example.com\\\",\\\"pieces\\\": 0,\\\"weight\\\": 0,\\\"packageType\\\": \\\"Envelope\\\",\\\"caller\\\": \\\"string\\\",\\\"additionalEmail\\\": \\\"user@example.com\\\",\\\"returnTripServic\\\": {\\\"baseRate\\\": 0,\\\"ser_time\\\": 0,\\\"dtdct\\\": \\\"2019-08-24T14:15:22Z\\\"}}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
+      }
+    },
+    "/order/{account}/{jobID}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order",
+        "description": "Get order by account ID and job ID",
+        "operationId": "getOrder",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          },
+          {
+            "$ref" : "#/components/parameters/jobID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/order/1000/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/order/1000/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/order/1000/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/order/1000/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/orders/{account}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get orders",
+        "description": "Get orders of an account",
+        "operationId": "getOrders",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/orders/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orders/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orders/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/orders/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/zpl/{account}/{jobID}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order zpl label",
+        "description": "",
+        "operationId": "zpl",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          },
+          {
+            "$ref" : "#/components/parameters/jobID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation complete, returns a ZPL Label"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          },
+          "500": {
+            "$ref" : "#/components/responses/error500"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/zpl/1000/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/zpl/1000/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/zpl/1000/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/zpl/1000/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/orderPhoto/{account}/{jobID}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order photo",
+        "description": "Retrieve first photo of the order",
+        "operationId": "orderPhoto",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          },
+          {
+            "$ref" : "#/components/parameters/jobID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation complete, returns a picture of the order"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          },
+          "404": {
+            "$ref" : "#/components/responses/error404"
+          },
+          "500": {
+            "$ref" : "#/components/responses/error500"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/orderPhoto/1000/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orderPhoto/1000/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orderPhoto/1000/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/orderPhoto/1000/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/orderPhoto/{account}/{jobID}/{photoNumber}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order photo",
+        "description": "Retrieve photo of the order",
+        "operationId": "orderPhotoByNumber",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          },
+          {
+            "$ref" : "#/components/parameters/jobID"
+          },
+          {
+            "name": "photoNumber",
+            "in": "path",
+            "required": true,
+            "description": "Photo number",
+            "schema": {
+              "type": "string",
+              "example":"1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation complete, returns a picture of the order"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          },
+          "404": {
+            "$ref" : "#/components/responses/error404"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/orderPhoto/1000/12345/1"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orderPhoto/1000/12345/1'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orderPhoto/1000/12345/1\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/orderPhoto/1000/12345/1\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/orderSignature/{account}/{jobID}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order signature",
+        "description": "Retrieve picture of the order signature",
+        "operationId": "orderSignature",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          },
+          {
+            "$ref" : "#/components/parameters/jobID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation complete, returns a picture of the order signature"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          },
+          "404": {
+            "$ref" : "#/components/responses/error404"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/orderSignature/1000/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/orderSignature/1000/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/orderSignature/1000/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/orderSignature/1000/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/barcode/{jobID}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get order barcode",
+        "description": "Retrieve picture of the order's barcode",
+        "operationId": "barcode",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/jobID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operation complete, returns a picture of the barcode"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          },
+          "500": {
+            "$ref" : "#/components/responses/error500"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/barcode/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/barcode/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/barcode/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/barcode/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/referenceFields/{account}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Reference"
+        ],
+        "summary": "Get reference fields",
+        "description": "Get reference fields",
+        "operationId": "referenceFields",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "refID": {
+                        "type": "integer",
+                        "description": "Reference ID"
+                      },
+                      "typeDesc": {
+                        "type": "string",
+                        "description": "Description"
+                      },
+                      "label": {
+                        "type": "string",
+                        "description": "Label"
+                      },
+                      "maxLen": {
+                        "type": "integer",
+                        "description": "Maximum length"
+                      },
+                      "defaultValue": {
+                        "type": "string",
+                        "description": "Default Value"
+                      },
+                      "required": {
+                        "type": "boolean",
+                        "description": "Required"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/referenceFields/1000"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/referenceFields/1000'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/referenceFields/1000\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/referenceFields/1000\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/referenceDropDown/{refID}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Reference"
+        ],
+        "summary": "Get reference drop down",
+        "description": "",
+        "operationId": "referenceDropDown",
+        "parameters": [
+          {
+            "name": "refID",
+            "in": "path",
+            "required": true,
+            "description": "Reference ID",
+            "schema": {
+              "type": "string",
+              "example":"101"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items" : {
+                      "type": "object",
+                      "properties": {
+                        "ddvalue": {
+                          "type": "string",
+                          "description": "Drop down value"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/referenceDropDown/101"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/referenceDropDown/101'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/referenceDropDown/101\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/referenceDropDown/101\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/postReferenceFields": {
+      "post": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Reference"
+        ],
+        "summary": "Post reference fields",
+        "description": "Create new reference fields",
+        "operationId": "postReferenceFields",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "jobID": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "Job ID"
+                  },
+                  "reference": {
+                    "properties": {
+                      "refID": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Reference ID"
+                      },
+                      "value": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Reference Value"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Reference field info",
+          "required": [
+            "jobID",
+            "reference"
+          ]
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          },
+          "405": {
+            "$ref" : "#/components/responses/error405"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/postReferenceFields \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"jobID\": 12345,\"reference\": {\"refID\": 0,\"value\": 10}'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/postReferenceFields',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"jobID\": 12345,\"reference\": {\"refID\": 0,\"value\": 10}'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"jobID\": 12345,\"reference\": {\"refID\": 0,\"value\": 10}';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/postReferenceFields\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/postReferenceFields\"\n\npayload = \"{\\\"jobID\\\": 12345,\\\"reference\\\": {\\\"refID\\\": 0,\\\"value\\\": 10}}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
+      }
+    },
+    "/track/{jobID}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Track"
+        ],
+        "summary": "Get tracking details",
+        "description": "Get tracking details of an order",
+        "operationId": "track",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/jobID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "ORDER": {
+                        "type": "integer",
+                        "description": "Order ID"
+                      },
+                      "TIMESTAMP": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Time Stamp"
+                      },
+                      "color": {
+                        "type": "string",
+                        "description": "Color"
+                      },
+                      "filled": {
+                        "type": "boolean",
+                        "description": "Filled status"
+                      },
+                      "POSITION": {
+                        "type": "string",
+                        "description": "Position"
+                      },
+                      "inclTime": {
+                        "type": "boolean",
+                        "description": "Include time"
+                      },
+                      "bigText": {
+                        "type": "string",
+                        "description": "Big text"
+                      },
+                      "smallText": {
+                        "type": "string",
+                        "description": "Small Text"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/track/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/track/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/track/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/track/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/jobGPS/{jobID}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Track"
+        ],
+        "summary": "Get location of order",
+        "description": "Get location of order",
+        "operationId": "jobGPS",
+        "parameters": [
+          {
+            "name": "jobID",
+            "in": "path",
+            "required": true,
+            "description": "Job ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "slat": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Start latitude"
+                    },
+                    "slong": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Start longitude"
+                    },
+                    "clat": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Current latitude"
+                    },
+                    "clong": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Current longitude"
+                    },
+                    "last_driv": {
+                      "type": "string",
+                      "description": "Last Driver"
+                    },
+                    "TripLat": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Trip Latitude"
+                    },
+                    "TripLong": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "Trip Longitude"
+                    },
+                    "TripTimeUTC": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Trip Time in UTC"
+                    },
+                    "TripLocation": {
+                      "type": "string",
+                      "description": "Trip Location"
+                    },
+                    "DriverLat": {
+                      "type": "number",
+                      "format": "float"
+                    },
+                    "DriverLong": {
+                      "type": "number",
+                      "format": "float"
+                    },
+                    "Crumb1Lat": {
+                      "type": "number"
+                    },
+                    "Crumb1Long": {
+                      "type": "number"
+                    },
+                    "Crumb2Lat": {
+                      "type": "number"
+                    },
+                    "Crumb2Long": {
+                      "type": "number"
+                    },
+                    "Crumb3Lat": {
+                      "type": "number"
+                    },
+                    "Crumb3Long": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/jobGPS/12345"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/jobGPS/12345'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/jobGPS/12345\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/jobGPS/12345\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/orderUpdateWeight/{account}/{jobID}": {
+      "patch": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Reference"
+        ],
+        "summary": "Update weight",
+        "description": "",
+        "operationId": "orderUpdateWeight",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          },
+          {
+            "$ref" : "#/components/parameters/jobID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "newWeight": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "Weight of package",
+                    "example" : 12
+                  }
+                }
+              }
+            }
+          },
+          "description": "New Weight",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "message": {
+                      "type" : "string",
+                      "example" :"successful"
+                    },
+                    "recordSets": {
+                      "type" : "array",
+                      "items" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request PATCH \\\n  --url https://api.directx.ca/orderUpdateWeight/1000/12345 \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/json' \\\n --data '\"newWeight\":12'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'PATCH',\n  url: 'https://api.directx.ca/orderUpdateWeight/1000/12345',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '[\"newWeight\":12]',\n  json: true\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = JSON.stringify([\n  {\n    \"newWeight\": 12\n  }\n]);\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"PATCH\", \"https://api.directx.ca/orderUpdateWeight/1000/12345\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/orderUpdateWeight/1000/12345\"\n\npayload = \"[{\\\"newWeight\\\":12]\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/json\"\n    }\n\nresponse = requests.request(\"PATCH\", url, data=payload, headers=headers)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/getAddressByID/{account}/{addressID}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Track"
+        ],
+        "summary": "Get address",
+        "description": "Get address by addressID",
+        "operationId": "getAddressByID",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          },
+          {
+            "name": "addressID",
+            "in": "path",
+            "required": true,
+            "description": "Address ID",
+            "schema": {
+              "type": "string",
+              "example" : "101"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "array",
+                    "items" : {
+                      "$ref": "#/components/schemas/Address"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/getAddressByID/1000/101"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/getAddressByID/1000/101'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/getAddressByID/1000/101\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/getAddressByID/1000/101\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/userEmails/{account}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Track"
+        ],
+        "summary": "Get user emails",
+        "description": "Get user emails of an account",
+        "operationId": "getUserEmails",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "username": {
+                        "type": "string",
+                        "description": "Username"
+                      },
+                      "emailAddress": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "Email"
+                      },
+                      "sendNotification": {
+                        "type": "boolean",
+                        "description": "Subscribed to notifications"
+                      },
+                      "LastDate": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Last date used"
+                      },
+                      "tripCount": {
+                        "type": "integer",
+                        "description": "Number of trips"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/userEmails/1000"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/userEmails/1000'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/userEmails/1000\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/userEmails/1000\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/groupAccounts/{groupID}": {
+      "get": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Track"
+        ],
+        "summary": "Get accounts",
+        "description": "Get accounts by group ID",
+        "operationId": "groupAccounts",
+        "parameters": [
+          {
+            "name": "groupID",
+            "in": "path",
+            "required": true,
+            "description": "Group ID",
+            "schema": {
+              "type": "string",
+              "example" : "1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "accountName": {
+                          "type": "string",
+                          "description": "Name of account"
+                        },
+                        "account": {
+                          "type": "string",
+                          "description": "Account ID"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request GET \\\n  --url https://api.directx.ca/groupAccounts/1"
+          },
+          {
+            "lang": "Node",
+            "source": "var request = require(\"request\");\n\nvar options = {method: 'GET', url: 'https://api.directx.ca/groupAccounts/1'};\n\nrequest(options, function (error, response, body) {\n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = null;\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"GET\", \"https://api.directx.ca/groupAccounts/1\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/groupAccounts/1\"\n\nresponse = requests.request(\"GET\", url)\n\nprint(response.text)"
+          }
+        ]
+      }
+    },
+    "/loginToken": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login Token",
+        "description": "",
+        "operationId": "loginToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "sso_token": {
+                    "type": "string",
+                    "description": "SSO Token for login"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Login token info",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Message: Login successful!"
+                    },
+                    "preferences": {
+                      "properties": {
+                        "email_Req": {
+                          "type": "string"
+                        },
+                        "CompanyID": {
+                          "type": "integer"
+                        },
+                        "email_addr": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "ship_addressID": {
+                          "type": "string"
+                        },
+                        "phone": {
+                          "type": "string"
+                        },
+                        "groupID": 76,
+                        "openTime": {
+                          "type": "string"
+                        },
+                        "closeTime": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "userReal": {
+                      "properties": {
+                        "ACCOUNT": {
+                          "type": "string"
+                        },
+                        "SHIPPER": {
+                          "type": "string"
+                        },
+                        "ADDRESS": {
+                          "type": "string"
+                        },
+                        "LOCATION": {
+                          "type": "string"
+                        },
+                        "CITY": {
+                          "type": "string"
+                        },
+                        "POSTAL": {
+                          "type": "string"
+                        },
+                        "PHONE": {
+                          "type": "string"
+                        },
+                        "CALLER": {
+                          "type": "string"
+                        },
+                        "FAX": {
+                          "type": "string"
+                        },
+                        "SURCHARGE": {
+                          "type": "number"
+                        },
+                        "PASSWORD": {
+                          "type": "string"
+                        },
+                        "accountID": {
+                          "type": "number"
+                        },
+                        "addressID": {
+                          "type": "string"
+                        },
+                        "HasInvoicePassword": {
+                          "type": "integer"
+                        },
+                        "referenceRequired": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "user": {
+                      "properties": {
+                        "user_name": {
+                          "type": "string"
+                        },
+                        "accountNumber": {
+                          "type": "string"
+                        },
+                        "groupID": {
+                          "type": "integer"
+                        },
+                        "HasInvoicePassword": {
+                          "type": "integer"
+                        },
+                        "referenceRequired": {
+                          "type": "boolean"
+                        },
+                        "address": {
+                          "properties": {
+                            "addressID": {
+                              "type": "string"
+                            },
+                            "companyName": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "city": {
+                              "type": "string"
+                            },
+                            "postalCode": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": "string"
+                            },
+                            "HasGPS": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "401": {
+            "description": "sso_token not found",
+             "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "description": "Error description",
+                        "example": "account not found"
+                      }
+                    }
+                  }
+                }
+              }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/postReferenceFields \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"sso_token\": \"sso_token\"'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/postReferenceFields',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"sso_token\": \"sso_token\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"sso_token\": \"sso_token\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/postReferenceFields\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/postReferenceFields\"\n\npayload = \"{\\\"sso_token\\\": \\\"sso_token\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
+      }
+    },
+    "/topAddress/{account}": {
+      "post": {
+        "tags": [
+          "Misc"
+        ],
+        "summary": "Search address",
+        "description": "Returns top ten address in the database matching search parameters",
+        "operationId": "topAddress",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "$": {
+                    "type": "string",
+                    "description": "Address search query"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Address info",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Address"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/topAddress/1000 \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"$\": \"QUERY\"'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/topAddress/1000',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"$\": \"QUERY\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"$\": \"QUERY\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/topAddress/1000\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/topAddress/1000\"\n\npayload = \"{\\\"$\\\": \\\"QUERY\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
+      }
+    },
+    "/expandAddress/{account}/{skip}": {
+      "post": {
+        "tags": [
+          "Misc"
+        ],
+        "summary": "Expand Address",
+        "description": "",
+        "operationId": "expandAddress",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          },
+          {
+            "in": "path",
+            "name": "skip",
+            "description": "Number of search results to skip",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "$": {
+                    "type": "string",
+                    "description": "Address search query"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Address Info",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Address"
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/expandAddress/1000/4 \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"$\": \"QUERY\"'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/expandAddress/1000/4',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"$\": \"QUERY\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"$\": \"QUERY\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/expandAddress/1000/4\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/expandAddress/1000/4\"\n\npayload = \"{\\\"$\\\": \\\"QUERY\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
+      }
+    },
+    "/addContact": {
+      "post": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Misc"
+        ],
+        "summary": "Add contact",
+        "description": "Create new contact",
+        "operationId": "addContact",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "companyName": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Contact Info",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/addContact \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"address\" : { \"companyName\" : \"_companyName_\", \"phone\" : \"_phoneNumber_\"}'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/addContact',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"address\" : { \"companyName\" : \"_companyName_\", \"phone\" : \"_phoneNumber_\"}'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"address\" : { \"companyName\" : \"_companyName_\", \"phone\" : \"_phoneNumber_\"}';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/addContact\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/addContact\"\n\npayload = \"{\\\"address\\\" : { \\\"companyName\\\" : \\\"_companyName_\\\", \\\"phone\\\" : \\\"_phoneNumber_\\\"}}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
+      }
+    },
+    "/userEmails": {
+      "post": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Misc"
+        ],
+        "summary": "Create user email",
+        "description": "",
+        "operationId": "postUserEmails",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "accountNumber": {
+                    "type": "string",
+                    "example" : "1000"
+                  },
+                  "caller": {
+                    "type": "object",
+                    "properties": {
+                      "username": {
+                        "type": "string",
+                        "example" : "_username_"
+                      },
+                      "emailAddress": {
+                        "type": "string",
+                        "format": "email",
+                        "example" : "user@example.com"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Email info",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/userEmails \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"accountNumber\" : \"1000\",\"caller\" : { \"username\" : \"_username_\", \"emailAddress\" : \"_emailAddress_\"}'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/userEmails',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"accountNumber\" : \"1000\",\"caller\" : { \"username\" : \"_username_\", \"emailAddress\" : \"_emailAddress_\"}'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"accountNumber\" : \"1000\",\"caller\" : { \"username\" : \"_username_\", \"emailAddress\" : \"_emailAddress_\"}';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/userEmails\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/userEmails\"\n\npayload = \"{\\\"accountNumber\\\" : \\\"1000\\\",\\\"caller\\\" : { \\\"username\\\" : \\\"_username_\\\", \\\"emailAddress\\\" : \\\"_emailAddress_\\\"}}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
+      }
+    },
+    "/address": {
+      "post": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Misc"
+        ],
+        "summary": "Create address",
+        "description": "Create new address to the database. Must be a valid address.",
+        "operationId": "address",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "accountNumber": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "object",
+                    "properties": {
+                      "companyName": {
+                        "type": "string",
+                        "description": "Company Name",
+                        "example" : "DirectIT Group"
+                      },
+                      "suite": {
+                        "type": "string",
+                        "description": "Address suite",
+                        "example": "Unit 1"
+                      },
+                      "address": {
+                        "type": "string",
+                        "description": "Address line",
+                        "example" : "100 Barclay Parade"
+                      },
+                      "quad": {
+                        "type": "string",
+                        "description": "Quad if there exists one (NE, SE, NW, SW)",
+                        "example":"SW"
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "City",
+                        "example":"Calgary"
+                      },
+                      "prov": {
+                        "type": "string",
+                        "description": "Province",
+                        "example":"AB"
+                      },
+                      "postal": {
+                        "type": "string",
+                        "description": "Postal code",
+                        "example":"T2P3E7"
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "Country",
+                        "example":"Canada"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "description": "Phone number",
+                        "example":"1234567890"
+                      },
+                      "lat": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Latitude",
+                        "example": 51.05246
+                      },
+                      "long": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Longitude",
+                        "example" : -114.068443
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "Address info",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/orderCall/{account}/{job}": {
+      "post": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Misc"
+        ],
+        "summary": "Create order call",
+        "description": "",
+        "operationId": "orderCall",
+        "parameters": [
+          {
+            "$ref" : "#/components/parameters/account"
+          },
+          {
+            "$ref" : "#/components/parameters/jobID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Phone info",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "405": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/ordercall/1000/12345 \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"phone\" : \"1234567890\"'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/ordercall/1000/12345',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"phone\" : \"1234567890\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"phone\" : \"1234567890\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/ordercall/1000/12345\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/ordercall/1000/12345\"\n\npayload = \"{\\\"phone\\\" : \\\"1234567890\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
+      }
+    },
+    "/invoicePassword": {
+      "post": {
+        "security": [
+          {
+            "sso_token": []
+          }
+        ],
+        "tags": [
+          "Misc"
+        ],
+        "summary": "Get invoice password",
+        "description": "Retrieve invoice password for an account",
+        "operationId": "invoicePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "accountNumber": {
+                    "type": "string",
+                    "example" : "1000"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example" : "password123"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Account info",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "405": {
+            "description": "Invalid input"
+          },
+          "401": {
+            "$ref" : "#/components/responses/error401"
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "Curl",
+            "source": "curl --request POST \\\n  --url https://api.directx.ca/invoicePassword \\\n  --header 'accept: text/plain' \\\n  --header 'content-type: application/*+json' \\\n  --data '\"accountNumber\" : \"1000\",\"password\" : \"password123\"'"
+          },
+          {
+            "lang": "Node",
+            "source": "var http = require(\"request\");\n\nvar options = {\n  method: 'POST',\n  url: 'https://api.directx.ca/invoicePassword',\n  headers: {accept: 'text/plain', 'content-type': 'application/*+json'},\n  body: '\"accountNumber\" : \"1000\",\"password\" : \"password123\"'\n};\n\nrequest(options, function (error, response, body) { \n  if (error) throw new Error(error);\n\n  console.log(body);\n});"
+          },
+          {
+            "lang": "JavaScript",
+            "source": "var data = '\"accountNumber\" : \"1000\",\"password\" : \"password123\"';\n\nvar xhr = new XMLHttpRequest();\n\nxhr.addEventListener(\"readystatechange\", function () {\n  if (this.readyState === this.DONE) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"https://api.directx.ca/invoicePassword\");\nxhr.setRequestHeader(\"accept\", \"text/plain\");\nxhr.setRequestHeader(\"content-type\", \"application/*+json\");\n\nxhr.send(data);"
+          },
+          {
+            "lang": "Python",
+            "source": "import requests\n\nurl = \"https://api.directx.ca/invoicePassword\"\n\npayload = \"{\\\"accountNumber\\\" : \\\"1000\\\",\\\"password\\\" : \\\"password123\\\"}\"\nheaders = {\n    'accept': \"text/plain\",\n    'content-type': \"application/*+json"
+          }
+        ]
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "DirectIt developer API documentation",
+    "url": "https://api.directx.ca/documentation"
+  },
+  "servers": [
+    {
+      "url" : "http://localhost:6655/"
+    },
+    {
+      "url": "https://api.directx.ca/"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Order": {
+        "type": "object",
+        "properties": {
+          "jobID": {
+            "type": "integer",
+            "description": "Job ID used to identify the order",
+            "example" : 12345
+
+          },
+          "TrackNumber": {
+            "type": "string",
+            "description": "TrackNumber used to access information on the ship.directx",
+            "example" : "TR3591012182321"
+          },
+          "TrackingLink": {
+            "type": "string",
+            "description": "Trackinglink to visit site for more information on status of order",
+            "example" : "https://ship.directx.ca/redirect.php?TrackNumber=TR3591012182321"
+          },
+          "ACCOUNT": {
+            "type": "string",
+            "maxLength": 10,
+            "description": "Account ID",
+            "example" : "1000"
+          },
+          "ShipperName": {
+            "type": "string",
+            "description": "Shipper name",
+            "example" : "DirectIT Group"
+          },
+          "sCompanyName": {
+            "type": "string",
+            "description": "Company name",
+            "example" : "DirectIT Group"
+          },
+          "sSuite": {
+            "type": "string",
+            "description": "Address Suite",
+            "example" : "Unit 1"
+          },
+          "sAddress": {
+            "type": "string",
+            "description": "Address Line",
+            "example" : "100 Barclay Parade"
+          },
+          "sQuad": {
+            "type": "string",
+            "description": "Quad if there exists one (NE, SE, NW, SW)",
+            "example" : "SW"
+          },
+          "sCity": {
+            "type": "string",
+            "description": "City",
+            "example" : "Calgary"
+          },
+          "sProv": {
+            "type": "string",
+            "description": "Province",
+            "example" : "AB"
+          },
+          "sPostal": {
+            "type": "string",
+            "description": "Postal Code",
+            "example" : "T2P3E7"
+          },
+          "sCountry": {
+            "type": "string",
+            "description": "Country",
+            "example" : "Canada"
+          },
+          "sPhone": {
+            "type": "string",
+            "description": "Contact phone number",
+            "example" : "1234567890"
+          },
+          "sLat": {
+            "type": "number",
+            "format": "float",
+            "description": "Latitude",
+            "example" : 51.05246
+          },
+          "sLong": {
+            "type": "number",
+            "format": "float",
+            "description": "Longitude",
+            "example" : -114.068443
+          },
+          "ConsignName": {
+            "type": "string",
+            "description": "Shipper name",
+            "example" : "DirectIT Group"
+          },
+          "cCompanyName": {
+            "type": "string",
+            "description": "Company name",
+            "example" : "DirectIT Group"
+          },
+          "cSuite": {
+            "type": "string",
+            "description": "Address Suite",
+            "example" : "Unit 1"
+          },
+          "cAddress": {
+            "type": "string",
+            "description": "Address Line",
+            "example" : "100 Barclay Parade"
+          },
+          "cQuad": {
+            "type": "string",
+            "description": "Quad if there exists one (NE, SE, NW, SW)",
+            "example" : "SW"
+          },
+          "cCity": {
+            "type": "string",
+            "description": "City",
+            "example" : "Calgary"
+          },
+          "cProv": {
+            "type": "string",
+            "description": "Province",
+            "example" : "AB"
+          },
+          "cPostal": {
+            "type": "string",
+            "description": "Postal Code",
+            "example" : "T2P3E7"
+          },
+          "sCountry": {
+            "type": "string",
+            "description": "Country",
+            "example" : "Canada"
+          },
+          "cPhone": {
+            "type": "string",
+            "description": "Contact phone number",
+            "example" : "1234567890"
+          },
+          "cLat": {
+            "type": "number",
+            "format": "float",
+            "description": "Latitude",
+            "example" : 51.05246
+          },
+          "cLong": {
+            "type": "number",
+            "format": "float",
+            "description": "Longitude",
+            "example" : -114.068443
+          },
+          "sContact": {
+            "type": "string",
+            "description": "Shipper contact name",
+            "example" : "John Smith"
+          },
+          "cContact": {
+            "type": "string",
+            "description": "Consign contact name",
+            "example" : "Jane Smith"
+          },
+          "drivDistance": {
+            "type": "number",
+            "description": "Driver Distance",
+            "example" : 0
+          },
+          "Pieces": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Number of packages",
+            "example" : 2
+          },
+          "Weight": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Weight of package",
+            "example" : 12
+          },
+          "Description": {
+            "type": "string",
+            "description": "Type of package",
+            "enum": [
+              "Envelope",
+              "Package",
+              "Box",
+              "Skid",
+              "Roll",
+              "Binder",
+              "Book",
+              "Drycleaning",
+              "Flowers",
+              "Bag",
+              "Other"
+            ]
+          },
+          "Service Type": {
+            "type" :"string",
+            "description" : "Service area and time selected",
+            "example" : "A-121"
+          },
+          "Customer Reference": {
+            "type": "string",
+            "description" : "Customer Reference",
+            "example" : "John"
+          },
+          "Exception": {
+            "type" : "integer",
+            "format": "int32",
+            "description" : "Indicates if trip has an exception flag enabled. Output is 0 if false. Any other digit >= 1 is true."
+          },
+          "Created Time": {
+            "type" : "string",
+            "format" :"date-time",
+            "description" : "Time job was created"
+          },
+          "Ready At Time": {
+            "type" : "string",
+            "format" :"date-time",
+            "description" : "Time the package should be ready for pickup"
+          },
+          "Pick Time": {
+            "type" : "string",
+            "format" :"date-time",
+            "description" : "Time job was picked"
+          },
+          "Delivery Completion Time": {
+            "type" : "string",
+            "format" :"date-time",
+            "description" : "Estimated time of completion of delivery"
+          },
+          "timezone": {
+            "type" : "string",
+            "description" :"Time Zone",
+            "example" :"Mountain Standard Time"
+          },
+          "locationString": {
+            "type" :"string",
+            "description" :"Current Location of the package",
+            "example": "At Client"
+          },
+          "StatusString": {
+            "type" : "string",
+            "description" :"Status of the package",
+            "example" :"Driver 950 Responsibility"
+          },
+          "RATE": {
+            "type" : "number",
+            "description" : "The rate of delivery",
+            "example" : 34.38
+          },
+          "FUELRATE": {
+            "type" : "number",
+            "description" : "The rate of fuel",
+            "example" : 4.38
+          },
+          "GST_RATE": {
+            "type" : "number",
+            "description" : "The tax rate",
+            "example" : 0.1
+          },
+          "Declared Value": {
+            "type" : "number",
+            "description" : "The insurable value of the package",
+            "example" : 100
+          },
+          "zInvoice": {
+            "type":"string",
+            "description": "Any additional charges applied to the trip (distance, fuel, etc)",
+            "example":"Fuel 14.60%"
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "dbid": {
+            "type": "string",
+            "description": "Database ID",
+            "example" : 1
+          },
+          "addressID": {
+            "type": "string",
+            "description": "Address ID",
+            "example" : "1924791"
+          },
+          "companyName": {
+            "type": "string",
+            "description": "Company name",
+            "example" : "DirectIT Group"
+          },
+          "suite": {
+            "type": "string",
+            "description": "Address Suite",
+            "example" : "Unit 1"
+          },
+          "address": {
+            "type": "string",
+            "description": "Address Line",
+            "example" : "100 Barclay Parade"
+          },
+          "quad": {
+            "type": "string",
+            "description": "Quad if there exists one (NE, SE, NW, SW)",
+            "example" : "SW"
+          },
+          "city": {
+            "type": "string",
+            "description": "City",
+            "example" : "Calgary"
+          },
+          "prov": {
+            "type": "string",
+            "description": "Province",
+            "example" : "AB"
+          },
+          "postal": {
+            "type": "string",
+            "description": "Postal Code",
+            "example" : "T2P3E7"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country",
+            "example" : "Canada"
+          },
+          "zone": {
+            "type": "string",
+            "description": "Delivery Zone",
+            "example" : "SB"
+          },
+          "contact": {
+            "type": "string",
+            "description": "Contact name",
+            "exmaple" : "John Doe"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Contact phone number",
+            "example" : "1234567890"
+          },
+          "lat": {
+            "type": "number",
+            "format": "float",
+            "description": "Latitude",
+            "example" : 51.05246
+          },
+          "long": {
+            "type": "number",
+            "format": "float",
+            "description": "Longitude",
+            "example" : -114.068443
+          },
+          "gpserror": {
+            "type": "boolean",
+            "description": "Returns true if there is GPS error",
+            "example" : false
+          },
+          "locationID": {
+            "type": "string",
+            "description": "Location ID",
+            "example" : "2657"
+          },
+          "private": {
+            "type": "boolean",
+            "description": "Returns true if address is private",
+            "example" : false
+          },
+          "custNo": {
+            "type": "string",
+            "description": "Customer Number"
+          },
+          "contactID": {
+            "type": "number",
+            "description": "Contact ID"
+          },
+          "cnt": {
+            "type": "number"
+          },
+          "cnt2": {
+            "type": "number",
+            "example" : 41
+          },
+          "hasGPS": {
+            "type": "number",
+            "example" : 1
+          },
+          "rowNumber": {
+            "type": "number"
+          },
+          "events": {
+            "type": "number"
+          },
+          "addressExtID": {
+            "type": "string"
+          },
+          "LastDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last Date Used"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "account": {
+        "name": "account",
+        "in": "path",
+        "description": "Account ID",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "1000"
+        }
+      },
+      "jobID" : {
+        "name": "jobID",
+        "in": "path",
+        "required": true,
+        "description": "Job ID",
+        "schema": {
+          "type": "string",
+          "example" : "12345"
+        }
+        
+      }
+
+    },
+    "securitySchemes" : {
+      "apiKey": {
+        "type" : "apiKey",
+        "in" : "header",
+        "name" : "apiKey"
+
+      }
+    },
+    "responses" : {
+      "error401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "Authentication failed",
+                    "Required parameter missing"
+                  ],
+                  "description": "Error description",
+                  "example": "Authentication failed"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 401
+                }
+              }
+            }
+          }
+        }
+      },
+      "error403": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error description",
+                  "example": "Access not granted"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 403
+                }
+              }
+            }
+          }
+        }
+      },
+      "error404": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "Entity not found",
+                    "Resource not found"
+                  ],
+                  "description": "Error description",
+                  "example": "Entity not found"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 404
+                }
+              }
+            }
+          }
+        }
+      },
+      "error405": {
+        "description": "Not valid input",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "enum": [
+                    "Entity not found",
+                    "Resource not found"
+                  ],
+                  "description": "Error description",
+                  "example": "Entity not found"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 405
+                }
+              }
+            }
+          }
+        }
+      },
+      "error422": {
+        "description": "Unprocessable Entity",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error description",
+                  "example": "Incorrect parameter value"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 422
+                }
+              }
+            }
+          }
+        }
+      },
+      "error500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error description",
+                  "example": "Internal error"
+                },
+                "status": {
+                  "type": "integer",
+                  "description": "HTTP Error code",
+                  "example": 500
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
