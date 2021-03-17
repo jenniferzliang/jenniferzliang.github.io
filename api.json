@@ -866,94 +866,180 @@
       "Order": {
         "type": "object",
         "properties": {
-          "account": {
+          "jobID": {
+            "type": "integer",
+            "description": "Job ID used to identify the order",
+            "example" : 12345
+
+          },
+          "TrackNumber": {
+            "type": "string",
+            "description": "TrackNumber used to access information on the ship.directx",
+            "example" : "TR3591012182321"
+          },
+          "TrackingLink": {
+            "type": "string",
+            "description": "Trackinglink to visit site for more information on status of order",
+            "example" : "https://ship.directx.ca/redirect.php?TrackNumber=TR3591012182321"
+          },
+          "ACCOUNT": {
             "type": "string",
             "maxLength": 10,
             "description": "Account ID",
             "example" : "1000"
           },
-          "shipAddressID": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Shipping Address ID",
-            "example" : 101
-          },
-          "conAddressID": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Consign Address ID",
-            "example" : 800
-          },
-          "del_inst": {
+          "ShipperName": {
             "type": "string",
-            "description": "Deliver Instruction",
-            "example" : "Leave at door"
+            "description": "Shipper name",
+            "example" : "DirectIT Group"
           },
-          "cust_ref": {
+          "sCompanyName": {
             "type": "string",
-            "description": "Customer Reference",
-            "example" : "John Doe"
+            "description": "Company name",
+            "example" : "DirectIT Group"
           },
-          "checkedEmail": {
-            "type": "boolean",
-            "description": "True if email is checked",
-            "example" : true
-          },
-          "deliveryEmail": {
+          "sSuite": {
             "type": "string",
-            "format": "email",
-            "description": "Delivery Email",
-            "example" : "johndoe@example.com"
+            "description": "Address Suite",
+            "example" : "Unit 1"
           },
-          "rate": {
-            "type": "object",
-            "properties": {
-              "baseRate": {
-                "type": "number",
-                "format": "double",
-                "description": "Base Rate charges",
-                "example" : 3.00
-              },
-              "ser_time": {
-                "type": "integer",
-                "description": "Service time",
-                "example" : 10
-              },
-              "ser_area": {
-                "type": "string",
-                "description": "Service area",
-                "example" : "S"
-              },
-              "dtdct": {
-                "type": "string",
-                "format": "date-time",
-                "description": "Deliver Time"
-              },
-              "dtCallIn": {
-                "type": "string",
-                "format": "date-time",
-                "description": "Deliver Time Call In"
-              }
-            }
-          },
-          "email": {
+          "sAddress": {
             "type": "string",
-            "format": "email",
-            "description": "Email"
+            "description": "Address Line",
+            "example" : "100 Barclay Parade"
           },
-          "pieces": {
+          "sQuad": {
+            "type": "string",
+            "description": "Quad if there exists one (NE, SE, NW, SW)",
+            "example" : "SW"
+          },
+          "sCity": {
+            "type": "string",
+            "description": "City",
+            "example" : "Calgary"
+          },
+          "sProv": {
+            "type": "string",
+            "description": "Province",
+            "example" : "AB"
+          },
+          "sPostal": {
+            "type": "string",
+            "description": "Postal Code",
+            "example" : "T2P3E7"
+          },
+          "sCountry": {
+            "type": "string",
+            "description": "Country",
+            "example" : "Canada"
+          },
+          "sPhone": {
+            "type": "string",
+            "description": "Contact phone number",
+            "example" : "1234567890"
+          },
+          "sLat": {
+            "type": "number",
+            "format": "float",
+            "description": "Latitude",
+            "example" : 51.05246
+          },
+          "sLong": {
+            "type": "number",
+            "format": "float",
+            "description": "Longitude",
+            "example" : -114.068443
+          },
+          "ConsignName": {
+            "type": "string",
+            "description": "Shipper name",
+            "example" : "DirectIT Group"
+          },
+          "cCompanyName": {
+            "type": "string",
+            "description": "Company name",
+            "example" : "DirectIT Group"
+          },
+          "cSuite": {
+            "type": "string",
+            "description": "Address Suite",
+            "example" : "Unit 1"
+          },
+          "cAddress": {
+            "type": "string",
+            "description": "Address Line",
+            "example" : "100 Barclay Parade"
+          },
+          "cQuad": {
+            "type": "string",
+            "description": "Quad if there exists one (NE, SE, NW, SW)",
+            "example" : "SW"
+          },
+          "cCity": {
+            "type": "string",
+            "description": "City",
+            "example" : "Calgary"
+          },
+          "cProv": {
+            "type": "string",
+            "description": "Province",
+            "example" : "AB"
+          },
+          "cPostal": {
+            "type": "string",
+            "description": "Postal Code",
+            "example" : "T2P3E7"
+          },
+          "sCountry": {
+            "type": "string",
+            "description": "Country",
+            "example" : "Canada"
+          },
+          "cPhone": {
+            "type": "string",
+            "description": "Contact phone number",
+            "example" : "1234567890"
+          },
+          "cLat": {
+            "type": "number",
+            "format": "float",
+            "description": "Latitude",
+            "example" : 51.05246
+          },
+          "cLong": {
+            "type": "number",
+            "format": "float",
+            "description": "Longitude",
+            "example" : -114.068443
+          },
+          "sContact": {
+            "type": "string",
+            "description": "Shipper contact name",
+            "example" : "John Smith"
+          },
+          "cContact": {
+            "type": "string",
+            "description": "Consign contact name",
+            "example" : "Jane Smith"
+          },
+          "drivDistance": {
+            "type": "number",
+            "description": "Driver Distance",
+            "example" : 0
+          },
+          "Pieces": {
             "type": "integer",
             "format": "int32",
             "description": "Number of packages",
             "example" : 2
           },
-          "weight": {
+          "Weight": {
             "type": "integer",
             "format": "int32",
             "description": "Weight of package",
             "example" : 12
           },
-          "packageType": {
+          "Description": {
             "type": "string",
             "description": "Type of package",
             "enum": [
@@ -970,36 +1056,80 @@
               "Other"
             ]
           },
-          "caller": {
-            "type": "string",
-            "description": "Caller name",
-            "example" : "Jane"
+          "Service Type": {
+            "type" :"string",
+            "description" : "Service area and time selected",
+            "example" : "A-121"
           },
-          "additionalEmail": {
+          "Customer Reference": {
             "type": "string",
-            "format": "email",
-            "description": "Additional email"
+            "description" : "Customer Reference",
+            "example" : "John"
           },
-          "returnTripService": {
-            "type": "object",
-            "properties": {
-              "baseRate": {
-                "type": "number",
-                "format": "double",
-                "description": "Return trip base rate",
-                "example" : 2.33
-              },
-              "ser_time": {
-                "type": "integer",
-                "description": "Return trip service time",
-                "example" : 12
-              },
-              "dtdct": {
-                "type": "string",
-                "format": "date-time",
-                "description": "Return trip delivery time"
-              }
-            }
+          "Exception": {
+            "type" : "integer",
+            "format": "int32",
+            "description" : "Indicates if trip has an exception flag enabled. Output is 0 if false, Any other digit >= 1 is true."
+          },
+          "Created Time": {
+            "type" : "string",
+            "format" :"date-time",
+            "description" : "Time job was created"
+          },
+          "Ready At Time": {
+            "type" : "string",
+            "format" :"date-time",
+            "description" : "Time the package should be ready for pickup"
+          },
+          "Pick Time": {
+            "type" : "string",
+            "format" :"date-time",
+            "description" : "Time job was picked"
+          },
+          "Delivery Completion Time": {
+            "type" : "string",
+            "format" :"date-time",
+            "description" : "Estimated time of completion of delivery"
+          },
+          "timezone": {
+            "type" : "string",
+            "description" :"Time Zone",
+            "example" :"Mountain Standard Time"
+          },
+          "locationString": {
+            "type" :"string",
+            "description" :"Current Location of the package",
+            "example": "At Client"
+          },
+          "StatusString": {
+            "type" : "string",
+            "description" :"Status of the package",
+            "example" :"Driver 950 Responsibility"
+          },
+          "RATE": {
+            "type" : "number",
+            "description" : "The rate of delivery",
+            "example" : 34.38
+          },
+          "FUELRATE": {
+            "type" : "number",
+            "description" : "The rate of fuel",
+            "example" : 4.38
+          },
+          "GST_RATE": {
+            "type" : "number",
+            "description" : "The tax rate",
+            "example" : 0.1
+          },
+          "Declared Value": {
+            "type" : "number",
+            "description" : "The insurable value of the package",
+            "example" : 100
+          },
+          "zInvoice": {
+            "type":"string",
+            "description": "Any additional charges applied to the trip (distance, fuel, etc)",
+            "example":"Fuel 14.60%"
           }
         }
       },
@@ -1159,10 +1289,10 @@
 
     },
     "securitySchemes" : {
-      "sso_token": {
+      "apiKey": {
         "type" : "apiKey",
         "in" : "header",
-        "name" : "sso_token"
+        "name" : "apiKey"
 
       }
     },
