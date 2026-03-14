@@ -2,7 +2,7 @@ var project = [
     {
         name: "Spotify Music Analyzer",
         tools: "Python, Django, Spotify API, Data Analysis",
-        description: '<p>Web application that analyzes Spotify playlists using advanced audio feature extraction and statistical analysis. Implements machine learning algorithms to classify music preferences and generate personalized recommendations based on audio characteristics like tempo, energy, and valence.</p><a class="btn btn-dark btn-social" href="https://github.com/jenniferli1098/spotifyAnalyzer"><i class="fab fa-github"></i></a>',
+        description: '<p>Web application that analyzes Spotify playlists using advanced audio feature extraction and statistical analysis. Implements machine learning algorithms to classify music preferences and generate personalized recommendations based on audio characteristics like tempo, energy, and valence.</p><a class="btn btn-dark btn-social" href="https://github.com/jenniferzliang/spotifyAnalyzer"><i class="fab fa-github"></i></a>',
         img: "assets/img/portfolio/spotify2.png"
     },
     {
@@ -20,7 +20,7 @@ var project = [
     {
         name: "COVID-19 Data Tracker",
         tools: "Node.js, Angular, API Integration, Data Visualization",
-        description: '<p>Interactive web application for real-time COVID-19 data visualization and analysis. Integrated with covid19api for live data feeds, implemented statistical analysis algorithms, and created dynamic charts for trend analysis across geographic regions.</p><a class="btn btn-dark btn-social" href="https://github.com/jenniferli1098/CovidStatsTracker-webApp"><i class="fab fa-github"></i></a>',
+        description: '<p>Interactive web application for real-time COVID-19 data visualization and analysis. Integrated with covid19api for live data feeds, implemented statistical analysis algorithms, and created dynamic charts for trend analysis across geographic regions.</p><a class="btn btn-dark btn-social" href="https://github.com/jenniferzliang/CovidStatsTracker-webApp"><i class="fab fa-github"></i></a>',
         img: ""
     }
 ];
