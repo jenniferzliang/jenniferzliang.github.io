@@ -24,10 +24,10 @@
             <h1>Jennifer Liang</h1>
             <p class="subtitle">Software Engineer</p>
             <nav>
-                <a href="#about">About</a>
+                <a href="#about" class="active">About</a>
                 <a href="projects.html">Projects</a>
                 <a href="misc.html">Misc</a>
-                <a href="assets/Jennifer_Liang.pdf" target="_blank">Resume</a>
+                <a href="assets/Jennifer_Liang.pdf" target="_blank">Resume ↗</a>
             </nav>
         </header>
 
@@ -70,11 +70,12 @@
         </main>
 
         <footer>
-            <p>&copy; 2024 Jennifer Liang</p>
+            <p>&copy; 2026 Jennifer Liang</p>
         </footer>
     </div>
 
     <dialog id="nycDialog" style="max-width: 800px; padding: 0; border: none; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+        <button onclick="document.getElementById('nycDialog').close()" style="position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.5); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 14px; cursor: pointer; line-height: 1;">✕</button>
         <img src="assets/nyc.jpg" alt="Walking in NYC" style="width: 100%; height: auto; display: block; border-radius: 8px;">
     </dialog>
 
@@ -85,6 +86,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             margin: 0;
+            overflow: visible;
         }
         #nycDialog::backdrop {
             background: rgba(0, 0, 0, 0.5);

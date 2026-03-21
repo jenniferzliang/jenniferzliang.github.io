@@ -141,6 +141,17 @@ section:last-child {
     margin-bottom: 0;
 }
 
+/* Project entries */
+.project + .project {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e5e5;
+}
+
+.project h3 {
+    margin-top: 0;
+}
+
 /* Page title */
 .page-title {
     margin-bottom: 2rem;
