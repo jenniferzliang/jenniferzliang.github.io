@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Travel Planner</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f6f8; color: #1a1a2e; height: 100vh; overflow: hidden; }
+
+    /* ---- SETUP / SPOTS SCREENS ---- */
+    .screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
+    .card { background: #fff; border-radius: 20px; box-shadow: 0 4px 32px rgba(0,0,0,0.09); padding: 40px 44px; width: 100%; max-width: 540px; }
+    .logo { font-size: 28px; font-weight: 700; color: #2563eb; margin-bottom: 4px; letter-spacing: -0.5px; }
+    .logo span { color: #64748b; font-weight: 400; }
+    .subtitle { color: #64748b; font-size: 14px; margin-bottom: 32px; }
+    .field { margin-bottom: 20px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; color: #374151; margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .field input { width: 100%; padding: 11px 14px; border: 1.5px solid #e5e7eb; border-radius: 10px; font-size: 14px; color: #1a1a2e; outline: none; transition: border-color 0.15s; background: #fafafa; }
+    .field input:focus { border-color: #2563eb; background: #fff; }
+    .field input::placeholder { color: #b0b8c8; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .days-input { display: flex; align-items: center; gap: 12px; }
+    .days-input input { width: 80px; text-align: center; }
+    .days-label { font-size: 14px; color: #64748b; }
+    .transport-btns { display: flex; gap: 10px; }
+    .transport-btn { flex: 1; padding: 10px; border: 1.5px solid #e5e7eb; border-radius: 10px; background: #fafafa; cursor: pointer; font-size: 13px; font-weight: 500; color: #374151; transition: all 0.15s; text-align: center; }
+    .transport-btn:hover { border-color: #93c5fd; background: #eff6ff; }
+    .transport-btn.active { border-color: #2563eb; background: #eff6ff; color: #2563eb; }
+    .btn-primary { width: 100%; padding: 13px; background: #2563eb; color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 8px; transition: background 0.15s; letter-spacing: 0.2px; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-primary:disabled { background: #93c5fd; cursor: not-allowed; }
+    .step-back { font-size: 13px; color: #2563eb; cursor: pointer; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 5px; }
+    .step-back:hover { text-decoration: underline; }
+
+    /* ---- SPOTS MANAGER ---- */
+    .search-wrap { position: relative; }
+    .search-wrap input { padding-right: 40px; }
+    .search-spinner { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; border: 2px solid #e5e7eb; border-top-color: #2563eb; border-radius: 50%; animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+    .autocomplete-list { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: #fff; border: 1.5px solid #e5e7eb; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); z-index: 999; overflow: hidden; }
+    .ac-item { padding: 10px 14px; cursor: pointer; border-bottom: 1px solid #f3f4f6; transition: background 0.1s; }
+    .ac-item:last-child { border-bottom: none; }
+    .ac-item:hover { background: #f0f7ff; }
+    .ac-name { font-size: 13px; font-weight: 600; color: #1a1a2e; }
+    .ac-addr { font-size: 11px; color: #94a3b8; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .spots-list { margin-top: 20px; max-height: 300px; overflow-y: auto; }
+    .spot-tag { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #f8faff; border: 1px solid #e0eaff; border-radius: 10px; margin-bottom: 8px; }
+    .spot-tag-dot { width: 10px; height: 10px; border-radius: 50%; background: #2563eb; flex-shrink: 0; }
+    .spot-tag-name { flex: 1; font-size: 13px; font-weight: 500; color: #1e293b; }
+    .spot-tag-addr { font-size: 11px; color: #94a3b8; }
+    .spot-remove { width: 22px; height: 22px; border-radius: 50%; border: none; background: #fee2e2; color: #ef4444; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.1s; }
+    .spot-remove:hover { background: #fca5a5; }
+    .empty-spots { text-align: center; padding: 30px 0; color: #94a3b8; font-size: 13px; }
+    .spots-count { font-size: 12px; color: #64748b; margin-bottom: 8px; }
+
+    /* ---- ITINERARY VIEW ---- */
+    .itinerary-layout { display: flex; height: 100vh; overflow: hidden; }
+    .sidebar { width: 380px; flex-shrink: 0; background: #fff; border-right: 1px solid #e5e7eb; display: flex; flex-direction: column; overflow: hidden; }
+    .sidebar-header { padding: 18px 20px 14px; border-bottom: 1px solid #f0f0f0; }
+    .sidebar-title { font-size: 16px; font-weight: 700; color: #1a1a2e; }
+    .sidebar-meta { font-size: 12px; color: #94a3b8; margin-top: 3px; }
+    .day-tabs { display: flex; gap: 6px; padding: 12px 16px; overflow-x: auto; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; scrollbar-width: none; }
+    .day-tabs::-webkit-scrollbar { display: none; }
+    .day-tab { flex-shrink: 0; padding: 6px 14px; border-radius: 20px; border: 1.5px solid #e5e7eb; background: #fafafa; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: #64748b; white-space: nowrap; }
+    .day-tab:hover { border-color: #93c5fd; color: #2563eb; }
+    .day-tab.active { color: white; border-color: transparent; }
+    .day-panel { flex: 1; overflow-y: auto; padding: 14px 16px; }
+    .day-actions { display: flex; gap: 8px; margin-bottom: 14px; }
+    .btn-sm { padding: 7px 14px; border-radius: 8px; border: 1.5px solid #e5e7eb; background: #fafafa; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: #374151; display: flex; align-items: center; gap: 5px; }
+    .btn-sm:hover { border-color: #2563eb; color: #2563eb; background: #eff6ff; }
+    .btn-sm.optimize { background: #f0fdf4; border-color: #bbf7d0; color: #15803d; }
+    .btn-sm.optimize:hover { background: #dcfce7; border-color: #86efac; }
+    .hotel-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: #fafafa; border-radius: 10px; margin-bottom: 10px; border: 1px solid #f0f0f0; }
+    .hotel-icon { font-size: 18px; }
+    .hotel-info { flex: 1; }
+    .hotel-name { font-size: 12px; font-weight: 600; color: #374151; }
+    .hotel-sub { font-size: 11px; color: #94a3b8; }
+    .route-arrow { font-size: 10px; color: #94a3b8; text-align: center; margin: 4px 0 4px 18px; }
+    .spot-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #fff; border: 1.5px solid #e5e7eb; border-radius: 12px; margin-bottom: 8px; cursor: grab; transition: all 0.15s; user-select: none; position: relative; }
+    .spot-item:active { cursor: grabbing; }
+    .spot-item.dragging { opacity: 0.4; border-style: dashed; }
+    .spot-item.drag-over { border-color: #2563eb; background: #eff6ff; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,0.15); }
+    .spot-num { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; }
+    .spot-info { flex: 1; min-width: 0; }
+    .spot-name { font-size: 13px; font-weight: 600; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .spot-address { font-size: 11px; color: #94a3b8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .spot-actions { display: flex; gap: 4px; flex-shrink: 0; }
+    .icon-btn { width: 26px; height: 26px; border-radius: 6px; border: 1px solid #e5e7eb; background: #fafafa; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; transition: all 0.1s; color: #64748b; }
+    .icon-btn:hover { background: #f0f7ff; border-color: #93c5fd; color: #2563eb; }
+    .icon-btn.danger:hover { background: #fee2e2; border-color: #fca5a5; color: #ef4444; }
+    .move-menu { position: absolute; right: 8px; top: calc(100% + 4px); background: white; border: 1.5px solid #e5e7eb; border-radius: 10px; box-shadow: 0 6px 20px rgba(0,0,0,0.1); z-index: 100; min-width: 130px; overflow: hidden; }
+    .move-menu-item { padding: 9px 14px; font-size: 12px; font-weight: 500; cursor: pointer; color: #374151; transition: background 0.1s; }
+    .move-menu-item:hover { background: #f0f7ff; color: #2563eb; }
+    .add-spot-section { padding: 12px 16px; border-top: 1px solid #f0f0f0; flex-shrink: 0; }
+    .add-spot-label { font-size: 11px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .unscheduled-pool { padding: 10px 16px; border-top: 1px solid #f0f0f0; flex-shrink: 0; }
+    .unscheduled-title { font-size: 11px; font-weight: 600; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .unscheduled-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; margin-bottom: 6px; font-size: 12px; cursor: pointer; }
+    .unscheduled-item:hover { background: #fef3c7; }
+    .map-container { flex: 1; position: relative; }
+    .map-el { width: 100%; height: 100%; }
+    .transport-badge { position: absolute; top: 16px; right: 16px; z-index: 500; background: white; border-radius: 24px; padding: 6px 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .new-trip-btn { position: absolute; top: 16px; left: 16px; z-index: 500; background: white; border-radius: 24px; padding: 6px 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); font-size: 12px; font-weight: 600; cursor: pointer; border: none; color: #2563eb; display: flex; align-items: center; gap: 5px; }
+    .new-trip-btn:hover { background: #eff6ff; }
+    .drag-handle { color: #cbd5e1; font-size: 14px; cursor: grab; flex-shrink: 0; }
+    .empty-day { text-align: center; padding: 40px 20px; color: #94a3b8; font-size: 13px; }
+    .empty-day-icon { font-size: 32px; margin-bottom: 10px; }
+    .dist-badge { font-size: 10px; color: #94a3b8; padding: 0 8px; }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script type="text/babel">
+
+const { useState, useEffect, useRef, useCallback } = React;
+
+// ============================================================
+// CONSTANTS
+// ============================================================
+const DAY_COLORS = [
+  '#E53935','#8E24AA','#1E88E5','#43A047','#FB8C00',
+  '#3949AB','#00897B','#D81B60','#6D4C41','#546E7A',
+  '#00ACC1','#7CB342','#F4511E','#FDD835'
+];
+const TRANSPORT_META = {
+  walk:   { label: '🚶 Walking',   emoji: '🚶', color: '#43A047', dash: [8, 12] },
+  subway: { label: '🚇 Subway',    emoji: '🚇', color: '#1E88E5', dash: null },
+  uber:   { label: '🚗 Uber',      emoji: '🚗', color: '#FB8C00', dash: [12, 6] },
+};
+
+// ============================================================
+// UTILS
+// ============================================================
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const toRad = x => x * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1), dLon = toRad(lng2 - lng1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2)**2;
+  return +(2 * R * Math.asin(Math.sqrt(a))).toFixed(1);
+}
+
+function optimizeRoute(hotel, spots) {
+  if (!spots.length) return [];
+  const rem = [...spots];
+  const route = [];
+  let cur = hotel;
+  while (rem.length) {
+    let bi = 0, bd = Infinity;
+    rem.forEach((s, i) => { const d = haversine(cur.lat, cur.lng, s.lat, s.lng); if (d < bd) { bd = d; bi = i; } });
+    route.push(rem[bi]); cur = rem[bi]; rem.splice(bi, 1);
+  }
+  return route;
+}
+
+function buildItinerary(hotel, spots, numDays) {
+  if (!spots.length) return Array.from({ length: numDays }, () => []);
+  if (numDays === 1) return [optimizeRoute(hotel, spots)];
+  if (spots.length <= numDays) {
+    const days = spots.map(s => [s]);
+    while (days.length < numDays) days.push([]);
+    return days;
+  }
+  // K-means clustering
+  let centers = spots.slice().sort(() => Math.random() - 0.5).slice(0, numDays).map(s => ({ lat: s.lat, lng: s.lng }));
+  let assignments = new Array(spots.length).fill(0);
+  for (let iter = 0; iter < 20; iter++) {
+    assignments = spots.map(s => {
+      let best = 0, bestD = Infinity;
+      centers.forEach((c, i) => { const d = haversine(s.lat, s.lng, c.lat, c.lng); if (d < bestD) { bestD = d; best = i; } });
+      return best;
+    });
+    centers = centers.map((c, i) => {
+      const cl = spots.filter((_, j) => assignments[j] === i);
+      if (!cl.length) return c;
+      return { lat: cl.reduce((s, p) => s + p.lat, 0) / cl.length, lng: cl.reduce((s, p) => s + p.lng, 0) / cl.length };
+    });
+  }
+  // Balance: move excess spots from large clusters to small ones
+  const targetPerDay = Math.ceil(spots.length / numDays);
+  for (let i = 0; i < 5; i++) {
+    const counts = centers.map((_, di) => assignments.filter(a => a === di).length);
+    const overIdx = counts.findIndex(c => c > targetPerDay + 1);
+    const underIdx = counts.findIndex(c => c < targetPerDay - 1);
+    if (overIdx === -1 || underIdx === -1) break;
+    const overSpotIdx = assignments.findIndex(a => a === overIdx);
+    if (overSpotIdx !== -1) assignments[overSpotIdx] = underIdx;
+  }
+  const days = centers.map((_, i) => spots.filter((_, j) => assignments[j] === i));
+  return days.map(ds => optimizeRoute(hotel, ds));
+}
+
+async function geocodeNominatim(query, city = '') {
+  const q = city && !query.toLowerCase().includes(city.toLowerCase()) ? `${query}, ${city}` : query;
+  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=6&addressdetails=1`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Geocode failed');
+  return res.json();
+}
+
+function uid() { return `${Date.now()}_${Math.random().toString(36).slice(2)}`; }
+
+// ============================================================
+// PLACE SEARCH (Autocomplete)
+// ============================================================
+function PlaceSearch({ city, onSelect, placeholder = 'Search for a place…', autoFocus }) {
+  const [q, setQ] = useState('');
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const timer = useRef(null);
+  const wrapRef = useRef(null);
+
+  useEffect(() => {
+    const handler = e => { if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false); };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  const doSearch = useCallback(async (val) => {
+    if (!val.trim() || val.length < 2) { setResults([]); setOpen(false); return; }
+    setLoading(true);
+    try {
+      const data = await geocodeNominatim(val, city);
+      setResults(data.slice(0, 6));
+      setOpen(data.length > 0);
+    } catch(e) { console.error('Nominatim error:', e); setResults([]); setOpen(false); }
+    setLoading(false);
+  }, [city]);
+
+  const handleChange = e => {
+    const v = e.target.value; setQ(v);
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => doSearch(v), 450);
+  };
+
+  const handleSelect = r => {
+    const name = r.display_name.split(',')[0].trim();
+    const addr = r.display_name.split(',').slice(1, 4).join(',').trim();
+    onSelect({ id: uid(), name, address: addr || r.display_name, lat: parseFloat(r.lat), lng: parseFloat(r.lon) });
+    setQ(''); setResults([]); setOpen(false);
+  };
+
+  return (
+    <div ref={wrapRef} className="search-wrap">
+      <input
+        autoFocus={autoFocus}
+        value={q}
+        onChange={handleChange}
+        onFocus={() => results.length > 0 && setOpen(true)}
+        placeholder={placeholder}
+        style={{ width: '100%', padding: '11px 40px 11px 14px', border: '1.5px solid #e5e7eb', borderRadius: '10px', fontSize: '14px', outline: 'none', background: '#fafafa' }}
+      />
+      {loading && <div className="search-spinner" />}
+      {open && results.length > 0 && (
+        <div className="autocomplete-list">
+          {results.map((r, i) => (
+            <div key={i} className="ac-item" onMouseDown={() => handleSelect(r)}>
+              <div className="ac-name">{r.display_name.split(',')[0]}</div>
+              <div className="ac-addr">{r.display_name.split(',').slice(1, 4).join(', ')}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ============================================================
+// SETUP FORM (Step 1)
+// ============================================================
+function SetupForm({ onComplete }) {
+  const [city, setCity] = useState('');
+  const [cityResult, setCityResult] = useState(null);
+  const [hotelName, setHotelName] = useState('');
+  const [hotelAddr, setHotelAddr] = useState('');
+  const [hotelResult, setHotelResult] = useState(null);
+  const [numDays, setNumDays] = useState(3);
+  const [transport, setTransport] = useState('walk');
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState('');
+
+  const handleCitySelect = r => {
+    setCity(r.name);
+    setCityResult(r);
+    // Reset hotel when city changes
+    setHotelName(''); setHotelAddr(''); setHotelResult(null);
+    setErr('');
+  };
+
+  const handleHotelSelect = r => { setHotelName(r.name); setHotelAddr(r.address); setHotelResult(r); };
+
+  const handleSubmit = () => {
+    if (!cityResult) { setErr('Please select a city from the suggestions.'); return; }
+    if (!hotelResult) { setErr('Please select your accommodation from the suggestions.'); return; }
+    setErr('');
+    onComplete({
+      city: city.trim(),
+      cityLat: cityResult.lat,
+      cityLng: cityResult.lng,
+      hotelName,
+      hotelAddr,
+      hotelLat: hotelResult.lat,
+      hotelLng: hotelResult.lng,
+      numDays: Math.max(1, Math.min(14, numDays)),
+      transport
+    });
+  };
+
+  return (
+    <div className="screen">
+      <div className="card">
+        <div className="logo">✈️ TripPlanner<span>.ai</span></div>
+        <div className="subtitle">Plan your trip, minimize backtracking.</div>
+        <div className="field">
+          <label>City / Destination</label>
+          <PlaceSearch city="" onSelect={handleCitySelect} placeholder="e.g. Tokyo, Paris, New York…" autoFocus />
+          {cityResult && (
+            <div style={{ marginTop: 8, padding: '8px 12px', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 8, fontSize: 12, color: '#15803d', display: 'flex', alignItems: 'center', gap: 6 }}>
+              ✓ <strong>{city}</strong> — {cityResult.address}
+            </div>
+          )}
+        </div>
+        <div className="field">
+          <label>Hotel / Accommodation</label>
+          <PlaceSearch city={city} onSelect={handleHotelSelect} placeholder={city ? `Search hotels in ${city}…` : 'Search for your hotel or Airbnb…'} />
+          {hotelResult && (
+            <div style={{ marginTop: 8, padding: '8px 12px', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 8, fontSize: 12, color: '#15803d', display: 'flex', alignItems: 'center', gap: 6 }}>
+              ✓ <strong>{hotelName}</strong> — {hotelAddr}
+            </div>
+          )}
+        </div>
+        <div className="row2">
+          <div className="field">
+            <label>Duration</label>
+            <div className="days-input">
+              <input type="number" min="1" max="14" value={numDays} onChange={e => setNumDays(parseInt(e.target.value) || 1)} />
+              <span className="days-label">{numDays === 1 ? 'day' : 'days'}</span>
+            </div>
+          </div>
+          <div className="field">
+            <label>How you'll get around</label>
+            <div className="transport-btns">
+              {['walk','subway','uber'].map(t => (
+                <button key={t} className={`transport-btn ${transport === t ? 'active' : ''}`} onClick={() => setTransport(t)}>
+                  {TRANSPORT_META[t].emoji} {t.charAt(0).toUpperCase() + t.slice(1)}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        {err && <div style={{ color: '#ef4444', fontSize: 13, marginBottom: 10 }}>{err}</div>}
+        <button className="btn-primary" onClick={handleSubmit} disabled={loading}>
+          {loading ? 'Setting up…' : 'Add Spots →'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// SPOTS MANAGER (Step 2)
+// ============================================================
+function SpotsManager({ config, onGenerate, onBack }) {
+  const [spots, setSpots] = useState([]);
+
+  const addSpot = s => { if (!spots.find(x => x.id === s.id || (x.lat === s.lat && x.lng === s.lng))) setSpots(p => [...p, s]); };
+  const removeSpot = id => setSpots(p => p.filter(s => s.id !== id));
+
+  return (
+    <div className="screen">
+      <div className="card" style={{ maxWidth: 560 }}>
+        <span className="step-back" onClick={onBack}>← Back</span>
+        <div className="logo">📍 Add Your Spots</div>
+        <div className="subtitle" style={{ marginBottom: 20 }}>
+          Planning <strong>{config.numDays} day{config.numDays > 1 ? 's' : ''}</strong> in <strong>{config.city}</strong> · staying at <strong>{config.hotelName}</strong>
+        </div>
+        <div className="field">
+          <label>Search & Add Places</label>
+          <PlaceSearch city={config.city} onSelect={addSpot} placeholder={`Search places in ${config.city}…`} autoFocus />
+        </div>
+        <div className="spots-count">{spots.length} spot{spots.length !== 1 ? 's' : ''} added</div>
+        <div className="spots-list">
+          {spots.length === 0 && (
+            <div className="empty-spots">
+              <div style={{ fontSize: 32, marginBottom: 8 }}>🗺️</div>
+              Search for restaurants, museums, parks, landmarks…<br />and add them to your trip!
+            </div>
+          )}
+          {spots.map((s, i) => (
+            <div key={s.id} className="spot-tag">
+              <div className="spot-tag-dot" style={{ background: DAY_COLORS[i % DAY_COLORS.length] }} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="spot-tag-name">{s.name}</div>
+                {s.address && <div className="spot-tag-addr">{s.address}</div>}
+              </div>
+              <button className="spot-remove" onClick={() => removeSpot(s.id)} title="Remove">✕</button>
+            </div>
+          ))}
+        </div>
+        <button className="btn-primary" style={{ marginTop: 20 }} onClick={() => onGenerate(spots)} disabled={spots.length === 0}>
+          {spots.length === 0 ? 'Add at least one spot to continue' : `Build My ${config.numDays}-Day Itinerary →`}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// MAP VIEW
+// ============================================================
+function MapView({ config, itinerary, activeDay }) {
+  const mapRef = useRef(null);
+  const mapInst = useRef(null);
+  const layers = useRef([]);
+
+  useEffect(() => {
+    if (mapInst.current || !mapRef.current) return;
+    mapInst.current = L.map(mapRef.current, { zoomControl: true }).setView([config.hotelLat, config.hotelLng], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org">OpenStreetMap</a>',
+      maxZoom: 19
+    }).addTo(mapInst.current);
+    return () => { mapInst.current && mapInst.current.remove(); mapInst.current = null; };
+  }, []);
+
+  useEffect(() => {
+    const map = mapInst.current;
+    if (!map) return;
+    layers.current.forEach(l => map.removeLayer(l));
+    layers.current = [];
+
+    const daySpots = itinerary[activeDay] || [];
+    const color = DAY_COLORS[activeDay % DAY_COLORS.length];
+    const tm = TRANSPORT_META[config.transport];
+
+    // Hotel marker
+    const hotelIcon = L.divIcon({
+      html: `<div style="background:#1a1a2e;color:white;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:18px;border:2.5px solid white;box-shadow:0 2px 10px rgba(0,0,0,0.35)">🏨</div>`,
+      className: '', iconSize: [34, 34], iconAnchor: [17, 17]
+    });
+    const hm = L.marker([config.hotelLat, config.hotelLng], { icon: hotelIcon }).addTo(map);
+    hm.bindPopup(`<b>🏨 ${config.hotelName}</b><br><small>${config.hotelAddr}</small>`);
+    layers.current.push(hm);
+
+    if (!daySpots.length) {
+      map.setView([config.hotelLat, config.hotelLng], 13);
+      return;
+    }
+
+    // Spot markers
+    daySpots.forEach((spot, idx) => {
+      const icon = L.divIcon({
+        html: `<div style="background:${color};color:white;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;border:2.5px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3)">${idx + 1}</div>`,
+        className: '', iconSize: [30, 30], iconAnchor: [15, 15]
+      });
+      const m = L.marker([spot.lat, spot.lng], { icon }).addTo(map);
+      m.bindPopup(`<b>${idx + 1}. ${spot.name}</b><br><small>${spot.address}</small>`);
+      layers.current.push(m);
+    });
+
+    // Route polyline: hotel → spots → hotel
+    const points = [
+      [config.hotelLat, config.hotelLng],
+      ...daySpots.map(s => [s.lat, s.lng]),
+      [config.hotelLat, config.hotelLng]
+    ];
+    const polyline = L.polyline(points, {
+      color: tm.color,
+      weight: 4,
+      opacity: 0.85,
+      dashArray: tm.dash ? tm.dash.join(',') : undefined
+    }).addTo(map);
+
+    // Arrows along route
+    if (typeof L.polylineDecorator === 'undefined') {
+      // fallback: just add numbered markers (already done above)
+    }
+
+    layers.current.push(polyline);
+
+    // Fit bounds
+    const allPts = [[config.hotelLat, config.hotelLng], ...daySpots.map(s => [s.lat, s.lng])];
+    map.fitBounds(L.latLngBounds(allPts), { padding: [50, 50], maxZoom: 15 });
+  }, [activeDay, itinerary, config]);
+
+  return <div ref={mapRef} className="map-el" />;
+}
+
+// ============================================================
+// ITINERARY VIEW (Step 3)
+// ============================================================
+function ItineraryView({ config, initialItinerary, initialSpots, onNewTrip }) {
+  const [itinerary, setItinerary] = useState(initialItinerary); // array of arrays
+  const [unscheduled, setUnscheduled] = useState([]);
+  const [activeDay, setActiveDay] = useState(0);
+  const [openMenu, setOpenMenu] = useState(null); // spotId that has move-menu open
+  const [dragInfo, setDragInfo] = useState(null); // { spotId, dayIdx, spotIdx }
+  const [dragOver, setDragOver] = useState(null); // { dayIdx, spotIdx }
+  const numDays = itinerary.length;
+
+  // Close move menu on outside click
+  useEffect(() => {
+    const h = () => setOpenMenu(null);
+    document.addEventListener('mousedown', h);
+    return () => document.removeEventListener('mousedown', h);
+  }, []);
+
+  const addSpotToDay = (spot, dayIdx) => {
+    setItinerary(prev => {
+      const next = prev.map(d => [...d]);
+      next[dayIdx] = [...next[dayIdx], spot];
+      return next;
+    });
+    setUnscheduled(prev => prev.filter(s => s.id !== spot.id));
+  };
+
+  const addNewSpot = spot => {
+    // Add to current active day
+    setItinerary(prev => {
+      const next = prev.map(d => [...d]);
+      next[activeDay] = [...next[activeDay], spot];
+      return next;
+    });
+  };
+
+  const removeFromDay = (dayIdx, spotId) => {
+    setItinerary(prev => {
+      const next = prev.map(d => [...d]);
+      const removed = next[dayIdx].find(s => s.id === spotId);
+      next[dayIdx] = next[dayIdx].filter(s => s.id !== spotId);
+      return next;
+    });
+  };
+
+  const moveToDay = (fromDayIdx, spotId, toDayIdx) => {
+    setItinerary(prev => {
+      const next = prev.map(d => [...d]);
+      const spot = next[fromDayIdx].find(s => s.id === spotId);
+      if (!spot) return prev;
+      next[fromDayIdx] = next[fromDayIdx].filter(s => s.id !== spotId);
+      next[toDayIdx] = [...next[toDayIdx], spot];
+      return next;
+    });
+    setOpenMenu(null);
+  };
+
+  const optimizeDay = dayIdx => {
+    setItinerary(prev => {
+      const next = prev.map(d => [...d]);
+      next[dayIdx] = optimizeRoute({ lat: config.hotelLat, lng: config.hotelLng }, next[dayIdx]);
+      return next;
+    });
+  };
+
+  // Drag-and-drop handlers
+  const handleDragStart = (e, spotId, dayIdx, spotIdx) => {
+    setDragInfo({ spotId, dayIdx, spotIdx });
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (e, dayIdx, spotIdx) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    setDragOver({ dayIdx, spotIdx });
+  };
+
+  const handleDrop = (e, targetDayIdx, targetSpotIdx) => {
+    e.preventDefault();
+    if (!dragInfo) return;
+    const { spotId, dayIdx: srcDay, spotIdx: srcIdx } = dragInfo;
+    if (srcDay === targetDayIdx && srcIdx === targetSpotIdx) { cleanup(); return; }
+
+    setItinerary(prev => {
+      const next = prev.map(d => [...d]);
+      const spot = next[srcDay].find(s => s.id === spotId);
+      if (!spot) return prev;
+      // Remove from source
+      next[srcDay] = next[srcDay].filter(s => s.id !== spotId);
+      // Insert into target
+      const insertIdx = srcDay === targetDayIdx && srcIdx < targetSpotIdx ? targetSpotIdx - 1 : targetSpotIdx;
+      next[targetDayIdx].splice(insertIdx, 0, spot);
+      return next;
+    });
+    // If dragged to different day, switch to that day
+    if (targetDayIdx !== srcDay) setActiveDay(targetDayIdx);
+    cleanup();
+  };
+
+  const handleDropOnDay = (e, targetDayIdx) => {
+    e.preventDefault();
+    if (!dragInfo) return;
+    const { spotId, dayIdx: srcDay } = dragInfo;
+    if (srcDay === targetDayIdx) { cleanup(); return; }
+    setItinerary(prev => {
+      const next = prev.map(d => [...d]);
+      const spot = next[srcDay].find(s => s.id === spotId);
+      if (!spot) return prev;
+      next[srcDay] = next[srcDay].filter(s => s.id !== spotId);
+      next[targetDayIdx] = [...next[targetDayIdx], spot];
+      return next;
+    });
+    setActiveDay(targetDayIdx);
+    cleanup();
+  };
+
+  const cleanup = () => { setDragInfo(null); setDragOver(null); };
+
+  const daySpots = itinerary[activeDay] || [];
+  const dayColor = DAY_COLORS[activeDay % DAY_COLORS.length];
+
+  // Compute total distance for the day
+  const dayDist = (() => {
+    if (!daySpots.length) return 0;
+    const hotel = { lat: config.hotelLat, lng: config.hotelLng };
+    let d = haversine(hotel.lat, hotel.lng, daySpots[0].lat, daySpots[0].lng);
+    for (let i = 0; i < daySpots.length - 1; i++) d += haversine(daySpots[i].lat, daySpots[i].lng, daySpots[i+1].lat, daySpots[i+1].lng);
+    if (daySpots.length > 0) d += haversine(daySpots[daySpots.length-1].lat, daySpots[daySpots.length-1].lng, hotel.lat, hotel.lng);
+    return d;
+  })();
+
+  return (
+    <div className="itinerary-layout">
+      {/* SIDEBAR */}
+      <div className="sidebar">
+        <div className="sidebar-header">
+          <div className="sidebar-title">✈️ {config.city}</div>
+          <div className="sidebar-meta">{config.numDays} days · {TRANSPORT_META[config.transport].label} · {initialSpots.length} spots</div>
+        </div>
+
+        {/* DAY TABS */}
+        <div className="day-tabs">
+          {itinerary.map((d, i) => (
+            <button
+              key={i}
+              className={`day-tab ${activeDay === i ? 'active' : ''}`}
+              style={activeDay === i ? { background: DAY_COLORS[i % DAY_COLORS.length] } : {}}
+              onClick={() => setActiveDay(i)}
+              onDragOver={e => { e.preventDefault(); }}
+              onDrop={e => handleDropOnDay(e, i)}
+            >
+              Day {i + 1}
+              <span style={{ marginLeft: 5, opacity: 0.75 }}>({d.length})</span>
+            </button>
+          ))}
+        </div>
+
+        {/* DAY PANEL */}
+        <div className="day-panel">
+          <div className="day-actions">
+            <button className="btn-sm optimize" onClick={() => optimizeDay(activeDay)}>
+              🔀 Optimize Route
+            </button>
+            {daySpots.length > 0 && (
+              <span className="dist-badge">{dayDist} km total</span>
+            )}
+          </div>
+
+          {/* Hotel start */}
+          <div className="hotel-row">
+            <span className="hotel-icon">🏨</span>
+            <div className="hotel-info">
+              <div className="hotel-name">{config.hotelName}</div>
+              <div className="hotel-sub">Start & end here</div>
+            </div>
+          </div>
+
+          {daySpots.length === 0 ? (
+            <div className="empty-day">
+              <div className="empty-day-icon">📭</div>
+              No spots on Day {activeDay + 1}.<br />Drag spots here or add new ones below.
+            </div>
+          ) : (
+            daySpots.map((spot, idx) => (
+              <React.Fragment key={spot.id}>
+                <div className="route-arrow">↓ {idx === 0
+                  ? haversine(config.hotelLat, config.hotelLng, spot.lat, spot.lng) + ' km'
+                  : haversine(daySpots[idx-1].lat, daySpots[idx-1].lng, spot.lat, spot.lng) + ' km'}
+                </div>
+                <div
+                  className={`spot-item ${dragInfo?.spotId === spot.id ? 'dragging' : ''} ${dragOver?.dayIdx === activeDay && dragOver?.spotIdx === idx ? 'drag-over' : ''}`}
+                  draggable
+                  onDragStart={e => handleDragStart(e, spot.id, activeDay, idx)}
+                  onDragOver={e => handleDragOver(e, activeDay, idx)}
+                  onDrop={e => handleDrop(e, activeDay, idx)}
+                  onDragEnd={cleanup}
+                >
+                  <span className="drag-handle">⠿</span>
+                  <div className="spot-num" style={{ background: dayColor }}>{idx + 1}</div>
+                  <div className="spot-info">
+                    <div className="spot-name">{spot.name}</div>
+                    {spot.address && <div className="spot-address">{spot.address}</div>}
+                  </div>
+                  <div className="spot-actions" onClick={e => e.stopPropagation()}>
+                    {numDays > 1 && (
+                      <div style={{ position: 'relative' }}>
+                        <button className="icon-btn" title="Move to another day" onClick={() => setOpenMenu(openMenu === spot.id ? null : spot.id)}>⇄</button>
+                        {openMenu === spot.id && (
+                          <div className="move-menu">
+                            {itinerary.map((_, di) => di !== activeDay && (
+                              <div key={di} className="move-menu-item" onMouseDown={() => moveToDay(activeDay, spot.id, di)}>
+                                → Day {di + 1}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    <button className="icon-btn danger" title="Remove from day" onClick={() => removeFromDay(activeDay, spot.id)}>✕</button>
+                  </div>
+                </div>
+              </React.Fragment>
+            ))
+          )}
+
+          {daySpots.length > 0 && (
+            <>
+              <div className="route-arrow">↓ {haversine(daySpots[daySpots.length-1].lat, daySpots[daySpots.length-1].lng, config.hotelLat, config.hotelLng)} km</div>
+              <div className="hotel-row">
+                <span className="hotel-icon">🏨</span>
+                <div className="hotel-info">
+                  <div className="hotel-name">{config.hotelName}</div>
+                  <div className="hotel-sub">Return</div>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* UNSCHEDULED POOL */}
+        {unscheduled.length > 0 && (
+          <div className="unscheduled-pool">
+            <div className="unscheduled-title">⏳ Unscheduled ({unscheduled.length})</div>
+            {unscheduled.map(s => (
+              <div key={s.id} className="unscheduled-item" onClick={() => addSpotToDay(s, activeDay)} title={`Add to Day ${activeDay + 1}`}>
+                <span>📌</span>
+                <span style={{ flex: 1 }}>{s.name}</span>
+                <span style={{ fontSize: 10, color: '#d97706' }}>+ Day {activeDay + 1}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ADD SPOT */}
+        <div className="add-spot-section">
+          <div className="add-spot-label">+ Add spot to Day {activeDay + 1}</div>
+          <PlaceSearch city={config.city} onSelect={addNewSpot} placeholder={`Search in ${config.city}…`} />
+        </div>
+      </div>
+
+      {/* MAP */}
+      <div className="map-container">
+        <MapView config={config} itinerary={itinerary} activeDay={activeDay} />
+        <div className="transport-badge">
+          {TRANSPORT_META[config.transport].emoji} {config.transport.charAt(0).toUpperCase() + config.transport.slice(1)}
+        </div>
+        <button className="new-trip-btn" onClick={onNewTrip}>← New Trip</button>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// APP ROOT
+// ============================================================
+function App() {
+  const [step, setStep] = useState('setup'); // setup | spots | itinerary
+  const [config, setConfig] = useState(null);
+  const [itinerary, setItinerary] = useState(null);
+  const [spots, setSpots] = useState([]);
+
+  const handleSetupDone = cfg => { setConfig(cfg); setStep('spots'); };
+  const handleGenerate = spotsArr => {
+    const hotel = { lat: config.hotelLat, lng: config.hotelLng };
+    const built = buildItinerary(hotel, spotsArr, config.numDays);
+    setItinerary(built);
+    setSpots(spotsArr);
+    setStep('itinerary');
+  };
+  const handleNewTrip = () => { setStep('setup'); setConfig(null); setItinerary(null); setSpots([]); };
+
+  if (step === 'setup') return <SetupForm onComplete={handleSetupDone} />;
+  if (step === 'spots') return <SpotsManager config={config} onGenerate={handleGenerate} onBack={() => setStep('setup')} />;
+  if (step === 'itinerary') return <ItineraryView config={config} initialItinerary={itinerary} initialSpots={spots} onNewTrip={handleNewTrip} />;
+  return null;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
