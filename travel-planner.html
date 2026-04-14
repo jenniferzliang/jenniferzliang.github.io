@@ -559,7 +559,6 @@ async function geocode(query, city = '') {
 
 function exportItinerary(config, itinerary, transport) {
   const tm = TRANSPORT_META[transport];
-  const md = buildMarkdown(config, itinerary, transport);
 
   const daysHtml = itinerary.map((spots, di) => {
     const hotel = { lat: config.hotelLat, lng: config.hotelLng };
@@ -642,20 +641,8 @@ function exportItinerary(config, itinerary, transport) {
     .leg::before { content: ''; display: block; width: 24px; flex-shrink: 0; }
     .leg-line { flex: 1; border-left: 2px dashed #e0e0e0; padding-left: 12px; }
     .leg-dist { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; }
-    .toolbar { display: flex; gap: 10px; margin-top: 16px; }
-    .btn-action {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 14px; background: none;
-      border: 1px solid #e0e0e0;
-      font-family: 'Courier New', monospace; font-size: 10px;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: #888; cursor: pointer; transition: all 0.12s;
-    }
-    .btn-action:hover { border-color: #0d0d0d; color: #0d0d0d; }
-    .btn-action.copied { border-color: #2d6a4f; color: #2d6a4f; }
     @media print {
       body { background: white; padding: 20px; }
-      .toolbar { display: none; }
       .stop-body, .day-section { break-inside: avoid; }
     }
   </style>
@@ -665,28 +652,13 @@ function exportItinerary(config, itinerary, transport) {
     <div class="eyebrow">Trip Itinerary</div>
     <h1>${config.city}</h1>
     <div class="meta">${config.numDays} day${config.numDays > 1 ? 's' : ''} · ${tm.label} · ${config.hotelName}</div>
-    <div class="toolbar">
-      <button class="btn-action" onclick="window.print()">Print / Save PDF</button>
-      <button class="btn-action" id="copyMdBtn" onclick="copyMd()">Copy as Markdown</button>
-    </div>
   </div>
   <hr/>
   ${daysHtml}
   <div style="margin-top:40px;padding-top:20px;border-top:1px solid #e0e0e0;font-size:10px;color:#aaa;letter-spacing:0.1em;text-transform:uppercase">
     Generated with Trip Planner
   </div>
-  <script>
-    const MD = ${JSON.stringify(md)};
-    function copyMd() {
-      navigator.clipboard.writeText(MD).then(() => {
-        const btn = document.getElementById('copyMdBtn');
-        btn.textContent = 'Copied!';
-        btn.classList.add('copied');
-        setTimeout(() => { btn.textContent = 'Copy as Markdown'; btn.classList.remove('copied'); }, 2000);
-      });
-    }
-  </script>
-</body>
+  </body>
 </html>`;
 
   const win = window.open('', '_blank');
@@ -1073,6 +1045,7 @@ function ItineraryView({ config, initialItinerary, initialSpots, onNewTrip }) {
   const [editingNoteId, setEditingNoteId] = useState(null);
   const [dragInfo, setDragInfo] = useState(null);
   const [dragOver, setDragOver] = useState(null);
+  const [copied, setCopied] = useState(false);
 
   const numDays = itinerary.length;
   const daySpots = itinerary[activeDay] || [];
@@ -1192,6 +1165,14 @@ function ItineraryView({ config, initialItinerary, initialSpots, onNewTrip }) {
               </button>
               <button className="btn-export" onClick={() => exportItinerary(config, itinerary, config.transport)}>
                 <Ic.Export /> Export
+              </button>
+              <button className="btn-export" onClick={() => {
+                navigator.clipboard.writeText(buildMarkdown(config, itinerary, config.transport));
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}>
+                {copied ? <Ic.Check /> : <Ic.Copy />}
+                {copied ? 'Copied!' : 'Copy MD'}
               </button>
             </div>
           </div>
