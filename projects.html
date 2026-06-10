@@ -1,94 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+---
+layout: default
+title: Projects
+nav: projects
+description: Jennifer Liang - Projects
+---
+<div class="page-title">
+    <h2>Projects</h2>
+    <p>Technical work and implementations</p>
+</div>
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Jennifer Liang - Projects" />
-    <meta name="author" content="Jennifer Liang" />
-    <title>Projects - Jennifer Liang</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-
-    <!-- Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
-        rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/markdown-style.css" rel="stylesheet" />
-</head>
-
-<body>
-    <div class="container">
-        <header>
-            <h1>Jennifer Liang</h1>
-            <p class="subtitle">Software Engineer</p>
-            <nav>
-                <a href="index.html#about">About</a>
-                <a href="projects.html" class="active">Projects</a>
-                <a href="misc.html">Misc</a>
-                <a href="assets/Jennifer_Liang.pdf" target="_blank">Resume ↗</a>
-            </nav>
-        </header>
-
-        <main>
-            <div class="page-title">
-                <h2>Projects</h2>
-                <p>Technical work and implementations</p>
-            </div>
-
-            <section id="web-applications">
-                <h2>Web Applications</h2>
-
-                <div class="project">
-                    <h3>Restaurant Reservation System</h3>
-                    <p><strong>Technologies:</strong> Next.js 16, React, TypeScript, Prisma, PostgreSQL, Tailwind CSS</p>
-                    <p>Full-stack reservation platform with a public booking page, owner dashboard with daily manifest, calendar views, guest management with auto-merge, analytics, and configurable branding and operating hours.</p>
-                    <p><a href="https://github.com/jenniferzliang/reservations" target="_blank">GitHub</a> • <a href="https://bookatable.vercel.app/owner" target="_blank">Live Demo</a> (owner portal password: <code>0000</code>)</p>
-                </div>
-
-                <div class="project">
-                    <h3>NYC Neighborhood Explorer</h3>
-                    <p><strong>Technologies:</strong> React, TypeScript, Node.js, Express, MongoDB, Leaflet</p>
-                    <p>Full-stack app for tracking NYC neighborhood visits with interactive maps, user authentication, and personalized progress tracking.</p>
-                    <p><a href="https://github.com/jenniferzliang/nycneighborhoods" target="_blank">GitHub</a> • <a href="https://neighborhoods.onrender.com/auth" target="_blank">Live Demo</a></p>
-                </div>
-
-                <div class="project">
-                    <h3>Simple Workouts</h3>
-                    <p><strong>Technologies:</strong> React, TypeScript, Node.js, Express, MongoDB, Tailwind CSS</p>
-                    <p>Minimalist workout logger that converts free-form text into structured workout data with live preview, exercise tracking, and weekly analytics.</p>
-                    <p><a href="https://github.com/jenniferzliang/simpleworkouts" target="_blank">GitHub</a> • <a href="https://simpleworkouts.onrender.com" target="_blank">Live Demo</a></p>
-                </div>
-
-                <div class="project">
-                    <h3>Online Subletting Platform</h3>
-                    <p><strong>Technologies:</strong> MongoDB, Express.js, Angular, Node.js</p>
-                    <p>MEAN stack platform for student housing with real-time search, geolocation, user authentication, and messaging.</p>
-                    <p><a href="https://github.com/Danjin617/Online_Sublet_Platform" target="_blank">GitHub</a></p>
-                </div>
-
-                <div class="project">
-                    <h3>Spotify Music Analyzer</h3>
-                    <p><strong>Technologies:</strong> Python, Django, Spotify API, Pandas, Scikit-learn</p>
-                    <p>Analyzes Spotify playlists using ML to classify music preferences and generate personalized recommendations based on audio features.</p>
-                    <p><a href="https://github.com/jenniferzliang/spotifyAnalyzer" target="_blank">GitHub</a></p>
-                </div>
-
-                <div class="project">
-                    <h3>Chinatown Citizenship Platform</h3>
-                    <p><strong>Technologies:</strong> HTML5, CSS3, JavaScript, Bootstrap</p>
-                    <p>Multilingual platform for Chinese immigrants preparing for US Naturalization exams with interactive practice tests.</p>
-                    <p><a href="https://github.com/jenniferzliang/chinatowncitizenship" target="_blank">GitHub</a></p>
-                </div>
-            </section>
-        </main>
-
-        <footer>
-            <p>&copy; 2026 Jennifer Liang • <a href="index.html">Back to Home</a></p>
-        </footer>
+{% for category in site.data.projects %}
+<section id="{{ category.id }}">
+    <h2>{{ category.category }}</h2>
+    {% for project in category.items %}
+    <div class="project">
+        <h3>{{ project.name }}</h3>
+        <p><strong>Technologies:</strong> {{ project.tools }}</p>
+        <p>{{ project.description }}</p>
+        {% if project.links %}
+        <p>{% for link in project.links %}<a href="{{ link.url }}" target="_blank">{{ link.label }}</a>{% unless forloop.last %} • {% endunless %}{% endfor %}{% if project.note %} {{ project.note }}{% endif %}</p>
+        {% endif %}
     </div>
-
-</body>
-
-</html>
+    {% endfor %}
+</section>
+{% endfor %}

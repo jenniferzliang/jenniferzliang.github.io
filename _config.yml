@@ -1,1 +1,8 @@
-theme: jekyll-theme-minimal
+title: Jennifer Liang
+description: Jennifer Liang - Software Engineer
+url: "https://jenniferzliang.github.io"
+
+# Repo housekeeping files that shouldn't be deployed to the live site.
+exclude:
+  - CLAUDE.md
+  - README.md

@@ -1,0 +1,51 @@
+- category: Web Applications
+  id: web-applications
+  items:
+    - name: Restaurant Reservation System
+      tools: Next.js 16, React, TypeScript, Prisma, PostgreSQL, Tailwind CSS
+      description: Full-stack reservation platform with a public booking page, owner dashboard with daily manifest, calendar views, guest management with auto-merge, analytics, and configurable branding and operating hours.
+      links:
+        - label: GitHub
+          url: https://github.com/jenniferzliang/reservations
+        - label: Live Demo
+          url: https://bookatable.vercel.app/owner
+      note: '(owner portal password: <code>0000</code>)'
+
+    - name: NYC Neighborhood Explorer
+      tools: React, TypeScript, Node.js, Express, MongoDB, Leaflet
+      description: Full-stack app for tracking NYC neighborhood visits with interactive maps, user authentication, and personalized progress tracking.
+      links:
+        - label: GitHub
+          url: https://github.com/jenniferzliang/nycneighborhoods
+        - label: Live Demo
+          url: https://neighborhoods.onrender.com/auth
+
+    - name: Simple Workouts
+      tools: React, TypeScript, Node.js, Express, MongoDB, Tailwind CSS
+      description: Minimalist workout logger that converts free-form text into structured workout data with live preview, exercise tracking, and weekly analytics.
+      links:
+        - label: GitHub
+          url: https://github.com/jenniferzliang/simpleworkouts
+        - label: Live Demo
+          url: https://simpleworkouts.onrender.com
+
+    - name: Online Subletting Platform
+      tools: MongoDB, Express.js, Angular, Node.js
+      description: MEAN stack platform for student housing with real-time search, geolocation, user authentication, and messaging.
+      links:
+        - label: GitHub
+          url: https://github.com/Danjin617/Online_Sublet_Platform
+
+    - name: Spotify Music Analyzer
+      tools: Python, Django, Spotify API, Pandas, Scikit-learn
+      description: Analyzes Spotify playlists using ML to classify music preferences and generate personalized recommendations based on audio features.
+      links:
+        - label: GitHub
+          url: https://github.com/jenniferzliang/spotifyAnalyzer
+
+    - name: Chinatown Citizenship Platform
+      tools: HTML5, CSS3, JavaScript, Bootstrap
+      description: Multilingual platform for Chinese immigrants preparing for US Naturalization exams with interactive practice tests.
+      links:
+        - label: GitHub
+          url: https://github.com/jenniferzliang/chinatowncitizenship

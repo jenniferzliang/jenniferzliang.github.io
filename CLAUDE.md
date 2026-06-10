@@ -4,47 +4,43 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a static portfolio website hosted on GitHub Pages for Jennifer Liang. The site is built with vanilla HTML, CSS, and JavaScript using Bootstrap for responsive design.
+This is a static portfolio website for Jennifer Liang, built with Jekyll and hosted on GitHub Pages. Styling is plain CSS (`css/markdown-style.css`) with no framework.
 
 ## Architecture
 
-- **Static Site**: No build process required - files are served directly
-- **GitHub Pages**: Deployed via Jekyll with minimal theme configuration in `_config.yml`
-- **Frontend Only**: Pure client-side code with no backend dependencies
+- **Jekyll Site**: Pages share a single layout; project data lives in a YAML data file
+- **Deployment**: GitHub Actions (`.github/workflows/static.yml`) builds the site with `actions/jekyll-build-pages` and deploys to GitHub Pages on every push to `master`
 
 ### Key Files Structure
 
-- `index.html` - Main portfolio page with sections for About, Experience, and Portfolio
-- `js/portfolio.js` - Portfolio filtering functionality for project categories
-- `js/createPorfolio.js` - Project data and modal content management
-- `css/` - Custom styling files (style1.css, style2.css, custom.css, tab.css)
-- `assets/` - Images, PDFs, and static resources
-- `v1/` - Legacy version of the portfolio (SCSS-based with Gulp build process)
+- `_layouts/default.html` - Shared layout: head, header/nav, footer
+- `_data/projects.yml` - Project data (categories and items) rendered on the Projects page
+- `index.html` - About and Experience sections (plus the NYC walking-map dialog)
+- `projects.html` - Loops over `site.data.projects` to render project cards
+- `misc.html` - Books, movies, podcasts, travel apps, hobbies
+- `css/markdown-style.css` - The site's only stylesheet
+- `travel-planner.html` - Standalone self-contained app (no front matter; Jekyll copies it verbatim — do not add the layout to it)
+- `v1/` - Legacy version of the portfolio, served as-is at `/v1/`
 
-### Project Data Management
+### Page Front Matter
 
-Projects are defined as JavaScript objects in `js/createPorfolio.js` with properties:
-- `name` - Project title
-- `tools` - Technologies used  
-- `description` - HTML content with links
-- `img` - Image path for modal display
-
-Portfolio filtering uses CSS classes (`web`, `app`, `misc`) to categorize and show/hide projects.
+Each page sets:
+- `layout: default`
+- `title` - Appended to the `<title>` tag (omitted on the home page)
+- `nav` - One of `about`/`projects`/`misc`; controls the active nav link
+- `description` - Meta description
 
 ## Development
 
 ### Local Development
-Since this is a static site, simply open `index.html` in a browser. No build process or local server required.
+Requires Ruby and Bundler with the `github-pages` gem, then `bundle exec jekyll serve`. There is no Gemfile checked in; alternatively, push to a branch and check the Actions build.
 
 ### Deployment
-Changes are automatically deployed to GitHub Pages when pushed to the `master` branch.
+Pushes to `master` trigger the Pages workflow, which runs the Jekyll build and deploys `_site/`.
 
 ### Adding New Projects
-1. Add project data object to `project` array in `js/createPorfolio.js`
-2. Add corresponding portfolio item HTML in `index.html` with appropriate `filterDiv` classes
-3. Ensure image assets are placed in `assets/img/portfolio/`
+Add an entry to the appropriate category in `_data/projects.yml` with `name`, `tools`, `description`, optional `links` (list of `label`/`url`), and optional `note` (raw HTML appended after the links).
 
 ### Content Updates
 - Resume: Replace `assets/Jennifer_Liang.pdf`
-- Profile images: Update files in `assets/img/profile/`
 - Project images: Add to `assets/img/portfolio/`
