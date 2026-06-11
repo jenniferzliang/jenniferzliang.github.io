@@ -10,7 +10,7 @@ I'm a software engineer based in NYC with a background in Applied Mathematics an
 
 ### Beyond Code
 
-Passionate reader and literacy advocate. Founded Arctic Reading Circle (2020-2024), a Canadian nonprofit organization that hosted weekly English and French read-aloud sessions and writing classes for the community.
+Passionate reader and literacy advocate. Founded [Arctic Reading Circle](https://arcticreadingcircle.github.io){:target="_blank"} (2020-2024), a Canadian nonprofit organization that hosted weekly English and French read-aloud sessions and writing classes for the community.
 
 Former competitive foil fencer, having placed in the top 4 in national tournaments and competed in the European Cadet Circuit. Recipient of the Ontario Quest for Gold athlete scholarship (2017).
 
