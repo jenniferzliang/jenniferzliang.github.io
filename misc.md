@@ -18,6 +18,7 @@ description: Jennifer Liang - Misc
 - **Horse** by Geraldine Brooks
 - **The Song of Achilles** by Madeline Miller
 - **The Invisible Life of Addie LaRue** by V.E. Schwab
+- **Good People** by Patmeena Sabit
 
 ### Non-Fiction
 
